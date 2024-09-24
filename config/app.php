@@ -78,7 +78,7 @@ return [
     |
     */
 
-    'locale' => env('APP_LOCALE', 'ch'),
+    'locale' => env('APP_LOCALE', 'zh'),
 
     // add all available translations here, after providing the needed translation files in \lang\XX
     // possible languages: see XX in \vendor\stefangabos\world_countries\data\countries\XX\
