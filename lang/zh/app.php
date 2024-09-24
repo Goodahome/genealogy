@@ -12,7 +12,7 @@ return [
     'terms_of_service' => '服务条款',
     'useful_links'     => '相关链接',
     'impressum_links'  => '网站声明',
-    'contact'          => '联系方式',
+    'contact_footer'   => '联系地址',
 
     // Labels
     'api_tokens'       => 'API-Token',
