@@ -86,12 +86,12 @@ return [
         'Deutsch'    => 'de',
         'English'    => 'en',
         'Nederlands' => 'nl',
-        '中文简体' => 'ch',
+        '中文简体' => 'zh_CN',
     ],
 
-    'fallback_locale' => env('APP_FALLBACK_LOCALE', 'ch'),
+    'fallback_locale' => env('APP_FALLBACK_LOCALE', 'zh_CN'),
 
-    'faker_locale' => env('APP_FAKER_LOCALE', 'ch'),
+    'faker_locale' => env('APP_FAKER_LOCALE', 'zh_CN'),
 
     /*
     |--------------------------------------------------------------------------
