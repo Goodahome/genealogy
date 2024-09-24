@@ -2,7 +2,7 @@
 
 return [
     // 标签
-    'biological' => '',
+    'biological' => '生物性别',
     'person'     => '姓名',
     'people'     => '亲友',
 
@@ -18,6 +18,7 @@ return [
     'siblings'      => '兄弟姐妹',
     'ancestors'     => '祖先',
     'descendants'   => '后代',
+    'birth'         => '出生',
     'dead'          => '已故',
     'death'         => '已故',
     'deceased'      => '已故',
@@ -67,6 +68,7 @@ return [
     // 属性
     'id'          => 'ID',
     'name'        => '姓名',
+    'names'       => '姓名',
     'firstname'   => '姓',
     'surname'     => '名',
     'birthname'   => '出生名',
@@ -94,7 +96,7 @@ return [
     'state'       => '区、县',
     'country'     => '国家',
     'phone'       => '电话',
-
+    'summary'     => '简介',
     'cemetery'          => '墓地',
     'cemetery_location' => '墓地位置',
 

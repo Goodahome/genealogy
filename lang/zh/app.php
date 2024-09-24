@@ -17,7 +17,7 @@ return [
     // Labels
     'api_tokens'       => 'API-Token',
     'attention'        => '注意',
-    'contact'          => '联系',
+    'contacts'         => '联系',
     'death'            => '已故',
     'family_chart'     => '家族结构',
     'female'           => '女性',
