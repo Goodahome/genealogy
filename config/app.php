@@ -78,7 +78,7 @@ return [
     |
     */
 
-    'locale' => env('APP_LOCALE', 'zh'),
+    'locale' => env('APP_LOCALE', 'ch'),
 
     // add all available translations here, after providing the needed translation files in \lang\XX
     // possible languages: see XX in \vendor\stefangabos\world_countries\data\countries\XX\
@@ -86,12 +86,12 @@ return [
         'Deutsch'    => 'de',
         'English'    => 'en',
         'Nederlands' => 'nl',
-        '中文简体' => 'zh',
+        '中文简体' => 'ch',
     ],
 
-    'fallback_locale' => env('APP_FALLBACK_LOCALE', 'zh'),
+    'fallback_locale' => env('APP_FALLBACK_LOCALE', 'ch'),
 
-    'faker_locale' => env('APP_FAKER_LOCALE', 'zh'),
+    'faker_locale' => env('APP_FAKER_LOCALE', 'ch'),
 
     /*
     |--------------------------------------------------------------------------
