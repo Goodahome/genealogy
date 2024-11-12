@@ -43,11 +43,15 @@
                                     <button type="button"
                                         class="relative px-4 py-3 inline-flex w-full rounded focus:z-10 focus:outline-none focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-600 {{ $index > 0 ? 'border-t border-gray-200 dark:border-gray-700 focus:border-none rounded-t-none' : '' }} {{ !$loop->last ? 'rounded-b-none' : '' }}"
                                         wire:click="$set('addTeamMemberForm.role', '{{ $role->key }}')">
-                                        <div @class(['opacity-50' => isset($addTeamMemberForm['role']) and $addTeamMemberForm['role'] !== $role->key])>
+                                        <div @class([
+                                            'opacity-50' =>
+                                                isset($addTeamMemberForm['role']) and
+                                                $addTeamMemberForm['role'] !== $role->key,
+                                        ])>
                                             {{-- role name --}}
                                             <div class="flex items-center">
                                                 <div class="text-sm text-gray-600 {{ $addTeamMemberForm['role'] == $role->key ? 'font-semibold' : '' }}">
-                                                    <b>{{ __('jetstream.role_' . strtolower($role->name) . '_name') }}</b>
+                                                    <b>{{ __('jetstream.role_' . strtolower($role->key) . '_name') }}</b>
                                                 </div>
 
                                                 @if ($addTeamMemberForm['role'] == $role->key)
@@ -57,7 +61,7 @@
 
                                             {{-- role description --}}
                                             <div class="mt-2 text-xs text-gray-600 text-start">
-                                                {{ __('jetstream.role_' . strtolower($role->name) . '_description') }}
+                                                {{ __('jetstream.role_' . strtolower($role->key) . '_description') }}
                                             </div>
                                         </div>
                                     </button>
@@ -152,22 +156,21 @@
                                     {{-- manage team member role --}}
                                     @if (Gate::check('updateTeamMember', $team) and Laravel\Jetstream\Jetstream::hasRoles())
                                         <x-ts-button sm class="text-sm min-w-28 ms-3" wire:click="manageRole('{{ $user->id }}')" title="{{ __('team.change_role') }}">
-                                            {{ Laravel\Jetstream\Jetstream::findRole($user->membership->role)->name }}
+                                            {{ __('jetstream.role_' . strtolower(Laravel\Jetstream\Jetstream::findRole($user->membership->role)->key) . '_name') }}
                                         </x-ts-button>
                                     @elseif (Laravel\Jetstream\Jetstream::hasRoles())
                                         <div class="text-sm min-w-28 ms-3">
-                                            {{ Laravel\Jetstream\Jetstream::findRole($user->membership->role)->name }}
+                                            {{ __('jetstream.role_' . strtolower(Laravel\Jetstream\Jetstream::findRole($user->membership->role)->key) . '_name') }}
                                         </div>
                                     @endif
 
-                                    {{-- leave team --}}
                                     @if ($this->user->id === $user->id)
+                                        {{-- leave team --}}
                                         <x-ts-button color="danger" sm class="text-sm min-w-28 ms-3" wire:click="$toggle('confirmingLeavingTeam')" title="{{ __('team.leave_team') }}">
                                             {{ __('team.leave') }}
                                         </x-ts-button>
-
-                                        {{-- remove team member --}}
                                     @elseif (Gate::check('removeTeamMember', $team))
+                                        {{-- remove team member --}}
                                         <x-ts-button color="danger" sm class="text-sm min-w-28 ms-3" wire:click="confirmTeamMemberRemoval('{{ $user->id }}')"
                                             title="{{ __('team.remove_member') }}">
                                             {{ __('team.remove') }}
@@ -198,7 +201,7 @@
                             {{-- role name --}}
                             <div class="flex items-center">
                                 <div class="text-sm text-gray-600 {{ $currentRole == $role->key ? 'font-semibold' : '' }}">
-                                    {{ $role->name }}
+                                    {{ __('jetstream.role_' . strtolower($role->key) . '_name') }}
                                 </div>
 
                                 @if ($currentRole == $role->key)
@@ -208,7 +211,7 @@
 
                             {{-- role description --}}
                             <div class="mt-2 text-xs text-gray-600">
-                                {{ $role->description }}
+                                {{ __('jetstream.role_' . strtolower($role->key) . '_description') }}
                             </div>
                         </div>
                     </button>

@@ -10,74 +10,61 @@ use Livewire\Component;
 
 class Gallery extends Component
 {
+    // ------------------------------------------------------------------------------
     public $person;
 
+    // ------------------------------------------------------------------------------
     public array $images = [];
 
     public ?int $selected = null;
 
+    // ------------------------------------------------------------------------------
     protected $listeners = [
         'photos_updated' => 'mount',
         'person_updated' => 'render',
     ];
 
-    /**
-     * Mount the component and load images.
-     */
+    // ------------------------------------------------------------------------------
     public function mount(): void
     {
-        // Fetch all the images for the person
+        // Fetch all the image filenames for the person
         $path = public_path("storage/photos/{$this->person->team_id}/{$this->person->id}_*.webp");
 
         $this->images = collect(File::glob($path))
             ->map(fn ($p) => basename($p)) // Extract filename
             ->toArray();
 
-        // Set selected image index, if any
-        $this->selected = $this->getSelectedImageIndex();
+        // Set the primary image (if any) as selected
+        $this->selected = $this->getPrimaryImageIndex();
     }
 
-    /**
-     * Get the selected image index.
-     */
-    protected function getSelectedImageIndex(): ?int
+    protected function getPrimaryImageIndex(): ?int
     {
         if (count($this->images) === 0) {
             return null;
         }
 
         return $this->person->photo
-            ? array_search($this->person->photo, $this->images)
+            ? (int) array_search($this->person->photo, $this->images)
             : 0;
     }
 
-    /**
-     * Select the previous image in the gallery.
-     */
     public function previousImage(): void
     {
         $this->selected = ($this->selected - 1 + count($this->images)) % count($this->images);
     }
 
-    /**
-     * Select the next image in the gallery.
-     */
     public function nextImage(): void
     {
         $this->selected = ($this->selected + 1) % count($this->images);
     }
 
-    /**
-     * Select an image by its index.
-     */
-    public function selectImage(int $index): void
+    public function selectImage($index): void
     {
         $this->selected = $index;
     }
 
-    /**
-     * Render the component view.
-     */
+    // ------------------------------------------------------------------------------
     public function render(): View
     {
         return view('livewire.people.gallery');
