@@ -44,10 +44,7 @@
                         required />
                 </div>
 
-                {{-- birthname --}}
-                <div class="col-span-6 md:col-span-3">
-                    <x-ts-input wire:model="personForm.birthname" id="birthname" label="{{ __('person.birthname') }} :" wire:dirty.class="bg-yellow-200 dark:text-black" autocomplete="birthname" />
-                </div>
+                
 
                 {{-- nickname --}}
                 <div class="col-span-6 md:col-span-3">
@@ -57,7 +54,7 @@
 
                 {{-- sex --}}
                 <div class="col-span-6 md:col-span-3">
-                    <x-label for="sex" class="mr-5" value="{{ __('person.sex') }} ({{ __('person.biological') }}) : *" />
+                    <x-label for="sex" class="mr-5" value="{{ __('person.sex') }}: *" />
                     <div class="flex">
                         <div class="mt-3 mb-[0.125rem] mr-4 inline-block min-h-[1.5rem] pl-[1.5rem]">
                             <x-ts-radio color="primary" wire:model="personForm.sex" name="sex" id="sexM" value="m" label="{{ __('app.male') }}" />
@@ -68,11 +65,7 @@
                     </div>
                 </div>
 
-                {{-- gender_id --}}
-                <div class="col-span-6 md:col-span-3">
-                    <x-ts-select.styled wire:model="personForm.gender_id" id="gender_id" label="{{ __('person.gender') }} : *" :options="$personForm->genders()" select="label:name|value:id"
-                        placeholder="{{ __('app.select') }} ..." wire:dirty.class="bg-yellow-200 dark:text-black" searchable />
-                </div>
+                
                 <x-hr.narrow class="col-span-6 my-0!" />
 
                 {{-- yob --}}

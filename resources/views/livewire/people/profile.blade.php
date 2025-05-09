@@ -74,33 +74,33 @@
         <table class="w-full">
             <tbody>
                 <tr class="align-top">
-                    <td class="pr-2 border-t-2 border-r-2">{{ __('person.firstname') }}</td>
-                    <td class="pl-2 break-words border-t-2 max-w-96">{{ $person->firstname }}</td>
+                    <td class="pr-2 border-t-2 border-r-2">{{ __('person.firstname') }}{{ __('person.surname') }}</td>
+                    <td class="pl-2 break-words border-t-2 max-w-96">{{ $person->firstname }}{{ $person->surname }}</td>
                 </tr>
-                <tr class="align-top">
+                <!-- <tr class="align-top">
                     <td class="pr-2 border-r-2">{{ __('person.surname') }}</td>
                     <td class="pl-2 break-words max-w-96">{{ $person->surname }}</td>
-                </tr>
-                <tr class="align-top">
+                </tr> -->
+                <!-- <tr class="align-top">
                     <td class="pr-2 border-r-2">{{ __('person.birthname') }}</td>
                     <td class="pl-2 break-words max-w-96">{{ $person->birthname }}</td>
-                </tr>
+                </tr> -->
                 <tr class="align-top border-b-2">
                     <td class="pr-2 border-r-2">{{ __('person.nickname') }}</td>
                     <td class="pl-2 break-words max-w-96">{{ $person->nickname }}</td>
                 </tr>
 
                 <tr class="align-top">
-                    <td class="pr-2 border-r-2">{{ __('person.sex') }} ({{ __('person.biological') }})</td>
+                    <td class="pr-2 border-r-2">{{ __('person.sex') }}</td>
                     <td class="pl-2">
                         {{ $person->sex === 'm' ? __('app.male') : __('app.female') }}
                         <x-ts-icon icon="tabler.{{ $person->sex === 'm' ? 'gender-male' : 'gender-female' }}" class="inline-block size-5" />
                     </td>
                 </tr>
-                <tr class="align-top border-b-2">
+                <!-- <tr class="align-top border-b-2">
                     <td class="pr-2 border-r-2">{{ __('person.gender') }}</td>
                     <td class="pl-2 break-words max-w-96">{{ $person->gender ? $person->gender->name : '' }}</td>
-                </tr>
+                </tr> -->
 
                 <tr class="align-top">
                     <td class="pr-2 border-r-2">{{ __('person.dob') }}</td>

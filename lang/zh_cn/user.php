@@ -13,8 +13,8 @@ return [
     // 属性
     'id'                      => 'ID',
     'name'                    => '姓名',
-    'firstname'               => '名',
-    'surname'                 => '姓',
+    'firstname'               => '姓',
+    'surname'                 => '名',
     'email'                   => '电子邮件',
     'password'                => '密码',
     'current_password'        => '当前密码',

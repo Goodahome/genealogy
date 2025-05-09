@@ -11,29 +11,21 @@
             </tr>
             <tr class="align-top">
                 <td colspan="2">&nbsp;</td>
-                <td>{{ __('person.firstname') }} :</td>
-                <td class="break-words max-w-96">{{ $person->firstname }}</td>
+                <td>{{ __('person.firstname') }} 名:</td>
+                <td class="break-words max-w-96">{{ $person->firstname }}{{ $person->surname }}</td>
             </tr>
-            <tr class="align-top">
-                <td colspan="2">&nbsp;</td>
-                <td>{{ __('person.surname') }} :</td>
-                <td class="break-words max-w-96">{{ $person->surname }}</td>
-            </tr>
-            <tr class="align-top">
-                <td colspan="2">&nbsp;</td>
-                <td>{{ __('person.birthname') }} :</td>
-                <td class="break-words max-w-96">{{ $person->birthname }}</td>
-            </tr>
+            
+            
             <tr class="align-top">
                 <td colspan="2">&nbsp;</td>
                 <td>{{ __('person.nickname') }} :</td>
                 <td class="break-words max-w-96">{{ $person->nickname }}</td>
             </tr>
 
-            {{-- sex & gender --}}
+            {{-- sex --}}
             <tr>
                 <td>&nbsp;</td>
-                <td class="border-b-2 border-gray-600 border-solid">{{ __('person.sex') }} & {{ __('person.gender') }}</td>
+                <td class="border-b-2 border-gray-600 border-solid">{{ __('person.sex') }}</td>
                 <td colspan="2" class="border-b-2 border-gray-600 border-solid">&nbsp;</td>
             </tr>
             <tr class="align-top">
@@ -44,11 +36,7 @@
                     <x-ts-icon icon="tabler.{{ $person->sex === 'm' ? 'gender-male' : 'gender-female' }}" class="inline-block size-5" />
                 </td>
             </tr>
-            <tr class="align-top">
-                <td colspan="2">&nbsp;</td>
-                <td>{{ __('person.gender') }} :</td>
-                <td class="break-words max-w-96">{{ $person->gender ? $person->gender->name : '' }}</td>
-            </tr>
+            
 
             {{-- birth --}}
             <tr>

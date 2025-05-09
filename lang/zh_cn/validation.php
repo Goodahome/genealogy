@@ -134,7 +134,7 @@ return [
     'required_unless'      => '除非 :other 在 :values 中',
     'required_with'        => '当 :values 存在时，:attribute 字段是必需的。',
     'required_with_all'    => '当 :values 存在时，:attribute 字段是必需的。',
-    'required_without'     => '当 :values 不存在时，:attribute 字段是必需的。',
+    'required_without'     => ':attribute 字段是必需的。',
     'required_without_all' => '当没有 :values 存在时，:attribute 字段是必需的。',
     'same'                 => ':attribute 字段必须与 :other 匹配。',
     'size'                 => [
