@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="Genealogy Application - Manage your family tree and discover your ancestry.">
 
-    <title>{{ config('app.name', 'Genealogy') }} @yield('title')</title>
+    <title>{{ config('app.name', '族谱网') }} @yield('title')</title>
 
     <!-- favicon -->
     <link rel="icon" type="image/png" href="{{ asset('img/favicon/favicon-16x16.png') }}" sizes="16x16">

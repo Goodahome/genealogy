@@ -15,7 +15,7 @@ return [
     |
     */
 
-    'name' => env('APP_NAME', 'Genealogy'),
+    'name' => env('APP_NAME', '族谱网'),
 
     /*
     |--------------------------------------------------------------------------
@@ -80,21 +80,21 @@ return [
     |
     */
 
-    'locale' => env('APP_LOCALE', 'en'),
+    'locale' => env('APP_LOCALE', 'zh'),
 
     // add all available translations here, after providing the needed translation files in /lang/XX/
     'available_locales' => [
-        'Deutsch'    => 'de',               // German
+        // 'Deutsch'    => 'de',               // German
         'English'    => 'en',               // English
-        'Español'    => 'es',               // Spanish
-        'Français'   => 'fr',               // French
-        'Nederlands' => 'nl',               // Dutch
-        'Português'  => 'pt',               // Portuguese
-        'Việt Nam'   => 'vi',               // Vietnamese
+        // 'Español'    => 'es',               // Spanish
+        // 'Français'   => 'fr',               // French
+        // 'Nederlands' => 'nl',               // Dutch
+        // 'Português'  => 'pt',               // Portuguese
+        // 'Việt Nam'   => 'vi',               // Vietnamese
         '中文简体'   => 'zh_cn',            // Chinees
     ],
 
-    'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
+    'fallback_locale' => env('APP_FALLBACK_LOCALE', 'zh'),
 
     'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
 
