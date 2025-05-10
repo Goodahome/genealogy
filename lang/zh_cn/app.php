@@ -136,4 +136,24 @@ return [
 
     'under_construction' => '建设中',
     'demonstration'      => '示范',
+    
+    // 添加以下键值对到现有文件
+    'share' => '分享',
+    'share_person' => '分享人物',
+    'share_link' => '分享链接',
+    'expires_in_days' => '过期天数',
+    'day' => '天',
+    'days' => '天',
+    'generate_link' => '生成链接',
+    'copy' => '复制',
+    'copied' => '已复制',
+    'close' => '关闭',
+    'expires_at' => '过期时间',
+    'error_generating_link' => '生成链接时出错',
+    // 添加以下键值对到现有文件
+    'shared_edit_notice_files' => '您正在通过分享链接上传文件。上传的文件将与此人物关联。',
+    'shared_edit_notice' => '您正在通过分享链接编辑此人物信息。您只能编辑此人物，且链接有时效性，想查看更多人物请联系管理员。',
+    'shared_person_updated' => '人物信息已成功更新。',
+    'link_expired' => '分享链接已过期，无法编辑。',
+    'save' => '保存',
 ];

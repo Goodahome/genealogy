@@ -27,7 +27,7 @@ return new class extends Migration
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
 
-            $table->string('language', 5)->default('en');
+            $table->string('language', 5)->default('zh');
             $table->string('timezone')->default('UTC');
             $table->boolean('is_developer')->default(false);
 

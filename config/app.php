@@ -91,12 +91,12 @@ return [
         // 'Nederlands' => 'nl',               // Dutch
         // 'Português'  => 'pt',               // Portuguese
         // 'Việt Nam'   => 'vi',               // Vietnamese
-        '中文简体'   => 'zh_cn',            // Chinees
+        '中文简体'   => 'zh',            // Chinees
     ],
 
     'fallback_locale' => env('APP_FALLBACK_LOCALE', 'zh'),
 
-    'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
+    'faker_locale' => env('APP_FAKER_LOCALE', 'zh'),
 
     /*
     |--------------------------------------------------------------------------

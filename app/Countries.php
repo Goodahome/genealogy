@@ -16,7 +16,7 @@ final class Countries
         // 'fr'    => 'fr',
         // 'nl'    => 'nl',
         // 'pt'    => 'pt',
-        'zh_cn' => 'zh',
+        'zh' => 'zh',
     ];
 
     public Collection $countries;
