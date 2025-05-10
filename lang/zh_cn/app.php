@@ -32,7 +32,7 @@ return [
     'nothing_available' => '没有可用内容',
     'nothing_found'     => '未找到内容',
     'nothing_recorded'  => '没有数据。',
-    'search'            => '搜索',
+    'search'            => '家族成员',
     'yes'               => '同意',
     'no'                => '拒绝',
 
@@ -156,4 +156,6 @@ return [
     'shared_person_updated' => '人物信息已成功更新。',
     'link_expired' => '分享链接已过期，无法编辑。',
     'save' => '保存',
+    'pdf_viewer' => '家族族谱',
+    'events' => '家族事件',
 ];

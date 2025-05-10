@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Laravel\Jetstream\Jetstream;
+use App\Models\Event;
 
 final class PageController extends Controller
 {
@@ -18,8 +19,18 @@ final class PageController extends Controller
         // return view('home', [
         //     'home' => Str::markdown(file_get_contents($homeFile)),
         // ]);
-        $pdfUrl = asset('pdfs/sample.pdf');
-        return view('home', compact('pdfUrl'));
+        try {
+            $pdfUrl = asset('pdfs/zupu.pdf');
+            $events = Event::orderBy('date', 'asc')->get(); // 获取所有事件，按日期升序
+            return view('home', compact('pdfUrl', 'events'));
+        } catch (\Exception $e) {
+            \Log::error('Home page error: ' . $e->getMessage());
+            return view('home', [
+                'pdfUrl' => null,
+                'events' => [],
+                'error' => '无法加载内容，请稍后重试。',
+            ]);
+        }
     }
 
     public function about(): View

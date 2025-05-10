@@ -13,6 +13,7 @@ Route::controller(App\Http\Controllers\Front\PageController::class)->group(funct
     Route::get('help', 'help')->name('help');
 });
 Route::redirect('/', '/login')->middleware('guest');
+
 // -----------------------------------------------------------------------------------
 // backend routes
 // -----------------------------------------------------------------------------------
@@ -37,6 +38,8 @@ Route::middleware([
     // -----------------------------------------------------------------------------------
     Route::controller(App\Http\Controllers\Back\PageController::class)->group(function (): void {
         Route::get('test', 'test')->name('test');
+        // 日期事件
+        Route::resource('events', App\Http\Controllers\EventController::class);
     });
 
     // -----------------------------------------------------------------------------------
