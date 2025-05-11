@@ -80,7 +80,7 @@ return [
     |
     */
 
-    'locale' => env('APP_LOCALE', 'zh'),
+    'locale' => env('APP_LOCALE', 'zh_cn'),
 
     // add all available translations here, after providing the needed translation files in /lang/XX/
     'available_locales' => [
@@ -91,12 +91,12 @@ return [
         // 'Nederlands' => 'nl',               // Dutch
         // 'Português'  => 'pt',               // Portuguese
         // 'Việt Nam'   => 'vi',               // Vietnamese
-        '中文简体'   => 'zh',            // Chinees
+        '中文简体'   => 'zh_cn',            // Chinees
     ],
 
-    'fallback_locale' => env('APP_FALLBACK_LOCALE', 'zh'),
+    'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
 
-    'faker_locale' => env('APP_FAKER_LOCALE', 'zh'),
+    'faker_locale' => env('APP_FAKER_LOCALE', 'en'),
 
     /*
     |--------------------------------------------------------------------------

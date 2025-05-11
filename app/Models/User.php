@@ -166,4 +166,16 @@ final class User extends Authenticatable
     {
         return implode(' ', array_filter([$this->firstname, $this->surname]));
     }
+
+    public function teams()
+    {
+        return $this->hasMany(Team::class, 'user_id');
+    }
+
+    public function allTeams()
+    {
+        $ownedTeams = $this->hasMany(Team::class, 'user_id')->get();
+        $memberTeams = $this->belongsToMany(Team::class, 'team_user', 'user_id', 'team_id')->withTimestamps()->get();
+        return $ownedTeams->merge($memberTeams)->unique('id')->sortBy('name');
+    }
 }

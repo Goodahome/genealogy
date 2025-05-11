@@ -11,12 +11,12 @@ final class Countries
     // Mapping of locales to country directory names
     private const array LOCALE_TO_COUNTRY = [
         // 'de'    => 'de',
-        'en'    => 'en',
+        // 'en'    => 'en',
         // 'es'    => 'es',
         // 'fr'    => 'fr',
         // 'nl'    => 'nl',
         // 'pt'    => 'pt',
-        'zh' => 'zh',
+        'zh_cn' => 'zh_cn',
     ];
 
     public Collection $countries;
@@ -24,17 +24,17 @@ final class Countries
     /**
      * Constructor to initialize the countries collection based on locale.
      */
-    public function __construct(string $locale = 'zh')
+    public function __construct(string $locale = 'zh_cn')
     {
         // Determine the country folder from the locale
-        $countryCode = self::LOCALE_TO_COUNTRY[$locale] ?? 'zh'; // Default to 'en' if locale is not found
+        $countryCode = self::LOCALE_TO_COUNTRY[$locale] ?? 'zh_cn'; // Default to 'en' if locale is not found
 
         // Set the base path for the countries data
         $path       = base_path('vendor/stefangabos/world_countries/data/countries/');
         $localePath = $path . $countryCode;
 
         // Load the country data for the specified locale or fallback to English
-        $this->countries = $this->loadCountriesData($localePath) ?? $this->loadCountriesData($path . 'zh');
+        $this->countries = $this->loadCountriesData($localePath) ?? $this->loadCountriesData($path . 'en');
     }
 
     /**
