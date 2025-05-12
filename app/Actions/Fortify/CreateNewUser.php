@@ -51,10 +51,16 @@ final class CreateNewUser implements CreatesNewUsers
      */
     protected function createTeam(User $user): void
     {
-        $user->ownedTeams()->save(Team::forceCreate([
+        $team = Team::forceCreate([
             'user_id'       => $user->id,
-            'name'          => 'Team ' . $user->name,
+            'name'          => 'Team ' . ($user->firstname ? $user->firstname . ' ' : '') . $user->surname,
             'personal_team' => true,
-        ]));
+        ]);
+
+        $user->ownedTeams()->save($team);
+        
+        // 设置新创建的团队为用户的当前团队
+        $user->current_team_id = $team->id;
+        $user->save();
     }
 }

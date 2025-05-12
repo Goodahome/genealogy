@@ -9,6 +9,7 @@ use Illuminate\Support\Str;
 use Illuminate\View\View;
 use Laravel\Jetstream\Jetstream;
 use App\Models\Event;
+use Illuminate\Support\Facades\Auth;
 
 final class PageController extends Controller
 {
@@ -21,7 +22,21 @@ final class PageController extends Controller
         // ]);
         try {
             $pdfUrl = asset('pdfs/zupu.pdf');
-            $events = Event::orderBy('date', 'asc')->get(); // 获取所有事件，按日期升序
+            
+            // 检查用户是否已登录
+            if (Auth::check()) {
+                // 获取当前用户的团队ID
+                $teamId = Auth::user()->currentTeam->id;
+                
+                // 只获取当前团队的事件
+                $events = Event::where('team_id', $teamId)
+                              ->orderBy('date', 'asc')
+                              ->get();
+            } else {
+                // 未登录用户不显示任何事件
+                $events = collect();
+            }
+            
             return view('home', compact('pdfUrl', 'events'));
         } catch (\Exception $e) {
             \Log::error('Home page error: ' . $e->getMessage());

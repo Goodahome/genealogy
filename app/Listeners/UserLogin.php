@@ -21,8 +21,8 @@ final class UserLogin
         // Set language and timezone
         // -----------------------------------------------------------------------
         session([
-            'locale'   => $user->language ?? config('app.locale', 'zh'),
-            'timezone' => $user->timezone ?? config('app.timezone', 'UTC'),
+            'locale'   => $user->language ?? config('app.locale', 'zh_cn'),
+            'timezone' => $user->timezone ?? config('app.timezone', 'Asia/Shanghai'),
         ]);
 
         // -----------------------------------------------------------------------

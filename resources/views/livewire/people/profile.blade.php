@@ -73,36 +73,23 @@
     <div class="p-2">
         <table class="w-full">
             <tbody>
-                <tr class="align-top">
+                <tr class="align-top border-b-2 h-8">
                     <td class="pr-2 border-t-2 border-r-2">{{ __('person.firstname') }}{{ __('person.surname') }}</td>
                     <td class="pl-2 break-words border-t-2 max-w-96">{{ $person->firstname }}{{ $person->surname }}</td>
                 </tr>
-                <!-- <tr class="align-top">
-                    <td class="pr-2 border-r-2">{{ __('person.surname') }}</td>
-                    <td class="pl-2 break-words max-w-96">{{ $person->surname }}</td>
-                </tr> -->
-                <!-- <tr class="align-top">
-                    <td class="pr-2 border-r-2">{{ __('person.birthname') }}</td>
-                    <td class="pl-2 break-words max-w-96">{{ $person->birthname }}</td>
-                </tr> -->
-                <tr class="align-top border-b-2">
+                <tr class="align-top border-b-2 h-8">
                     <td class="pr-2 border-r-2">{{ __('person.nickname') }}</td>
                     <td class="pl-2 break-words max-w-96">{{ $person->nickname }}</td>
                 </tr>
 
-                <tr class="align-top">
+                <tr class="align-top border-b-2 h-8">
                     <td class="pr-2 border-r-2">{{ __('person.sex') }}</td>
                     <td class="pl-2">
                         {{ $person->sex === 'm' ? __('app.male') : __('app.female') }}
                         <x-ts-icon icon="tabler.{{ $person->sex === 'm' ? 'gender-male' : 'gender-female' }}" class="inline-block size-5" />
                     </td>
                 </tr>
-                <!-- <tr class="align-top border-b-2">
-                    <td class="pr-2 border-r-2">{{ __('person.gender') }}</td>
-                    <td class="pl-2 break-words max-w-96">{{ $person->gender ? $person->gender->name : '' }}</td>
-                </tr> -->
-
-                <tr class="align-top">
+                <tr class="align-top border-b-2 h-8">
                     <td class="pr-2 border-r-2">{{ __('person.dob') }}</td>
                     <td class="pl-2">
                         {{ $person->birth_formatted }}
@@ -111,7 +98,7 @@
                         @endif
                     </td>
                 </tr>
-                <tr class="align-top border-b-2">
+                <tr class="align-top border-b-2 h-8">
                     <td class="pr-2 border-r-2">{{ __('person.pob') }}</td>
                     <td class="pl-2 break-words max-w-96">{{ $person->pob }}</td>
                 </tr>
@@ -148,7 +135,7 @@
                     </tr>
                 @else
                     <tr class="align-top">
-                        <td class="pr-2 border-b-2 border-r-2">
+                        <td class="pr-2 border-b-2 border-r-2 h-8">
                             {{ __('person.address') }}<br />
                             @if ($person->address)
                                 <a target="_blank" href="{{ $person->address_google }}">
@@ -160,13 +147,13 @@
                         </td>
                         <td class="pl-2 break-words whitespace-pre-line border-b-2 max-w-96">{{ $person->address }}</td>
                     </tr>
-                    <tr class="align-top">
+                    <tr class="align-top h-8">
                         <td class="pr-2 border-b-2 border-r-2">{{ __('person.phone') }}</td>
                         <td class="pl-2 break-words border-b-2 max-w-96">{{ $person->phone }}</td>
                     </tr>
                 @endif
 
-                <tr class="align-top border-b-2">
+                <tr class="align-top border-b-2 h-8">
                     <td class="pr-2 border-r-2">{{ __('person.summary') }}</td>
                     <td class="pl-2 break-words whitespace-pre-line max-w-96">{{ $person->summary }}</td>
                 </tr>

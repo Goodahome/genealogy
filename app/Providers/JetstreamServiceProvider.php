@@ -1,5 +1,5 @@
 <?php
-
+// 权限管理代码
 declare(strict_types=1);
 
 namespace App\Providers;
@@ -64,6 +64,11 @@ final class JetstreamServiceProvider extends ServiceProvider
             'couple:read',
             'couple:update',
             'couple:delete',
+
+            'event:create',
+            'event:read',
+            'event:update',
+            'event:delete',
         ])->description('Administrators can perform any action and manage the application.');
 
         Jetstream::role('manager', 'Manager', [
@@ -76,6 +81,11 @@ final class JetstreamServiceProvider extends ServiceProvider
             'couple:read',
             'couple:update',
             'couple:delete',
+
+            'event:create',
+            'event:read',
+            'event:update',
+            'event:delete',
         ])->description('Managers can perform any action on people.');
 
         Jetstream::role('editor', 'Editor', [
@@ -86,12 +96,16 @@ final class JetstreamServiceProvider extends ServiceProvider
             'couple:create',
             'couple:read',
             'couple:update',
+
+            'event:read',
         ])->description('Editors have the ability to create, read and update people.');
 
         Jetstream::role('member', 'Member', [
             'person:read',
 
             'couple:read',
+
+            'event:read',
         ])->description('Members have the ability to read people.');
     }
 }

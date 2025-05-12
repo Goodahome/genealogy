@@ -4,7 +4,9 @@
     <div class="w-full p-4">
         <div class="bg-white rounded-sm shadow-md p-6 max-w-4xl mx-auto">
             <h2 class="text-xl font-semibold mb-4">所有事件</h2>
-            <a href="{{ route('events.create') }}" class="btn btn-sm btn-primary mb-4">添加事件</a>
+            @if (auth()->user()->hasPermission('event:create'))
+                <a href="{{ route('events.create') }}" class="btn btn-sm btn-primary mb-4">添加事件</a>
+            @endif
             @if (session('success'))
                 <div class="alert alert-success mb-4">{{ session('success') }}</div>
             @endif
