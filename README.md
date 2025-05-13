@@ -261,7 +261,7 @@ create a new project folder, cd into the folder
 
 make the needed changes regarding name, url, database connection & mail server
 
-`composer install`
+`composer install` & `composer require overtrue/chinese-calendar`
 
 `php artisan key:generate`
 
@@ -272,6 +272,38 @@ make the needed changes regarding name, url, database connection & mail server
 `npm install & npm run build`
 
 `php artisan serve` or `npm run dev`
+
+# 回退数据库迁移
+要回退之前执行的迁移，您可以使用 Laravel 的 migrate:rollback 命令。这将撤销最后一批执行的迁移。
+
+执行以下命令来回退最后一批迁移：
+
+```bash
+php artisan migrate:rollback
+ ```
+
+如果您想回退特定的步数，可以使用 --step 参数：
+
+```bash
+php artisan migrate:rollback --step=1
+ ```
+
+上面的命令将只回退最后一个迁移。
+
+如果您想回退所有迁移，可以使用 migrate:reset 命令：
+
+```bash
+php artisan migrate:reset
+ ```
+
+如果您只想回退特定的迁移文件，可以使用 migrate:rollback 命令并指定路径：
+
+```bash
+php artisan migrate:rollback --path=database/migrations/2025_05_12_145830_add_lunar_calendar_fields_to_people_table.php
+ ```
+```
+
+执行回退后， is_lunar_dob 和 is_lunar_dod 字段将从 people 表中删除。
 
 ## Updating
 

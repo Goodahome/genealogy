@@ -51,6 +51,12 @@ final class Child extends Component
 
         $this->childForm->person_id = null;
 
+        // 初始化农历出生日期
+        $this->childForm->dob_year = $this->person->dob_lunar_year;
+        $this->childForm->dob_month = $this->person->dob_lunar_month;
+        $this->childForm->dob_day = $this->person->dob_lunar_day;
+        $this->childForm->dob_leap = (bool)$this->person->dob_lunar_leap;
+
         if ($this->person->sex === 'm') {
             $this->persons = Person::where('id', '!=', $this->person->id)
                 ->whereNull('father_id')
@@ -149,8 +155,15 @@ final class Child extends Component
                         'yob'       => $validated['yob'],
                         'dob'       => $validated['dob'],
                         'pob'       => $validated['pob'],
+                        // 保存农历日期字段
+                        'dob_lunar_year' => $validated['dob_year'] ?? null,
+                        'dob_lunar_month' => $validated['dob_month'] ?? null,
+                        'dob_lunar_day' => $validated['dob_day'] ?? null,
+                        'dob_lunar_leap' => $validated['dob_leap'] ?? false,
+                        
                         'father_id' => $this->person->id,
                         'team_id'   => $this->person->team_id,
+                        
                     ]);
                 } else {
                     $new_person = Person::create([
@@ -163,8 +176,15 @@ final class Child extends Component
                         'yob'       => $validated['yob'],
                         'dob'       => $validated['dob'],
                         'pob'       => $validated['pob'],
+                        // 保存农历日期字段
+                        'dob_lunar_year' => $validated['dob_year'] ?? null,
+                        'dob_lunar_month' => $validated['dob_month'] ?? null,
+                        'dob_lunar_day' => $validated['dob_day'] ?? null,
+                        'dob_lunar_leap' => $validated['dob_leap'] ?? false,
+
                         'mother_id' => $this->person->id,
                         'team_id'   => $this->person->team_id,
+                        
                     ]);
                 }
 
@@ -199,6 +219,11 @@ final class Child extends Component
         $this->childForm->yob !== null or
         $this->childForm->dob !== null or
         $this->childForm->pob !== null or
+
+        $this->childForm->dob_year !== $this->person->dob_lunar_year or
+        $this->childForm->dob_month !== $this->person->dob_lunar_month or
+        $this->childForm->dob_day !== $this->person->dob_lunar_day or
+        $this->childForm->dob_leap !== $this->person->dob_lunar_leap or
 
         $this->childForm->person_id;
     }

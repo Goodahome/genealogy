@@ -58,6 +58,12 @@ final class Partner extends Component
         $this->partnerForm->is_married = false;
         $this->partnerForm->has_ended  = false;
 
+        // 初始化农历出生日期
+        $this->partnerForm->dob_year = $this->person->dob_lunar_year;
+        $this->partnerForm->dob_month = $this->person->dob_lunar_month;
+        $this->partnerForm->dob_day = $this->person->dob_lunar_day;
+        $this->partnerForm->dob_leap = (bool)$this->person->dob_lunar_leap;
+
         $this->persons = Person::PartnerOffset($this->person->birth_year)
             ->where('id', '!=', $this->person->id)
             ->orderBy('firstname')->orderBy('surname')
@@ -148,6 +154,12 @@ final class Partner extends Component
                         'dob'       => $validated['dob'],
                         'pob'       => $validated['pob'],
                         'team_id'   => $this->person->team_id,
+                        // 保存农历日期字段
+                        'dob_lunar_year' => $validated['dob_year'] ?? null,
+                        'dob_lunar_month' => $validated['dob_month'] ?? null,
+                        'dob_lunar_day' => $validated['dob_day'] ?? null,
+                        'dob_lunar_leap' => $validated['dob_leap'] ?? false,
+                        
                     ]);
 
                     if ($this->photos) {
@@ -199,6 +211,12 @@ final class Partner extends Component
         $this->partnerForm->date_start !== null or
         $this->partnerForm->date_end !== null or
         $this->partnerForm->is_married !== false or
+
+        $this->partnerForm->dob_year !== $this->person->dob_lunar_year or
+        $this->partnerForm->dob_month !== $this->person->dob_lunar_month or
+        $this->partnerForm->dob_day !== $this->person->dob_lunar_day or
+        $this->partnerForm->dob_leap !== $this->person->dob_lunar_leap or
+
         $this->partnerForm->has_ended !== false;
     }
 

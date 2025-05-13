@@ -89,12 +89,14 @@
                         <x-ts-icon icon="tabler.{{ $person->sex === 'm' ? 'gender-male' : 'gender-female' }}" class="inline-block size-5" />
                     </td>
                 </tr>
+                {{-- 修改显示农历日期的部分 --}}
                 <tr class="align-top border-b-2 h-8">
                     <td class="pr-2 border-r-2">{{ __('person.dob') }}</td>
-                    <td class="pl-2">
-                        {{ $person->birth_formatted }}
-                        @if ($person->isBirthdayToday())
-                            <x-ts-icon icon="tabler.cake" class="inline-block size-5 text-red-600 dark:text-red-400" />
+                    <td class="pl-2 break-words max-w-96">
+                        @if($person->dob_lunar_year)
+                            {{ $person->lunar_birth_formatted }} (农历)
+                        @else
+                            {{ $person->birth_formatted }}
                         @endif
                     </td>
                 </tr>
@@ -107,7 +109,11 @@
                     <tr class="align-top">
                         <td class="pr-2 border-r-2">{{ __('person.dod') }}</td>
                         <td class="pl-2">
-                            {{ $person->death_formatted }}
+                            @if($person->dod_lunar_year)
+                                {{ $person->lunar_death_formatted }} (农历)
+                            @else
+                                {{ $person->death_formatted }}
+                            @endif
                             @if ($person->isDeathdayToday())
                                 <x-ts-icon icon="tabler.cake" class="inline-block size-5 text-red-600 dark:text-red-400" />
                             @endif

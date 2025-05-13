@@ -92,7 +92,8 @@ final class Person extends Component
     {
         if ($this->isDirty()) {
             $validated = $this->personForm->validate();
-
+            
+            // 创建新的人物记录
             $new_person = \App\Models\Person::create([
                 'firstname' => $validated['firstname'],
                 'surname'   => $validated['surname'],
@@ -101,11 +102,19 @@ final class Person extends Component
                 'sex'       => $validated['sex'],
                 'gender_id' => $validated['gender_id'] ?? null,
                 'yob'       => $validated['yob'],
-                'dob'       => $validated['dob'],
+                
+                // 保存农历日期字段
+                'dob_lunar_year' => $validated['dob_year'] ?? null,
+                'dob_lunar_month' => $validated['dob_month'] ?? null,
+                'dob_lunar_day' => $validated['dob_day'] ?? null,
+                'dob_lunar_leap' => $validated['dob_leap'] ?? false,
+                
                 'pob'       => $validated['pob'],
+                'yod'       => $validated['yod'] ?? null,
+                'pod'       => $validated['pod'] ?? null,
                 'team_id'   => auth()->user()->currentTeam->id,
             ]);
-
+            
             if ($this->photos) {
                 $personPhotos = new PersonPhotos($new_person);
                 $personPhotos->save($this->photos);

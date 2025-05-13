@@ -17,10 +17,10 @@
                         <!-- 头部区域：更现代的标题和按钮 -->
                         <div class="flex justify-between items-center mb-6">
                             <h2 class="text-2xl font-bold text-gray-800">{{ __('app.events') }}</h2>
-                            <a href="{{ route('events.create') }}"
+                            <!-- <a href="{{ route('events.create') }}"
                             class="px-4 py-2 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 transition duration-300 ease-in-out">
                                 添加事件
-                            </a>
+                            </a> -->
                         </div>
 
                         <!-- 成功提示：更柔和的颜色和动画 -->
@@ -40,20 +40,21 @@
                         <!-- 事件列表容器 -->
                         <div class="space-y-6 relative">
                             <!-- 连续的时间线 -->
-                            <div class="absolute left-[25%] w-1 h-full bg-gray-600 z-10"></div>
-                            <!-- 使事件时间按最新的日期排序 -->
-                            @forelse ($events->sortByDesc('date') as $event)
+                            <div class="absolute left-[30%] w-1 h-full bg-gray-600 z-10"></div>
+                            <!-- 使事件时间按最新的日期排序，并限制显示6个 -->
+                            @php $latestEvents = $events->sortByDesc('date')->take(6); @endphp
+                            @forelse ($latestEvents as $event)
                                 <!-- 单个事件：卡片样式，带悬停效果 -->
-                                <div class="relative block items-baseline group hover:shadow-xl transition-shadow duration-300 bg-gray-100 rounded-md p-4">
+                                <div class="relative block items-baseline group hover:shadow-xl transition-shadow duration-300 bg-gray-100 rounded-md p-5">
                                     <!-- 日期部分：更清晰的排版 -->
                                     <div class="w-1/3 pr-8 text-left">
-                                        <span class="text-sm font-semibold text-gray-500">
+                                        <span class="text-sm font-semibold text-gray-500 p-10">
                                             {{ $event->date->format('Y-m-d') }}
                                         </span>
                                     </div>
 
                                     <!-- 时间线节点 -->
-                                    <div class="absolute left-[25%] w-4 h-4 bg-gray-600 rounded-full mt-0 transform translate-x-0    z-20"></div>
+                                    <div class="absolute left-[25%] w-4 h-4 bg-gray-600 rounded-full mt-0 transform translate-x-2"></div>
 
                                     <!-- 事件内容：卡片化，带描述截断 -->
                                     <div class="w-2/3 pl-10">
@@ -69,6 +70,21 @@
                                 <!-- 空状态：更友好的提示 -->
                                 <p class="text-center text-gray-500 py-6">暂无事件，请添加新事件！</p>
                             @endforelse
+                            
+                            <!-- 如果事件数量超过6个，显示"更多事件"按钮 -->
+                            @if($events->count() > 6)
+                                <div class="relative block items-baseline group">
+                                    <!-- 时间线节点 -->
+                                    <!-- <div class="absolute left-[25%] w-4 h-4 bg-gray-600 rounded-full mt-0 transform translate-x-2"></div> -->
+                                    
+                                    <!-- 更多事件按钮 -->
+                                    <div class="w-full text-center">
+                                        <a href="{{ route('events.index') }}" class="inline-block px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-md text-base font-bold text-gray-500 hover:text-blue-200 transition-colors duration-300">
+                                            查看更多事件
+                                        </a>
+                                    </div>
+                                </div>
+                            @endif
                         </div>
                     </div>    
                 <!-- 右侧：PDF 查看器 -->

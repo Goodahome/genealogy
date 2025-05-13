@@ -56,6 +56,15 @@ final class Person extends Model implements HasMedia
         'photo',
 
         'team_id',
+
+        'dob_lunar_year',
+        'dob_lunar_month',
+        'dob_lunar_day',
+        'dob_lunar_leap',
+        'dod_lunar_year',
+        'dod_lunar_month',
+        'dod_lunar_day',
+        'dod_lunar_leap',
     ];
 
     protected $appends = [
@@ -631,4 +640,81 @@ final class Person extends Model implements HasMedia
 
         return null;
     }
+    /**
+     * 获取格式化的农历出生日期
+     */
+    public function getLunarBirthFormattedAttribute(): ?string
+    {
+        if ($this->dob_lunar_year && $this->dob_lunar_month && $this->dob_lunar_day) {
+            $chineseMonths = [
+                1 => '正月', 2 => '二月', 3 => '三月', 4 => '四月', 
+                5 => '五月', 6 => '六月', 7 => '七月', 8 => '八月', 
+                9 => '九月', 10 => '十月', 11 => '冬月', 12 => '腊月'
+            ];
+            
+            $chineseDays = [
+                1 => '初一', 2 => '初二', 3 => '初三', 4 => '初四', 5 => '初五',
+                6 => '初六', 7 => '初七', 8 => '初八', 9 => '初九', 10 => '初十',
+                11 => '十一', 12 => '十二', 13 => '十三', 14 => '十四', 15 => '十五',
+                16 => '十六', 17 => '十七', 18 => '十八', 19 => '十九', 20 => '二十',
+                21 => '廿一', 22 => '廿二', 23 => '廿三', 24 => '廿四', 25 => '廿五',
+                26 => '廿六', 27 => '廿七', 28 => '廿八', 29 => '廿九', 30 => '三十'
+            ];
+            
+            // 转换年份为中文大写
+            $chineseYear = '';
+            $yearStr = (string)$this->dob_lunar_year;
+            $chineseNumbers = [
+                '0' => '零', '1' => '一', '2' => '二', '3' => '三', '4' => '四', 
+                '5' => '五', '6' => '六', '7' => '七', '8' => '八', '9' => '九'
+            ];
+            
+            for ($i = 0; $i < strlen($yearStr); $i++) {
+                $chineseYear .= $chineseNumbers[$yearStr[$i]];
+            }
+            
+            $month = $chineseMonths[$this->dob_lunar_month] ?? $this->dob_lunar_month.'月';
+            $day = $chineseDays[$this->dob_lunar_day] ?? $this->dob_lunar_day.'日';
+            $leapText = $this->dob_lunar_leap ? '闰' : '';
+            
+            return "{$chineseYear}年{$leapText}{$month}{$day}";
+        }
+        return null;
+    }
+    /**
+     * 获取格式化的农历死亡日期
+     */
+    protected function getLunarDeathFormattedAttribute(): ?string
+{
+    if ($this->dod_lunar_year && $this->dod_lunar_month && $this->dod_lunar_day) {
+        $chineseMonths = [
+            1 => '正月', 2 => '二月', 3 => '三月', 4 => '四月',
+            5 => '五月', 6 => '六月', 7 => '七月', 8 => '八月',
+            9 => '九月', 10 => '十月', 11 => '冬月', 12 => '腊月'
+        ];
+        $chineseDays = [
+            1 => '初一', 2 => '初二', 3 => '初三', 4 => '初四', 5 => '初五',
+            6 => '初六', 7 => '初七', 8 => '初八', 9 => '初九', 10 => '初十',
+            11 => '十一', 12 => '十二', 13 => '十三', 14 => '十四', 15 => '十五',
+            16 => '十六', 17 => '十七', 18 => '十八', 19 => '十九', 20 => '二十',
+            21 => '廿一', 22 => '廿二', 23 => '廿三', 24 => '廿四', 25 => '廿五',
+            26 => '廿六', 27 => '廿七', 28 => '廿八', 29 => '廿九', 30 => '三十'
+        ];
+        $chineseYear = '';
+        $yearStr = (string)$this->dod_lunar_year; // Fixed
+        $chineseNumbers = [
+            '0' => '零', '1' => '一', '2' => '二', '3' => '三', '4' => '四',
+            '5' => '五', '6' => '六', '7' => '七', '8' => '八', '9' => '九'
+        ];
+        for ($i = 0; $i < strlen($yearStr); $i++) {
+            $chineseYear .= $chineseNumbers[$yearStr[$i]];
+        }
+        $month = $chineseMonths[$this->dod_lunar_month] ?? $this->dod_lunar_month.'月';
+        $day = $chineseDays[$this->dod_lunar_day] ?? $this->dod_lunar_day.'日';
+        $leapText = $this->dod_lunar_leap ? '闰' : '';
+        return "{$chineseYear}年{$leapText}{$month}{$day}";
+    }
+    return null;
+}
+    
 }

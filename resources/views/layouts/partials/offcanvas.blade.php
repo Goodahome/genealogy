@@ -16,26 +16,19 @@
                 </div>
 
                 <div class="basis-1/2">
-                @auth
-                    @if (auth()->user()->currentTeam && auth()->user()->teamRole(auth()->user()->currentTeam))
+                    @auth
                         {{ auth()->user()->teamRole(auth()->user()->currentTeam)->name }}
-                    @else
-                        {{ __('auth.no_role') }}
-                    @endif
 
-                    <x-hr.narrow class="w-full h-1 my-1 bg-gray-100 border-0 rounded-sm max-md:mx-auto dark:bg-gray-700" />
+                        <x-hr.narrow class="w-full h-1 my-1 bg-gray-100 border-0 rounded-sm max-md:mx-auto dark:bg-gray-700" />
 
-                    @if (auth()->user()->currentTeam)
                         @foreach (auth()->user()->teamPermissions(auth()->user()->currentTeam) as $permission)
                             {{ $permission }}<br />
                         @endforeach
                     @else
-                        {{ __('auth.no_permissions') }}
-                    @endif
-                @else
-                    {{ __('auth.guest') }}
-                    <x-hr.narrow class="w-full h-1 my-1 bg-gray-100 border-0 rounded-sm max-md:mx-auto dark:bg-gray-700" />
-                @endauth
+                        {{ __('auth.guest') }}
+
+                        <x-hr.narrow class="w-full h-1 my-1 bg-gray-100 border-0 rounded-sm max-md:mx-auto dark:bg-gray-700" />
+                    @endauth
                 </div>
             </div>
         </div>

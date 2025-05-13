@@ -15,6 +15,17 @@ use Livewire\Form;
 final class ProfileForm extends Form
 {
     // -----------------------------------------------------------------------
+    // 农历出生日期
+    public $dob_year;
+    public $dob_month;
+    public $dob_day;
+    public $dob_leap = false;
+    
+    public $dod_year;
+    public $dod_month;
+    public $dod_day;
+    public $dod_leap = false;
+    
     public $firstname;
 
     public $surname;
@@ -45,6 +56,9 @@ final class ProfileForm extends Form
     }
 
     // -----------------------------------------------------------------------
+    
+
+    // -----------------------------------------------------------------------
     public function rules(): array
     {
         return [
@@ -72,6 +86,16 @@ final class ProfileForm extends Form
             'pob' => ['nullable', 'string', 'max:255'],
 
             'summary' => ['nullable', 'string', 'max:65535'],
+            
+            'dob_year' => ['nullable', 'integer', 'min:1900', 'max:2100'],
+            'dob_month' => ['nullable', 'integer', 'min:1', 'max:12'],
+            'dob_day' => ['nullable', 'integer', 'min:1', 'max:30'],
+            'dob_leap' => ['boolean'],
+            
+            'dod_year' => ['nullable', 'integer', 'min:1900', 'max:2100'],
+            'dod_month' => ['nullable', 'integer', 'min:1', 'max:12'],
+            'dod_day' => ['nullable', 'integer', 'min:1', 'max:30'],
+            'dod_leap' => ['boolean'],
         ];
     }
 
@@ -96,6 +120,16 @@ final class ProfileForm extends Form
             'pob' => __('person.pob'),
 
             'summary' => __('person.summary'),
+
+            'dob_year' => '农历出生年',
+            'dob_month' => '农历出生月',
+            'dob_day' => '农历出生日',
+            'dob_leap' => '闰月',
+            
+            'dod_year' => '农历死亡年',
+            'dod_month' => '农历死亡月',
+            'dod_day' => '农历死亡日',
+            'dod_leap' => '闰月',
         ];
     }
 }

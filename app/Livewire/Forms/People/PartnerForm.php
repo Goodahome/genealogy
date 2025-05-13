@@ -51,6 +51,12 @@ final class PartnerForm extends Form
 
     public $has_ended = false;
 
+    // 农历日期字段
+    public $dob_year;
+    public $dob_month;
+    public $dob_day;
+    public $dob_leap = false;
+
     // -----------------------------------------------------------------------
     #[Computed(persist: true, seconds: 3600, cache: true)]
     public function genders(): Collection
@@ -93,6 +99,12 @@ final class PartnerForm extends Form
             'date_end'   => ['nullable', 'date_format:Y-m-d', 'before_or_equal:today', 'after:date_start'],
             'is_married' => ['nullable', 'boolean'],
             'has_ended'  => ['nullable', 'boolean'],
+
+            // 农历日期验证规则
+            'dob_year' => ['nullable', 'integer', 'min:1900', 'max:2100'],
+            'dob_month' => ['nullable', 'integer', 'min:1', 'max:12'],
+            'dob_day' => ['nullable', 'integer', 'min:1', 'max:30'],
+            'dob_leap' => ['boolean'],
         ];
     }
 
@@ -101,6 +113,9 @@ final class PartnerForm extends Form
         return [
             'surname.required_without'   => __('validation.surname.required_without'),
             'person_id.required_without' => __('validation.person_id.required_without'),
+            'dob_year.required' => '请选择农历出生年份',
+            'dob_month.required' => '请选择农历出生月份',
+            'dob_day.required' => '请选择农历出生日期',
         ];
     }
 
@@ -126,6 +141,11 @@ final class PartnerForm extends Form
             'date_end'   => __('couple.date_end'),
             'is_married' => __('couple.is_married'),
             'has_ended'  => __('couple.has_ended'),
+
+            'dob_year' => '农历出生年',
+            'dob_month' => '农历出生月',
+            'dob_day' => '农历出生日',
+            'dob_leap' => '闰月',
         ];
     }
 }

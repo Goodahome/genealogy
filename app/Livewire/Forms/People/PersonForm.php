@@ -37,6 +37,17 @@ final class PersonForm extends Form
 
     public $photo;
 
+    // 农历日期字段
+    public $dob_year;
+    public $dob_month;
+    public $dob_day;
+    public $dob_leap = false;
+    
+    public $dod_year;
+    public $dod_month;
+    public $dod_day;
+    public $dod_leap = false;
+
     // -----------------------------------------------------------------------
     #[Computed(persist: true, seconds: 3600, cache: true)]
     public function genders(): Collection
@@ -72,12 +83,27 @@ final class PersonForm extends Form
             'pob' => ['nullable', 'string', 'max:255'],
 
             'photo' => ['nullable', 'string', 'max:255'],
+
+            // 农历日期验证规则
+            'dob_year' => ['nullable', 'integer', 'min:1900', 'max:2100'],
+            'dob_month' => ['nullable', 'integer', 'min:1', 'max:12'],
+            'dob_day' => ['nullable', 'integer', 'min:1', 'max:30'],
+            'dob_leap' => ['boolean'],
+            
+            'dod_year' => ['nullable', 'integer', 'min:1900', 'max:2100'],
+            'dod_month' => ['nullable', 'integer', 'min:1', 'max:12'],
+            'dod_day' => ['nullable', 'integer', 'min:1', 'max:30'],
+            'dod_leap' => ['boolean'],
         ];
     }
 
     public function messages(): array
     {
-        return [];
+        return [
+            'dob_year.required' => '请选择农历出生年份',
+            'dob_month.required' => '请选择农历出生月份',
+            'dob_day.required' => '请选择农历出生日期',
+        ];
     }
 
     public function validationAttributes(): array
@@ -96,6 +122,16 @@ final class PersonForm extends Form
             'pob' => __('person.pob'),
 
             'photo' => __('person.photo'),
+
+            'dob_year' => '农历出生年',
+            'dob_month' => '农历出生月',
+            'dob_day' => '农历出生日',
+            'dob_leap' => '闰月',
+            
+            'dod_year' => '农历死亡年',
+            'dod_month' => '农历死亡月',
+            'dod_day' => '农历死亡日',
+            'dod_leap' => '闰月',
         ];
     }
 }

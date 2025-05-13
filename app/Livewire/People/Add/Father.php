@@ -50,6 +50,12 @@ final class Father extends Component
 
         $this->fatherForm->person_id = null;
 
+        // 初始化农历出生日期
+        $this->fatherForm->dob_year = $this->person->dob_lunar_year;
+        $this->fatherForm->dob_month = $this->person->dob_lunar_month;
+        $this->fatherForm->dob_day = $this->person->dob_lunar_day;
+        $this->fatherForm->dob_leap = (bool)$this->person->dob_lunar_leap;
+
         $this->persons = Person::where('id', '!=', $this->person->id)
             ->where('sex', 'm')
             ->OlderThan($this->person->birth_year)
@@ -128,6 +134,11 @@ final class Father extends Component
                     'dob'       => $validated['dob'],
                     'pob'       => $validated['pob'],
                     'team_id'   => $this->person->team_id,
+                    // 保存农历日期字段
+                    'dob_lunar_year' => $validated['dob_year'] ?? null,
+                    'dob_lunar_month' => $validated['dob_month'] ?? null,
+                    'dob_lunar_day' => $validated['dob_day'] ?? null,
+                    'dob_lunar_leap' => $validated['dob_leap'] ?? false,
                 ]);
 
                 if ($this->photos) {
@@ -164,6 +175,11 @@ final class Father extends Component
         $this->fatherForm->yob !== null or
         $this->fatherForm->dob !== null or
         $this->fatherForm->pob !== null or
+
+        $this->fatherForm->dob_year !== $this->person->dob_lunar_year or
+        $this->fatherForm->dob_month !== $this->person->dob_lunar_month or
+        $this->fatherForm->dob_day !== $this->person->dob_lunar_day or
+        $this->fatherForm->dob_leap !== $this->person->dob_lunar_leap or
 
         $this->fatherForm->person_id;
     }

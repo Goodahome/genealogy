@@ -60,10 +60,42 @@
                         <x-ts-input wire:model="childForm.yob" id="yob" label="{{ __('person.yob') }} :" wire:dirty.class="bg-yellow-200 dark:text-black" autocomplete="yob" />
                     </div>
 
-                    {{-- dob --}}
+                    {{-- 替换原来的日期选择部分 --}}
+                    
+                    {{-- 原来的 dob 字段 --}}
+                    {{-- <x-ts-date wire:model="childForm.dob" id="dob" label="{{ __('person.dob') }} :" wire:dirty.class="bg-yellow-200 dark:text-black" format="YYYY-MM-DD" :max-date="now()"
+                            placeholder="{{ __('app.select') }} ..." /> --}}
+                    
+                    {{-- 新的农历日期选择器 --}}
                     <div class="col-span-6 md:col-span-3">
-                        <x-ts-date wire:model="childForm.dob" id="dob" label="{{ __('person.dob') }} :" wire:dirty.class="bg-yellow-200 dark:text-black" format="YYYY-MM-DD" :max-date="now()"
-                            placeholder="{{ __('app.select') }} ..." />
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('person.dob') }} (农历):</label>
+                        <div class="flex flex-wrap gap-2">
+                            <select wire:model="childForm.dob_year" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option value="">年</option>
+                                @for($year = 1900; $year <= 2100; $year++)
+                                    <option value="{{ $year }}">{{ $year }}年</option>
+                                @endfor
+                            </select>
+                            
+                            <select wire:model="childForm.dob_month" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option value="">月</option>
+                                @for($month = 1; $month <= 12; $month++)
+                                    <option value="{{ $month }}">{{ $month }}月</option>
+                                @endfor
+                            </select>
+                            
+                            <select wire:model="childForm.dob_day" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                <option value="">日</option>
+                                @for($day = 1; $day <= 30; $day++)
+                                    <option value="{{ $day }}">{{ $day }}日</option>
+                                @endfor
+                            </select>
+                            
+                            <div class="flex items-center">
+                                <input type="checkbox" id="dob_leap" wire:model="childForm.dob_leap" class="w-5 h-5 bg-gray-500 border-gray-500 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                                <label for="dob_leap" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">闰月</label>
+                            </div>
+                        </div>
                     </div>
 
                     {{-- pob --}}

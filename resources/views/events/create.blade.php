@@ -1,9 +1,7 @@
 <x-app-layout>
     <x-slot name="heading">创建事件</x-slot>
 
-    <div class="w _
-
-full p-4">
+    <div class="w-full p-4">
         <div class="bg-white rounded-sm shadow-md p-6 max-w-2xl mx-auto">
             <h2 class="text-xl font-semibold mb-4">添加新事件</h2>
             <form action="{{ route('events.store') }}" method="POST">
@@ -20,7 +18,9 @@ full p-4">
                     <label for="description" class="block text-sm font-medium text-gray-700">描述</label>
                     <textarea name="description" id="description" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm"></textarea>
                 </div>
-                <button type="submit" class="btn btn-primary">保存</button>
+                <div class="flex justify-end">
+                    <button type="submit" class="btn btn-primary bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded">保存</button>
+                </div>
             </form>
         </div>
     </div>
