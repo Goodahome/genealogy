@@ -42,10 +42,16 @@ final class YobValid implements DataAwareRule, ValidationRule
             if ($value != $this->data['dob_year']) {
                 $fail(__('person.yob_not_matching_dob', ['value' => $this->data['dob_year']]));
             }
-        } elseif (isset($this->data['dob']) && $this->data['dob']) {
+            // if ($value !== date('Y', strtotime((string) $this->data['dob']))) {
+            //     $fail(__('person.yob_not_matching_dob', ['value' => date('Y', strtotime((string) $this->data['dob']))]));
+            // }
+        } elseif (isset($this->data['dob'])) {
             // 原来的逻辑，处理公历日期
+            // if ($value !== date('Y', strtotime((string) $this->data['dob']))) {
+            //     $fail(__('person.yob_not_matching_dob', ['value' => date('Y', strtotime((string) $this->data['dob']))]));
+            // }
             if ($value !== date('Y', strtotime((string) $this->data['dob']))) {
-                $fail(__('person.yob_not_matching_dob', ['value' => date('Y', strtotime((string) $this->data['dob']))]));
+                $fail(__('person.yod_not_matching_dob', ['value' => $this->data['dob']]));
             }
         } elseif (isset($this->data['person'])) {
             if ($this->data['person']['dod_year']) {

@@ -52,10 +52,10 @@ final class Child extends Component
         $this->childForm->person_id = null;
 
         // 初始化农历出生日期
-        $this->childForm->dob_year = $this->person->dob_lunar_year;
-        $this->childForm->dob_month = $this->person->dob_lunar_month;
-        $this->childForm->dob_day = $this->person->dob_lunar_day;
-        $this->childForm->dob_leap = (bool)$this->person->dob_lunar_leap;
+        $this->childForm->dob_year = null;
+        $this->childForm->dob_month = null;
+        $this->childForm->dob_day = null;
+        $this->childForm->dob_leap = false;
 
         if ($this->person->sex === 'm') {
             $this->persons = Person::where('id', '!=', $this->person->id)

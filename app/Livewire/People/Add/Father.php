@@ -51,10 +51,10 @@ final class Father extends Component
         $this->fatherForm->person_id = null;
 
         // 初始化农历出生日期
-        $this->fatherForm->dob_year = $this->person->dob_lunar_year;
-        $this->fatherForm->dob_month = $this->person->dob_lunar_month;
-        $this->fatherForm->dob_day = $this->person->dob_lunar_day;
-        $this->fatherForm->dob_leap = (bool)$this->person->dob_lunar_leap;
+        $this->fatherForm->dob_year = null;
+        $this->fatherForm->dob_month = null;
+        $this->fatherForm->dob_day = null;
+        $this->fatherForm->dob_leap = false;
 
         $this->persons = Person::where('id', '!=', $this->person->id)
             ->where('sex', 'm')

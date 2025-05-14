@@ -63,11 +63,13 @@
 
                     {{-- 替换原来的日期选择部分 --}}
                     
-                    {{-- 原来的 dob 字段 --}}
-                    {{-- <x-ts-date wire:model="partnerForm.dob" id="dob" label="{{ __('person.dob') }} :" wire:dirty.class="bg-yellow-200 dark:text-black" format="YYYY-MM-DD" :max-date="now()"
-                            placeholder="{{ __('app.select') }} ..." /> --}}
+                    {{-- 阳历日期选择器 --}}
+                    <div class="col-span-6 md:col-span-3">
+                        <x-ts-date wire:model="partnerForm.dob" id="dob" label="{{ __('person.dob') }} (阳历):" wire:dirty.class="bg-yellow-200 dark:text-black" format="YYYY-MM-DD" :max-date="now()"
+                            placeholder="{{ __('app.select') }} ..." />
+                    </div>
                     
-                    {{-- 新的农历日期选择器 --}}
+                    {{-- 农历日期选择器 --}}
                     <div class="col-span-6 md:col-span-3">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('person.dob') }} (农历):</label>
                         <div class="flex flex-wrap gap-2">

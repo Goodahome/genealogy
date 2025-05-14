@@ -59,10 +59,10 @@ final class Partner extends Component
         $this->partnerForm->has_ended  = false;
 
         // 初始化农历出生日期
-        $this->partnerForm->dob_year = $this->person->dob_lunar_year;
-        $this->partnerForm->dob_month = $this->person->dob_lunar_month;
-        $this->partnerForm->dob_day = $this->person->dob_lunar_day;
-        $this->partnerForm->dob_leap = (bool)$this->person->dob_lunar_leap;
+        $this->partnerForm->dob_year = null;
+        $this->partnerForm->dob_month = null;
+        $this->partnerForm->dob_day = null;
+        $this->partnerForm->dob_leap = false;
 
         $this->persons = Person::PartnerOffset($this->person->birth_year)
             ->where('id', '!=', $this->person->id)

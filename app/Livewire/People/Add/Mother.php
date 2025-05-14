@@ -51,10 +51,10 @@ final class Mother extends Component
         $this->motherForm->person_id = null;
 
         // 初始化农历出生日期
-        $this->motherForm->dob_year = $this->person->dob_lunar_year;
-        $this->motherForm->dob_month = $this->person->dob_lunar_month;
-        $this->motherForm->dob_day = $this->person->dob_lunar_day;
-        $this->motherForm->dob_leap = (bool)$this->person->dob_lunar_leap;
+        $this->motherForm->dob_year = null;
+        $this->motherForm->dob_month = null;
+        $this->motherForm->dob_day = null;
+        $this->motherForm->dob_leap = false;
 
         $this->persons = Person::where('id', '!=', $this->person->id)
             ->where('sex', 'f')

@@ -42,6 +42,12 @@ final class Person extends Component
         $this->personForm->pob = null;
 
         $this->personForm->photo = null;
+
+        // 初始化农历出生日期
+        $this->personForm->dob_year = null;
+        $this->personForm->dob_month = null;
+        $this->personForm->dob_day = null;
+        $this->personForm->dob_leap = false;
     }
 
     public function deleteUpload(array $content): void
@@ -144,6 +150,12 @@ final class Person extends Component
 
         $this->personForm->yob !== null or
         $this->personForm->dob !== null or
+
+        $this->personForm->dob_year !== $this->person->dob_lunar_year or
+        $this->personForm->dob_month !== $this->person->dob_lunar_month or
+        $this->personForm->dob_day !== $this->person->dob_lunar_day or
+        $this->personForm->dob_leap !== $this->person->dob_lunar_leap or
+
         $this->personForm->pob !== null;
     }
 

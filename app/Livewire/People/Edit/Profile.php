@@ -45,11 +45,6 @@ final class Profile extends Component
         $this->profileForm->dob_day = $this->person->dob_lunar_day;
         $this->profileForm->dob_leap = (bool)$this->person->dob_lunar_leap;
 
-        // 初始化农历死亡日期
-        $this->profileForm->dod_year = $this->person->dod_lunar_year;
-        $this->profileForm->dod_month = $this->person->dod_lunar_month;
-        $this->profileForm->dod_day = $this->person->dod_lunar_day;
-        $this->profileForm->dod_leap = (bool)$this->person->dod_lunar_leap;
     }
 
     public function saveProfile(): void
@@ -72,10 +67,7 @@ final class Profile extends Component
                 'dob_lunar_month' => $validated['dob_month'] ?? null,
                 'dob_lunar_day' => $validated['dob_day'] ?? null,
                 'dob_lunar_leap' => $validated['dob_leap'] ?? false,
-                'dod_lunar_year' => $validated['dod_year'] ?? null,
-                'dod_lunar_month' => $validated['dod_month'] ?? null,
-                'dod_lunar_day' => $validated['dod_day'] ?? null,
-                'dod_lunar_leap' => $validated['dod_leap'] ?? false,
+                
             ]);
 
             $this->toast()->success(__('app.save'), __('app.saved'))->flash()->send();
@@ -108,10 +100,7 @@ final class Profile extends Component
         $this->profileForm->dob_month !== $this->person->dob_lunar_month or
         $this->profileForm->dob_day !== $this->person->dob_lunar_day or
         $this->profileForm->dob_leap !== $this->person->dob_lunar_leap or
-        $this->profileForm->dod_year !== $this->person->dod_lunar_year or
-        $this->profileForm->dod_month !== $this->person->dod_lunar_month or
-        $this->profileForm->dod_day !== $this->person->dod_lunar_day or
-        $this->profileForm->dod_leap !== $this->person->dod_lunar_leap or
+        
 
         $this->profileForm->summary !== $this->person->summary;
     }

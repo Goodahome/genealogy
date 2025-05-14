@@ -58,9 +58,13 @@
                 </div>
 
                 {{-- dob --}}
+                <div class="col-span-6 md:col-span-3">
+                    <x-ts-date wire:model="profileForm.dob" id="dob" label="{{ __('person.dob') }} (阳历):" wire:dirty.class="bg-yellow-200 dark:text-black" format="YYYY-MM-DD" :max-date="now()"
+                        placeholder="{{ __('app.select') }} ..." />
+                </div>
                 {{-- 新的农历日期选择器 --}}
                 <div class="col-span-6">
-                    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('person.dob') }} (农历):</label>
+                    <label class="block mb-2 text-sm font-bold text-gray-700 dark:text-white">{{ __('person.dob') }} (农历):</label>
                     <div class="flex flex-wrap gap-2">
                         <select wire:model="profileForm.dob_year" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="">年</option>

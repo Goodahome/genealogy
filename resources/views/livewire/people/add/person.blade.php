@@ -75,13 +75,14 @@
 
                 {{-- dob --}}
                 <div class="col-span-6 md:col-span-3">
-                    {{-- 替换原来的日期选择部分 --}}
+                    {{-- 阳历日期选择器 --}}
+                    <div class="col-span-6 md:col-span-3">
+                        <x-ts-date wire:model="personForm.dob" id="dob" label="{{ __('person.dob') }} (阳历):" wire:dirty.class="bg-yellow-200 dark:text-black" format="YYYY-MM-DD" :max-date="now()"
+                            placeholder="{{ __('app.select') }} ..." />
+                    </div>
                     
-                    {{-- 原来的 dob 字段 --}}
-                    {{-- <x-ts-date wire:model="personForm.dob" id="dob" label="{{ __('person.dob') }} :" wire:dirty.class="bg-yellow-200 dark:text-black" format="YYYY-MM-DD" :max-date="now()" placeholder="{{ __('app.select') }} ..." /> --}}
-                    
-                    {{-- 新的农历日期选择器 --}}
-                    <div class="col-span-6">
+                    {{-- 农历日期选择器 --}}
+                    <div class="col-span-6 md:col-span-3">
                         <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">{{ __('person.dob') }} (农历):</label>
                         <div class="flex flex-wrap gap-2">
                             <select wire:model="personForm.dob_year" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
@@ -91,6 +92,7 @@
                                 @endfor
                             </select>
                             
+                            <!-- 其他选择器保持不变 -->
                             <select wire:model="personForm.dob_month" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                 <option value="">月</option>
                                 @for($month = 1; $month <= 12; $month++)

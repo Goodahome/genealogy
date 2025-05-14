@@ -61,8 +61,8 @@
                     {{-- 替换原来的日期选择部分 --}}
                     
                     {{-- 原来的 dob 字段 --}}
-                    {{-- <x-ts-date wire:model="motherForm.dob" id="dob" label="{{ __('person.dob') }} :" wire:dirty.class="bg-yellow-200 dark:text-black" format="YYYY-MM-DD" :max-date="now()"
-                            placeholder="{{ __('app.select') }} ..." /> --}}
+                    <x-ts-date wire:model="motherForm.dob" id="dob" label="{{ __('person.dob') }} :" wire:dirty.class="bg-yellow-200 dark:text-black" format="YYYY-MM-DD" :max-date="now()"
+                            placeholder="{{ __('app.select') }} ..." /> 
                     
                     {{-- 新的农历日期选择器 --}}
                     <div class="col-span-6 md:col-span-3">

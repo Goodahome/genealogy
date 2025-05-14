@@ -89,30 +89,31 @@
                         <x-ts-icon icon="tabler.{{ $person->sex === 'm' ? 'gender-male' : 'gender-female' }}" class="inline-block size-5" />
                     </td>
                 </tr>
-                {{-- 修改显示农历日期的部分 --}}
                 <tr class="align-top border-b-2 h-8">
                     <td class="pr-2 border-r-2">{{ __('person.dob') }}</td>
                     <td class="pl-2 break-words max-w-96">
-                        @if($person->dob_lunar_year)
+                        @if($person->dob && $person->dob_lunar_year)
+                            {{ $person->birth_formatted }} (阳历)<br>
                             {{ $person->lunar_birth_formatted }} (农历)
-                        @else
-                            {{ $person->birth_formatted }}
+                        @elseif($person->dob)
+                            {{ $person->birth_formatted }} (阳历)
+                        @elseif($person->dob_lunar_year)
+                            {{ $person->lunar_birth_formatted }} (农历)
                         @endif
                     </td>
                 </tr>
-                <tr class="align-top border-b-2 h-8">
-                    <td class="pr-2 border-r-2">{{ __('person.pob') }}</td>
-                    <td class="pl-2 break-words max-w-96">{{ $person->pob }}</td>
-                </tr>
-
+                
                 @if ($person->isDeceased())
                     <tr class="align-top">
                         <td class="pr-2 border-r-2">{{ __('person.dod') }}</td>
                         <td class="pl-2">
-                            @if($person->dod_lunar_year)
+                            @if($person->dod && $person->dod_lunar_year)
+                                {{ $person->death_formatted }} (阳历)<br>
                                 {{ $person->lunar_death_formatted }} (农历)
-                            @else
-                                {{ $person->death_formatted }}
+                            @elseif($person->dod)
+                                {{ $person->death_formatted }} (阳历)
+                            @elseif($person->dod_lunar_year)
+                                {{ $person->lunar_death_formatted }} (农历)
                             @endif
                             @if ($person->isDeathdayToday())
                                 <x-ts-icon icon="tabler.cake" class="inline-block size-5 text-red-600 dark:text-red-400" />

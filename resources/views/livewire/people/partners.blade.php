@@ -36,7 +36,7 @@
 
                         @if (auth()->user()->hasPermission('couple:delete') and $person->couples->count() > 0)
                             <hr />
-
+                            <!-- 配偶查询显示部分 -->
                             @foreach ($person->couples->sortBy('date_start') as $couple)
                                 <x-ts-dropdown.items class="text-red-600! dark:text-red-400!" wire:click="confirm({{ $couple->id }} , '{{ $couple->name }}')"
                                     title="{{ __('person.delete_relationship') }}">
