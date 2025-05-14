@@ -17,7 +17,7 @@
                     {{ $sibling->name }}
                 </x-link>
                 <x-ts-icon icon="tabler.{{ $sibling->sex === 'm' ? 'gender-male' : 'gender-female' }}" class="inline-block size-5" />
-                <span class="text-yellow-500">{{ $sibling->type }}</span>
+                <!-- <span class="text-yellow-500">{{ $sibling->type }}</span> -->
             </p>
         @endforeach
     @else

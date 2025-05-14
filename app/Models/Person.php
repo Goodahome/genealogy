@@ -22,9 +22,12 @@ use Spatie\Activitylog\Models\Activity;
 use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
+use Korridor\LaravelHasManyMerged\HasManyMerged;
+use Korridor\LaravelHasManyMerged\HasManyMergedRelation;
 
 final class Person extends Model implements HasMedia
 {
+    use HasManyMergedRelation;
     use InteractsWithMedia;
     use LogsActivity;
     use SoftDeletes;
@@ -262,20 +265,14 @@ final class Person extends Model implements HasMedia
     }
 
     /* returns OWN NATURAL CHILDREN (n Person) based on father_id OR mother_id, ordered by dob */
-    public function children(): HasMany
+    public function children(): HasManyMerged
     {
-        $fatherChildren = $this->hasMany(self::class, 'father_id');
-        $motherChildren = $this->hasMany(self::class, 'mother_id');
-
-        return $fatherChildren->union($motherChildren->getQuery())->orderBy('dob');
+        return $this->HasManyMerged(self::class, ['father_id', 'mother_id'])->orderBy('dob');
     }
 
-    public function children_with_children(): HasMany // only used in family chart
+    public function children_with_children(): HasManyMerged // only used in family chart
     {
-        $fatherChildrenWithChildren = $this->hasMany(self::class, 'father_id')->with('children');
-        $motherChildrenWithChildren = $this->hasMany(self::class, 'mother_id')->with('children');
-
-        return $fatherChildrenWithChildren->union($motherChildrenWithChildren->getQuery())->orderBy('dob');
+        return $this->HasManyMerged(self::class, ['father_id', 'mother_id'])->with('children')->orderBy('dob');
     }
 
     /* returns ALL NATURAL CHILDREN (n Person) (OWN + CURRENT PARTNER), ordered by type, birthyear */
@@ -321,12 +318,9 @@ final class Person extends Model implements HasMedia
     }
 
     /* returns ALL PARTNERSHIPS (n Couple) related to the person, ordered by date_start 配偶方法 */
-    public function couples()
+    public function couples(): HasManyMerged
     {
-        $person_1 = $this->hasMany(Couple::class, 'person1_id')->with(['person_1', 'person_2']);
-        $person_2 = $this->hasMany(Couple::class, 'person2_id')->with(['person_1', 'person_2']);
-
-        return $person_1->union($person_2->getQuery());
+        return $this->HasManyMerged(Couple::class, ['person1_id', 'person2_id'])->with(['person_1', 'person_2']);
     }
 
     /* returns ALL METADATA (n PersonMetadata) related to the person */
