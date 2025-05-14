@@ -109,8 +109,29 @@ class EventController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    /**
+     * 删除指定事件
+     */
+    public function destroy(Event $event)
     {
-        //
+        // 检查用户是否已登录
+        if (!Auth::check()) {
+            return redirect()->route('login');
+        }
+        
+        // 检查权限
+        if (!Auth::user()->hasPermission('event:delete')) {
+            abort(403, '您没有权限执行此操作');
+        }
+        
+        // 检查事件是否属于当前团队
+        if ($event->team_id !== Auth::user()->currentTeam->id) {
+            abort(403, '您无权删除其他团队的事件');
+        }
+        
+        // 删除事件
+        $event->delete();
+        
+        return redirect()->route('events.index')->with('success', '事件已成功删除');
     }
 }

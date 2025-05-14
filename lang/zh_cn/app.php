@@ -8,6 +8,7 @@ return [
     'dependencies'     => '依赖',
     'help'             => '帮助',
     'home'             => '主页',
+    'events'           => '家族事件',
     'menu'             => '菜单',
     'privacy_policy'   => '隐私政策',
     'session'          => '会话',

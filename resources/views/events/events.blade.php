@@ -41,12 +41,26 @@
 
                         <!-- 事件内容：卡片化，带描述截断 -->
                         <div class="w-2/3 pl-10">
-                            <h3 class="text-base font-bold text-gray-500 group-hover:text-blue-200 transition-colors duration-300">
-                                {{ $event->title }}
-                            </h3>
-                            <p class="text-sm tracking-widest text-gray-600 line-clamp-2">
-                                {{ $event->description ?? '暂无描述' }}
-                            </p>
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <h3 class="text-base font-bold text-gray-500 group-hover:text-blue-200 transition-colors duration-300">
+                                        {{ $event->title }}
+                                    </h3>
+                                    <p class="text-sm tracking-widest text-gray-600 line-clamp-2">
+                                        {{ $event->description ?? '暂无描述' }}
+                                    </p>
+                                </div>
+                                
+                                @if (auth()->user()->hasPermission('event:delete'))
+                                    <form action="{{ route('events.destroy', $event->id) }}" method="POST" onsubmit="return confirm('确定要删除此事件吗？');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-500 hover:text-red-700 transition-colors duration-300">
+                                            <x-ts-icon icon="tabler.trash" class="size-5" />
+                                        </button>
+                                    </form>
+                                @endif
+                            </div>
                         </div>
                     </div>
                 @empty

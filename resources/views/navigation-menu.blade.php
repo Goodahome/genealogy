@@ -28,12 +28,20 @@
                         <x-ts-icon icon="tabler.cake" class="mr-1 size-5" />
                         {{ __('birthday.birthdays') }}
                     </x-nav-link>
-
+                </div>
+                <div class="flex items-center gap-5">
+                    <x-nav-link href="{{ route('events.index') }}" :active="request()->routeIs('events.index')">
+                        <x-ts-icon icon="tabler.calendar-event" class="mr-1 size-5" />
+                        {{ __('app.events') }}
+                    </x-nav-link>
+                </div>
+                <div class="flex items-center gap-5">
                     <x-nav-link href="{{ route('help') }}" :active="request()->routeIs('help')">
                         <x-ts-icon icon="tabler.help" class="mr-1 size-5" />
                         {{ __('app.help') }}
                     </x-nav-link>
                 </div>
+                
             </div>
         </div>
 

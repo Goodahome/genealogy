@@ -33,6 +33,14 @@ Route::middleware([
         Route::put('/teams/{team}/transfer-ownership', 'transferOwnership')->name('teams.transfer-ownership');
     });
 
+    // 添加 events 相关路由
+    Route::controller(App\Http\Controllers\EventController::class)->group(function (): void {
+        Route::get('/events', 'index')->name('events');
+        Route::get('/events/create', 'create')->name('events.create');
+        Route::post('/events', 'store')->name('events.store');
+        Route::delete('/events/{event}', 'destroy')->name('events.destroy');
+    });
+
     // -----------------------------------------------------------------------------------
     // pages
     // -----------------------------------------------------------------------------------
