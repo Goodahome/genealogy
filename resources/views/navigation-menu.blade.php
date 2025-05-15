@@ -1,4 +1,7 @@
-<nav x-data="{ open: false }" class="border-b border-gray-100 bg-neutral-200 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-200">
+<nav x-data="{ open: false }" 
+     class="border-b border-gray-100 bg-neutral-200 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-200"
+     x-bind:class="{'fixed inset-0 z-50 overflow-y-auto': open, 'relative': !open}"
+     x-on:scroll.window="if(open) $event.preventDefault()">
     {{-- primary navigation menu --}}
     <div class="flex gap-5 px-2 min-h-16">
         <div class="flex grow gap-5">
@@ -209,28 +212,6 @@
 
     {{-- responsive navigation menu --}}
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden md:hidden">
-        <div class="space-y-1 border-t border-gray-200">
-            <x-nav-link-responsive href="{{ route('home') }}" :active="request()->routeIs('home')">
-                <x-ts-icon icon="tabler.home" class="inline-block mr-1 size-5" />
-                {{ __('app.home') }}
-            </x-nav-link-responsive>
-
-            <x-nav-link-responsive href="{{ route('people.search') }}" :active="request()->routeIs('people.search')">
-                <x-ts-icon icon="tabler.search" class="inline-block mr-1 size-5" />
-                {{ __('app.search') }}
-            </x-nav-link-responsive>
-
-            <x-nav-link-responsive href="{{ route('people.birthdays') }}" :active="request()->routeIs('people.birthdays')">
-                <x-ts-icon icon="tabler.cake" class="inline-block mr-1 size-5" />
-                {{ __('birthday.birthdays') }}
-            </x-nav-link-responsive>
-
-            <x-nav-link-responsive href="{{ route('help') }}" :active="request()->routeIs('help')">
-                <x-ts-icon icon="tabler.help" class="inline-block mr-1 size-5" />
-                {{ __('app.help') }}
-            </x-nav-link-responsive>
-        </div>
-
         @guest
             <div class="space-y-1 border-t border-gray-200">
                 <x-nav-link-responsive href="{{ route('login') }}" :active="request()->routeIs('login')">

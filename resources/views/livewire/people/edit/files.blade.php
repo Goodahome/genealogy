@@ -18,7 +18,7 @@
     <div class="p-2 print:hidden">
         {{-- source --}}
         <div class="mb-3">
-            <x-ts-textarea id="source" wire:model="source" label="{{ __('person.source') }} :" placeholder="{{ __('person.source_hint') }} ..." maxlength="1024" count autofocus />
+            <x-ts-textarea id="source" wire:model="source" label="{{ __('person.source') }} :" placeholder="{{ __('person.source_hint') }} ..." maxlength="10240" count autofocus />
         </div>
 
         {{-- source_date --}}

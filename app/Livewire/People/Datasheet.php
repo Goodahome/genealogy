@@ -23,7 +23,7 @@ final class Datasheet extends Component
     public function mount(): void
     {
         // Load image files for the person (webp format), returning only filenames with extensions
-        $this->images = collect(File::glob(storage_path("app/public/photos/{$this->person->team_id}/{$this->person->id}_*.webp")))
+        $this->images = collect(File::glob(storage_path("app/public/photos/{$this->person->team_id}/{$this->person->id}_*.{webp,gif}"), GLOB_BRACE))
             ->map(fn ($path): string => basename((string) $path)) // Extract filename with extension
             ->toArray();
 

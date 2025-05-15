@@ -154,10 +154,11 @@ final class Photos extends Component
     private function getPersonPhotos(): Finder
     {
         $teamId = $this->person->team_id;
-
+        
+        // 修改查找器以支持多种图片格式
         return Finder::create()
             ->in(public_path("storage/photos/{$teamId}"))
-            ->name("{$this->person->id}_*.webp");
+            ->name("{$this->person->id}_*.{webp,gif}"); // 支持webp和gif格式
     }
 
     /**
@@ -166,16 +167,35 @@ final class Photos extends Component
     private function mapPhotoData(SplFileInfo $file): array
     {
         $teamId = $this->person->team_id;
-
+        $filename = $file->getFilename();
+        $extension = $file->getExtension();
+        
+        // 根据文件扩展名确定正确的URL路径
+        $urlPath = "photos-384/{$teamId}/{$filename}";
+        $urlOriginalPath = "photos/{$teamId}/{$filename}";
+        
         return [
-            'name'          => $file->getFilename(),
-            'name_download' => "{$this->person->name} - {$file->getFilename()}",
-            'extension'     => $file->getExtension(),
+            'name'          => $filename,
+            'name_download' => "{$this->person->name} - {$filename}",
+            'extension'     => $extension,
             'size'          => Number::fileSize($file->getSize(), 2),
             'path'          => $file->getPath(),
-            'url'           => Storage::url("photos-384/{$teamId}/{$file->getFilename()}"),
-            'url_original'  => Storage::url("photos/{$teamId}/{$file->getFilename()}"),
+            'url'           => Storage::url($urlPath),
+            'url_original'  => Storage::url($urlOriginalPath),
         ];
+    }
+
+    /**
+     * Set a new primary photo if the current one is deleted.
+     */
+    private function setNewPrimaryPhoto(): void
+    {
+        // 修改以支持多种图片格式
+        $files = File::glob(public_path("storage/photos/{$this->person->team_id}/{$this->person->id}_*.{webp,gif}"), GLOB_BRACE);
+    
+        $newPrimary = $files ? basename((string) $files[0]) : null;
+    
+        $this->person->update(['photo' => $newPrimary]);
     }
 
     /**
@@ -196,17 +216,5 @@ final class Photos extends Component
         foreach (config('app.photo_folders') as $folder) {
             Storage::disk($folder)->delete("{$teamId}/{$photo}");
         }
-    }
-
-    /**
-     * Set a new primary photo if the current one is deleted.
-     */
-    private function setNewPrimaryPhoto(): void
-    {
-        $files = File::glob(public_path("storage/photos/{$this->person->team_id}/{$this->person->id}_*.webp"));
-
-        $newPrimary = $files ? basename((string) $files[0]) : null;
-
-        $this->person->update(['photo' => $newPrimary]);
     }
 }

@@ -150,6 +150,7 @@ return [
     ],
 
     'image_upload' => [
+        // 'max_size'      => 10240,
         'max_width'     => (int) env('IMAGE_UPLOAD_MAX_WIDTH', 600),
         'max_height'    => (int) env('IMAGE_UPLOAD_MAX_HEIGHT', 800),
         'quality'       => (int) env('IMAGE_UPLOAD_QUALITY', 80),
