@@ -116,6 +116,11 @@ Route::middleware([
     });
 });
 
+// 古籍管理路由
+Route::middleware(['auth:sanctum', 'verified'])->group(function () {
+    Route::resource('ancient-text', AncientTextController::class);
+});
+
 // -----------------------------------------------------------------------------------
 // set application language in session
 // actual language switching wil be handled by App\Http\Middleware\Localization::class

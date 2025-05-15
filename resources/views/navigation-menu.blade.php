@@ -39,6 +39,12 @@
                     </x-nav-link>
                 </div>
                 <div class="flex items-center gap-5">
+                    <x-ts-dropdown.items href="{{ route('ancient-text.index') }}">
+                        <x-ts-icon icon="tabler.book" class="mr-2" />
+                        {{ __('app.ancient_texts') }}
+                    </x-ts-dropdown.items>
+                </div>
+                <div class="flex items-center gap-5">
                     <x-nav-link href="{{ route('help') }}" :active="request()->routeIs('help')">
                         <x-ts-icon icon="tabler.help" class="mr-1 size-5" />
                         {{ __('app.help') }}
