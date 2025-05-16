@@ -159,7 +159,7 @@ return [
     'save' => '保存',
     'pdf_viewer' => '家族族谱',
     'events' => '家族事件',
-    'ancient_texts' => '古籍管理',
+    'ancient_texts' => '古籍',
     'create_ancient_text' => '创建古籍',
     'edit_ancient_text' => '编辑古籍',
     'title' => '标题',
@@ -172,4 +172,7 @@ return [
     'created_successfully' => '创建成功',
     'updated_successfully' => '更新成功',
     'deleted_successfully' => '删除成功',
+    'back' => '返回',
+    'edit' => '编辑',
+    'actions' => '操作'
 ];

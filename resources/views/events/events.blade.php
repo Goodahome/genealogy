@@ -2,10 +2,10 @@
     <x-slot name="heading">事件列表</x-slot>
 
     <div class="w-full p-4">
-        <div class="rounded-lg p-6 max-w-4xl mx-auto">
+        <div class="rounded-lg p-6 max-w-3xl mx-auto">
             <!-- 头部区域：更现代的标题和按钮 -->
             <div class="flex justify-between items-center mb-6">
-                <h2 class="text-2xl font-bold text-gray-800">所有事件</h2>
+                <h2 class="text-2xl font-bold text-gray-800 transform translate-x-5">所有事件</h2>
                 @if (auth()->user()->hasPermission('event:create'))
                     <a href="{{ route('events.create') }}" 
                        class="px-4 py-2 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700 transition duration-300 ease-in-out">
@@ -23,30 +23,30 @@
 
             <!-- 事件列表容器 -->
             <div class="space-y-6 relative">
-                <!-- 连续的时间线 -->
-                <div class="absolute left-[30%] w-1 h-full bg-gray-600 z-10"></div>
+                <!-- 连续的时间线 - 穿透整个页面 -->
+                <div class="absolute left-1 w-1 bg-gray-600 z-10" style="top: -150px; bottom: -100px;"></div>
                 <!-- 使事件时间按最新的日期排序 -->
                 @forelse ($events->sortByDesc('date') as $event)
                     <!-- 单个事件：卡片样式，带悬停效果 -->
-                    <div class="relative block items-baseline group hover:shadow-xl transition-shadow duration-300 bg-gray-100 rounded-md p-5">
+                    <div class="relative block items-baseline group duration-300 bg-gray-100 rounded-md p-5 pl-8">
+                        <!-- 时间线节点 - 移到左侧 -->
+                        <div class="absolute left-0 w-5 h-5 bg-gray-600 rounded-full mt-2 transform -translate-x-2"></div>
+
                         <!-- 日期部分：更清晰的排版 -->
-                        <div class="w-1/3 pr-8 text-left">
-                            <span class="text-sm font-semibold text-gray-500 p-10">
+                        <div class="w-full pr-8 text-left">
+                            <span class="text-sm font-semibold text-gray-500 break-words">
                                 {{ $event->date->format('Y-m-d') }}
                             </span>
                         </div>
 
-                        <!-- 时间线节点 -->
-                        <div class="absolute left-[25%] w-4 h-4 bg-gray-600 rounded-full mt-0 transform translate-x-2"></div>
-
                         <!-- 事件内容：卡片化，带描述截断 -->
-                        <div class="w-2/3 pl-10">
+                        <div class="w-full mt-2">
                             <div class="flex justify-between items-start">
-                                <div>
-                                    <h3 class="text-base font-bold text-gray-500 group-hover:text-blue-200 transition-colors duration-300">
+                                <div class="w-full pr-8">
+                                    <h3 class="text-base font-bold text-gray-500 group-hover:text-blue-200 transition-colors duration-300 break-words">
                                         {{ $event->title }}
                                     </h3>
-                                    <p class="text-sm tracking-widest text-gray-600 line-clamp-2">
+                                    <p class="text-sm tracking-widest text-gray-600 line-clamp-2 break-words whitespace-normal">
                                         {{ $event->description ?? '暂无描述' }}
                                     </p>
                                 </div>

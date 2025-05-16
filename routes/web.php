@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AncientTextController;
 
 // -----------------------------------------------------------------------------------
 // frontend routes
@@ -119,6 +120,7 @@ Route::middleware([
 // 古籍管理路由
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('ancient-text', AncientTextController::class);
+    Route::post('/ancient-text/preview', [AncientTextController::class, 'preview'])->name('ancient-text.preview');
 });
 
 // -----------------------------------------------------------------------------------

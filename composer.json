@@ -26,7 +26,8 @@
         "spatie/laravel-medialibrary": "^11.12",
         "stefangabos/world_countries": "^2.9",
         "stevebauman/location": "^7.5",
-        "tallstackui/tallstackui": "^2.5"
+        "tallstackui/tallstackui": "^2.5",
+        "tecnickcom/tcpdf": "^6.9"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.15",
