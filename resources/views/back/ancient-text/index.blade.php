@@ -16,10 +16,12 @@
                     </div>
 
                     <div class="flex-1 grow max-w-full text-end min-w-max">
-                        <x-ts-button href="{{ route('ancient-text.create') }}" color="emerald" class="text-sm text-white">
-                            <x-ts-icon icon="tabler.circle-plus" class="size-5" />
-                            {{ __('app.create') }}
-                        </x-ts-button>
+                        @if(auth()->user()->hasTeamPermission(auth()->user()->currentTeam, 'ancient-text:create'))
+                            <x-ts-button href="{{ route('ancient-text.create') }}" color="emerald" class="text-sm text-white">
+                                <x-ts-icon icon="tabler.circle-plus" class="size-5" />
+                                {{ __('app.create') }}
+                            </x-ts-button>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -47,16 +49,22 @@
                                         <x-ts-button href="{{ route('ancient-text.show', $text->id) }}" color="primary" class="text-sm">
                                             <x-ts-icon icon="tabler.eye" class="size-5" />
                                         </x-ts-button>
-                                        <x-ts-button href="{{ route('ancient-text.edit', $text->id) }}" color="yellow" class="text-sm">
-                                            <x-ts-icon icon="tabler.edit" class="size-5" />
-                                        </x-ts-button>
-                                        <form action="{{ route('ancient-text.destroy', $text->id) }}" method="POST" class="inline">
-                                            @csrf
-                                            @method('DELETE')
-                                            <x-ts-button type="submit" color="red" class="text-sm" onclick="return confirm('{{ __('app.confirm_delete') }}')">
-                                                <x-ts-icon icon="tabler.trash" class="size-5" />
+                                        
+                                        @if(auth()->user()->hasTeamPermission(auth()->user()->currentTeam, 'ancient-text:update'))
+                                            <x-ts-button href="{{ route('ancient-text.edit', $text->id) }}" color="yellow" class="text-sm">
+                                                <x-ts-icon icon="tabler.edit" class="size-5" />
                                             </x-ts-button>
-                                        </form>
+                                        @endif
+                                        
+                                        @if(auth()->user()->hasTeamPermission(auth()->user()->currentTeam, 'ancient-text:delete'))
+                                            <form action="{{ route('ancient-text.destroy', $text->id) }}" method="POST" class="inline">
+                                                @csrf
+                                                @method('DELETE')
+                                                <x-ts-button type="submit" color="red" class="text-sm" onclick="return confirm('{{ __('app.confirm_delete') }}')">
+                                                    <x-ts-icon icon="tabler.trash" class="size-5" />
+                                                </x-ts-button>
+                                            </form>
+                                        @endif
                                     </td>
                                 </tr>
                             @endforeach

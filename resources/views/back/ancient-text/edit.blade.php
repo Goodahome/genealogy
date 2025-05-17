@@ -35,15 +35,13 @@
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                         <div>
-                            <x-ts-input type="number" name="volume" label="{{ __('app.volume') }}" value="{{ $text->volume }}" min="1" required />
+                            <x-ts-input type="text" name="volume" label="{{ __('app.volume') }}" value="{{ $text->volume }}" required placeholder="请输入卷号（例如：壹、贰）" />
                         </div>
-                        <div>
-                            <x-ts-input type="number" name="page" label="{{ __('app.page') }}" value="{{ $text->page }}" min="1" required />
-                        </div>
+                        <!-- 移除 page 输入框 -->
                     </div>
                     
                     <div class="mb-4">
-                        <x-ts-checkbox name="show_on_homepage" label="在首页展示此古籍" :checked="$text->show_on_homepage" />
+                    <x-ts-checkbox name="show_on_homepage" label="在首页展示此古籍" :checked="$text->show_on_homepage ? true : false" value="1" />
                     </div>
                     
                     <div class="mb-4">
@@ -84,12 +82,19 @@
 
     @push('styles')
         <style>
+            .vertical-text-wrapper {
+                position: relative;
+                display: inline-block;
+                min-height: 32px; /* 确保空行有高度 */
+                width: 32px; /* 固定宽度，确保垂直对齐 */
+            }
+
             .vertical-text-container {
                 display: flex;
                 flex-direction: row-reverse;
                 justify-content: flex-start;
                 align-items: flex-start;
-                width: 800px;
+                width: 600px;
                 min-height: 400px;
                 border: 1px solid #ccc;
                 padding: 20px;
@@ -112,15 +117,27 @@
                 display: inline-block;
             }
 
-            /* 仅段落首行应用缩进 */
             .vertical-text.first-line-indent {
-                padding-top: 2em; /* 首行缩进 */
+                padding-top: 2em;
             }
 
             .vertical-text.first-line-indent::before {
                 content: '';
                 display: block;
                 height: 2em;
+            }
+
+            .volume-page-footer {
+                writing-mode: vertical-rl;
+                text-orientation: upright;
+                font-family: 'SimSun', 'Noto Serif CJK SC', serif;
+                font-size: 14px;
+                color: #666;
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                text-align: center;
             }
 
             .dark .vertical-text-container {
@@ -130,6 +147,10 @@
 
             .dark .vertical-text {
                 color: #ddd;
+            }
+
+            .dark .volume-page-footer {
+                color: #bbb;
             }
         </style>
     @endpush
@@ -148,16 +169,13 @@
                 let totalPages = 1;
                 let debounceTimer;
 
-                // 初始预览
                 updatePreview();
 
-                // 监听内容变化（使用防抖）
                 contentTextarea.addEventListener('input', () => {
                     clearTimeout(debounceTimer);
-                    debounceTimer = setTimeout(updatePreview, 500); // 500ms 延迟
+                    debounceTimer = setTimeout(updatePreview, 500);
                 });
 
-                // 上一页按钮
                 prevPageButton.addEventListener('click', () => {
                     if (currentPage > 1) {
                         currentPage--;
@@ -165,7 +183,6 @@
                     }
                 });
 
-                // 下一页按钮
                 nextPageButton.addEventListener('click', () => {
                     if (currentPage < totalPages) {
                         currentPage++;
@@ -175,24 +192,23 @@
 
                 function updatePreview() {
                     const content = contentTextarea.value;
-
-                    // 显示加载状态
                     previewContainer.innerHTML = '<div class="text-center text-gray-500 dark:text-gray-400 py-4">加载中...</div>';
 
-                    // 发送 AJAX 请求到后端预览端点
+                    const volumeInput = document.querySelector('input[name="volume"]').value;
+
                     fetch('{{ route('ancient-text.preview') }}', {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
                             'X-CSRF-TOKEN': '{{ csrf_token() }}',
                         },
-                        body: JSON.stringify({ content: content }),
+                        body: JSON.stringify({ content: content, volume: volumeInput }),
                     })
                     .then(response => response.json())
                     .then(data => {
                         paginatedContent = data.paginatedContent || [];
                         totalPages = paginatedContent.length || 1;
-                        currentPage = 1; // 重置到第一页
+                        currentPage = 1;
                         renderPage();
                     })
                     .catch(error => {
@@ -202,26 +218,38 @@
                 }
 
                 function renderPage() {
-                    // 清空预览容器
                     previewContainer.innerHTML = '';
 
-                    // 获取当前页内容
                     const pageContent = paginatedContent[currentPage - 1] || [];
                     if (pageContent.length === 0) {
                         previewContainer.innerHTML = '<div class="text-center text-gray-500 dark:text-gray-400 py-4">{{ __('app.no_content') }}</div>';
                     } else {
-                        pageContent.forEach(line => {
+                        // 渲染所有 17 行
+                        for (let index = 0; index < 17; index++) {
+                            const line = pageContent[index] || { content: '', isFirstLineOfParagraph: false };
+                            const wrapperDiv = document.createElement('div');
+                            wrapperDiv.className = 'vertical-text-wrapper';
+
                             const textDiv = document.createElement('div');
                             textDiv.className = 'vertical-text' + (line.isFirstLineOfParagraph ? ' first-line-indent' : '');
-                            textDiv.textContent = line.content;
-                            previewContainer.appendChild(textDiv);
-                        });
+                            textDiv.textContent = line.content || html_entity_decode('&nbsp;'); // 使用不间断空格占位
+                            wrapperDiv.appendChild(textDiv);
+
+                            if (line.footer) {
+                                const footerDiv = document.createElement('div');
+                                footerDiv.className = 'volume-page-footer';
+                                footerDiv.textContent = line.footer;
+                                wrapperDiv.appendChild(footerDiv);
+                            }
+
+                            previewContainer.appendChild(wrapperDiv);
+                        }
+
+                        console.log('Page content length:', pageContent.length);
                     }
 
-                    // 更新分页信息
                     pageInfo.textContent = `第 ${currentPage} 页 / 共 ${totalPages} 页`;
 
-                    // 更新按钮状态
                     prevPageButton.className = currentPage <= 1 ? 'text-gray-400 pointer-events-none' : 'text-blue-600 hover:text-blue-800';
                     nextPageButton.className = currentPage >= totalPages ? 'text-gray-400 pointer-events-none' : 'text-blue-600 hover:text-blue-800';
                 }

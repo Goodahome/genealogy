@@ -11,9 +11,9 @@
         <div class="dark:text-neutral-200">
             <div class="flex flex-col w-full pt-6 sm:pt-0">
                 <!-- 两栏布局 -->
-                <div class="w-full mt-2 grid grid-cols-1 lg:grid-cols-2 gap-2">
+                <div class="w-full mt-2 grid grid-cols-1 lg:grid-cols-3 gap-2">
                     <!-- 左侧：时间线事件 -->
-                    <div class="rounded-lg p-10 w-full mx-auto">
+                    <div class="rounded-sm p-10 w-full mx-auto">
                         <!-- 头部区域：更现代的标题和按钮 -->
                         <div class="flex justify-between items-center mb-6">
                             <h2 class="text-2xl font-bold text-gray-800 transform translate-x-5">{{ __('app.events') }}</h2>
@@ -85,22 +85,31 @@
                         </div>
                     </div>    
                 <!-- 右侧：古籍展示 -->
-                    <div class="rounded-sm overflow-hidden">
+                    <div class="rounded-lg overflow-hidden col-span-2">
                         <div class="p-2">
                             <h2 class="text-xl font-semibold mb-4">{{ __('app.ancient_texts') }}</h2>
                             @if(isset($homepageText) && $homepageText)
                                 <!-- 垂直文本容器 -->
                                 <div class="vertical-text-container">
-                                    @if (empty($currentPageContent))
-                                        <div class="text-center text-gray-500 dark:text-gray-400 py-4">
-                                            {{ __('app.no_content') }}
-                                        </div>
-                                    @else
-                                        @foreach ($currentPageContent as $line)
+                                    @for ($index = 0; $index < 17; $index++)
+                                        @php
+                                            $line = $currentPageContent[$index] ?? ['content' => '', 'isFirstLineOfParagraph' => false];
+                                        @endphp
+                                        <div class="vertical-text-wrapper">
                                             <div class="vertical-text {{ $line['isFirstLineOfParagraph'] ? 'first-line-indent' : '' }}">
-                                                {{ $line['content'] }}
+                                            {{ $line['content'] ?: html_entity_decode('&nbsp;') }}
                                             </div>
-                                        @endforeach
+                                        </div>
+                                    @endfor
+                                    @php
+                                        $footer = $currentPageContent[16]['footer'] ?? null;
+                                    @endphp
+                                    @if ($footer)
+                                        <div class="vertical-text-wrapper">
+                                            <div class="volume-page-footer">
+                                                {{ $footer }}
+                                            </div>
+                                        </div>
                                     @endif
                                 </div>
 
@@ -144,6 +153,12 @@
 
     @push('styles')
         <style>
+            .vertical-text-wrapper {
+                position: relative;
+                display: inline-block;
+                min-height: 30px;
+                width: 300px;
+            }
             .vertical-text-container {
                 display: flex;
                 flex-direction: row-reverse;
@@ -198,6 +213,31 @@
             }
             .animate-fade-in {
                 animation: fadeIn 0.5s ease-out;
+            }
+            .volume-page-footer {
+                writing-mode: vertical-rl;
+                text-orientation: upright;
+                font-family: 'SimSun', 'Noto Serif CJK SC', serif;
+                font-size: 24px;
+                color: #333;
+                /* position: relative; */
+                bottom: 0;
+                margin-left: 10px;
+                transform: translateX(-50%);
+                text-align: center;
+            }
+            
+            .dark .vertical-text-container {
+                background-color: #2d2d2d;
+                border-color: #444;
+            }
+
+            .dark .vertical-text {
+                color: #ddd;
+            }
+
+            .dark .volume-page-footer {
+                color: #bbb;
             }
         </style>
     @endpush

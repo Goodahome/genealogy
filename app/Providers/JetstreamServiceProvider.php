@@ -69,43 +69,59 @@ final class JetstreamServiceProvider extends ServiceProvider
             'event:read',
             'event:update',
             'event:delete',
+            
+            'ancient-text:create',
+            'ancient-text:read',
+            'ancient-text:update',
+            'ancient-text:delete',
         ])->description('Administrators can perform any action and manage the application.');
-
+    
         Jetstream::role('manager', 'Manager', [
             'person:create',
             'person:read',
             'person:update',
             'person:delete',
-
+    
             'couple:create',
             'couple:read',
             'couple:update',
             'couple:delete',
-
+    
             'event:create',
             'event:read',
             'event:update',
             'event:delete',
+            
+            'ancient-text:create',
+            'ancient-text:read',
+            'ancient-text:update',
+            'ancient-text:delete',
         ])->description('Managers can perform any action on people.');
-
+    
         Jetstream::role('editor', 'Editor', [
             'person:create',
             'person:read',
             'person:update',
-
+    
             'couple:create',
             'couple:read',
             'couple:update',
-
+    
             'event:read',
+            
+            'ancient-text:create',
+            'ancient-text:read',
+            'ancient-text:update',
         ])->description('Editors have the ability to create, read and update people.');
-
+    
         Jetstream::role('member', 'Member', [
             'person:read',
-
+    
             'couple:read',
-
+    
             'event:read',
+            
+            'ancient-text:read',
         ])->description('Members have the ability to read people.');
     }
 }

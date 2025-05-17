@@ -7,53 +7,83 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class AncientText extends Model
 {
-    protected $fillable = ['team_id', 'title', 'content', 'volume', 'page'];
+    protected $fillable = ['team_id', 'title', 'content', 'volume', 'page', 'show_on_homepage'];
+
+    protected $casts = [
+        'show_on_homepage' => 'boolean',
+    ];
 
     public function team(): BelongsTo
     {
         return $this->belongsTo(Team::class);
     }
-    
-    public function getPaginatedContent($linesPerPage = 12)
+
+    private function numberToChinese($number)
+    {
+        $chineseNumbers = ['零', '壹', '贰', '叁', '肆', '伍', '陆', '柒', '捌', '玖'];
+        return $chineseNumbers[$number] ?? $number;
+    }
+
+    public function calculateTotalPages($linesPerPage = 17)
     {
         $lines = $this->splitContentIntoLines($this->content);
-        return array_chunk($lines, $linesPerPage);
+        $paginated = array_chunk($lines, $linesPerPage);
+        return count($paginated);
+    }
+
+    public function getPaginatedContent($linesPerPage = 17)
+    {
+        $lines = $this->splitContentIntoLines($this->content);
+        $paginated = array_chunk($lines, $linesPerPage);
+
+        $volumeChinese = $this->numberToChinese($this->volume);
+        foreach ($paginated as $pageIndex => &$pageContent) {
+            // 确保每页有 17 行，不足时填充空行
+            $currentLineCount = count($pageContent);
+            if ($currentLineCount < $linesPerPage) {
+                for ($i = $currentLineCount; $i < $linesPerPage; $i++) {
+                    $pageContent[$i] = [
+                        'content' => '',
+                        'isFirstLineOfParagraph' => false
+                    ];
+                }
+            }
+
+            // 固定将 footer 添加到第 17 行（索引 16）
+            $pageContent[$linesPerPage - 1]['footer'] = "第{$volumeChinese}卷第" . $this->numberToChinese($pageIndex + 1) . "页";
+        }
+
+        return $paginated;
     }
 
     private function splitContentIntoLines($content)
     {
-        // 确保内容是 UTF-8 编码
         $content = mb_convert_encoding($content, 'UTF-8', 'UTF-8');
-        
-        // 按换行符分割段落
         $paragraphs = explode("\n", $content);
         $finalLines = [];
         
-        // 处理每个段落
+        $linesPerPage = 17;
+        $maxCharsPerLine = 27;
+
         foreach ($paragraphs as $paragraph) {
             if (trim($paragraph) === '') continue;
-            // 仅移除首尾空白字符，不移除句子间的空格
             $paragraph = trim($paragraph);
             
-            $maxCharsPerLine = 27; // 非首行最大字符数
             $currentLine = '';
             $paragraphLines = [];
             $isFirstLine = true;
 
-            // 按字符逐个处理
             $chars = preg_split('//u', $paragraph, -1, PREG_SPLIT_NO_EMPTY);
             $i = 0;
 
             while ($i < count($chars)) {
                 $remainingSpace = $isFirstLine ? $maxCharsPerLine - 2 : $maxCharsPerLine;
 
-                // 收集字符直到达到每行最大字符数
                 while ($i < count($chars) && mb_strlen($currentLine) < $remainingSpace) {
                     $currentLine .= $chars[$i];
                     $i++;
                 }
 
-                // 移除首尾空白字符（仅针对当前行）
                 $currentLine = trim($currentLine);
                 if ($currentLine === '') {
                     $currentLine = '';
@@ -65,7 +95,6 @@ class AncientText extends Model
                 $isFirstLine = false;
             }
 
-            // 为每行添加首行标记
             foreach ($paragraphLines as $lineIndex => $line) {
                 $finalLines[] = [
                     'content' => $line,
@@ -73,7 +102,29 @@ class AncientText extends Model
                 ];
             }
         }
-        
+
+        // 确保字符分配正确，避免第 17 行超长
+        $adjustedLines = [];
+        $currentPageLines = [];
+        foreach ($finalLines as $line) {
+            $currentPageLines[] = $line;
+            if (count($currentPageLines) == $linesPerPage) {
+                $adjustedLines[] = $currentPageLines;
+                $currentPageLines = [];
+            }
+        }
+        if (!empty($currentPageLines)) {
+            $adjustedLines[] = $currentPageLines;
+        }
+
+        // 将调整后的行重新分配到 finalLines
+        $finalLines = [];
+        foreach ($adjustedLines as $page) {
+            foreach ($page as $line) {
+                $finalLines[] = $line;
+            }
+        }
+
         return $finalLines;
     }
 }
