@@ -39,7 +39,7 @@
                     </x-nav-link>
                 </div>
                 <div class="flex items-center gap-5">
-                    <x-nav-link href="{{ route('ancient-text.index') }}">
+                    <x-nav-link href="{{ route('ancient-text.index') }}" :active="request()->routeIs('ancient-text.index')">
                         <x-ts-icon icon="tabler.book" class="mr-1 size-5" />
                         {{ __('app.ancient_texts') }}
                     </x-nav-link>
@@ -50,7 +50,6 @@
                         {{ __('app.help') }}
                     </x-nav-link>
                 </div>
-                
             </div>
         </div>
 
