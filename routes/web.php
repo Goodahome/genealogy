@@ -118,10 +118,17 @@ Route::middleware([
     });
 });
 
-// 古籍管理路由
+    // 古籍管理路由
 Route::middleware(['auth:sanctum', 'verified'])->group(function () {
     Route::resource('ancient-text', AncientTextController::class);
     Route::post('/ancient-text/preview', [AncientTextController::class, 'preview'])->name('ancient-text.preview');
+});
+
+// 家族基金
+Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function (): void {
+    Route::resource('family-fund', App\Http\Controllers\FamilyFundController::class)
+        ->parameters(['family-fund' => 'entry'])
+        ->except(['show']);
 });
 
 // -----------------------------------------------------------------------------------

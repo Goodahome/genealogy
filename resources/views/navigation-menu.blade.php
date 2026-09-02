@@ -55,6 +55,13 @@
                 </div>
 
                 <div class="flex items-center gap-5">
+                    <x-nav-link href="{{ route('family-fund.index') }}" :active="request()->routeIs('family-fund.*')">
+                        <x-ts-icon icon="tabler.coin" class="mr-1 size-5" />
+                        {{ __('fund.family_fund') }}
+                    </x-nav-link>
+                </div>
+
+                <div class="flex items-center gap-5">
                     <x-nav-link href="{{ route('help') }}" :active="request()->routeIs('help')">
                         <x-ts-icon icon="tabler.help" class="mr-1 size-5" />
                         {{ __('app.help') }}
@@ -257,6 +264,11 @@
             <x-nav-link-responsive href="{{ route('people.clan-lineage') }}" :active="request()->routeIs('people.clan-lineage')">
                 <x-ts-icon icon="tabler.binary-tree" class="inline-block mr-1 size-5" />
                 {{ __('app.clan_lineage') }}
+            </x-nav-link-responsive>
+
+            <x-nav-link-responsive href="{{ route('family-fund.index') }}" :active="request()->routeIs('family-fund.*')">
+                <x-ts-icon icon="tabler.coin" class="inline-block mr-1 size-5" />
+                {{ __('fund.family_fund') }}
             </x-nav-link-responsive>
 
             <x-nav-link-responsive href="{{ route('help') }}" :active="request()->routeIs('help')">

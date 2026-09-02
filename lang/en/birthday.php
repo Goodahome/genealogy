@@ -7,7 +7,7 @@ return [
     'birthday'              => 'Birthday',
     'birthdays'             => 'Birthdays',
     'upcoming_birthdays'    => 'Upcoming birthdays',
-    'upcoming_months'       => 'Upcoming birthdays in the next :months months.',
+    'upcoming_months'       => 'Next :months months',
     'no_upcoming_birthdays' => 'No upcoming birthdays in the next :months months.',
     'in'                    => 'in',
     'years'                 => '[0,1] year|[2,*] years',
