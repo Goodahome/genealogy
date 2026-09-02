@@ -100,14 +100,14 @@
     @endif
 
     {{-- image --}}
-    <div class="user-image">
+    <div class="user-image relative mx-auto aspect-square w-full max-w-96 overflow-hidden">
         @if (count($images) > 0)
-            <x-ts-link href="{{ asset('storage/photos/' . $person->team_id . '/' . $images[$selected]) }}" target="_blank">
-                <img class="rounded-sm shadow-lg w-96 dark:shadow-black/30" src="{{ asset('storage/photos-384/' . $person->team_id . '/' . $images[$selected]) }}" alt="{{ $person->name }}"
+            <x-ts-link href="{{ asset('storage/photos/' . $person->team_id . '/' . $images[$selected]) }}" target="_blank" class="block h-full w-full">
+                <img class="h-full w-full rounded-sm object-cover shadow-lg dark:shadow-black/30" src="{{ asset('storage/photos-384/' . $person->team_id . '/' . $images[$selected]) }}" alt="{{ $person->name }}"
                     title="{{ $person->name }}" />
             </x-ts-link>
         @else
-            <x-svg.person-no-image class="w-full rounded-sm shadow-lg dark:shadow-black/30 fill-neutral-400" alt="no-image-found" />
+            <x-svg.person-placeholder :sex="$person->sex ?? 'm'" class="h-full w-full rounded-sm shadow-lg dark:shadow-black/30 fill-neutral-400" alt="no-image-found" />
         @endif
 
         @if ($person->isDeceased())

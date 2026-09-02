@@ -53,6 +53,11 @@ final class PeopleController extends Controller
         return view('back.people.chart', ['person' => $person]);
     }
 
+    public function clanLineage(): View
+    {
+        return view('back.people.clan-lineage');
+    }
+
     public function history(Person $person): View
     {
         return view('back.people.history', ['person' => $person]);

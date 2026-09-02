@@ -7,7 +7,7 @@
         {{ __('person.profile') }}
     </x-slot>
 
-    <div class="p-2 pb-5 sticky top-[6.5rem] z-20 bg-gray-100 dark:bg-gray-900">
+    <div class="sticky top-[6.5rem] z-20 bg-gray-100 p-2 pb-2 dark:bg-gray-900 sm:pb-4">
         <livewire:people.heading :person="$person" />
     </div>
 
@@ -25,7 +25,7 @@
                 <livewire:people.files :person="$person" />
             </div>
 
-            <div class="flex flex-col grow gap-5 overflow-x-auto md:max-w-max">
+            <div class="hidden grow flex-col gap-5 overflow-x-auto md:flex md:max-w-max">
                 <livewire:people.ancestors :person="$person" />
                 <livewire:people.descendants :person="$person" />
             </div>

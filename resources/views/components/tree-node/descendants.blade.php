@@ -18,7 +18,7 @@
                     @if ($person->photo and Storage::exists('public/photos/' . $person->team_id . '/' . $person->photo))
                         <img src="{{ asset('storage/photos-096/' . $person->team_id . '/' . $person->photo) }}" class="w-full rounded-sm shadow-lg dark:shadow-black/30" alt="{{ $person->id }}" />
                     @else
-                        <x-svg.person-no-image class="w-full rounded-sm shadow-lg dark:shadow-black/30 fill-neutral-400" alt="no-image-found" />
+                        <x-svg.person-placeholder :sex="$person->sex ?? 'm'" class="w-full rounded-sm shadow-lg dark:shadow-black/30 fill-neutral-400" alt="no-image-found" />
                     @endif
 
                     @if ($person->dod or $person->yod)

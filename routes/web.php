@@ -58,6 +58,7 @@ Route::middleware([
     Route::controller(App\Http\Controllers\Back\PeopleController::class)->group(function (): void {
         Route::get('search', 'search')->name('people.search');
         Route::get('birthdays', 'birthdays')->name('people.birthdays');
+        Route::get('clan-lineage', 'clanLineage')->name('people.clan-lineage');
 
         Route::get('people/add', 'add')->name('people.add');
         Route::get('people/{person}', 'show')->name('people.show');

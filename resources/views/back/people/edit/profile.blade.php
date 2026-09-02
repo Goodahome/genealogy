@@ -7,7 +7,7 @@
         {{ __('person.edit_profile') }}
     </x-slot>
 
-    <div class="p-2 pb-5 sticky top-[6.5rem] z-20 bg-gray-100 dark:bg-gray-900">
+    <div class="sticky top-[6.5rem] z-20 bg-gray-100 p-2 pb-2 dark:bg-gray-900 sm:pb-4">
         <livewire:people.heading :person="$person" />
     </div>
 

@@ -1,4 +1,4 @@
-<div class="min-w-100 max-w-192 flex flex-col rounded-sm bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 text-neutral-800 dark:text-neutral-50">
+<div class="mx-auto flex w-full min-w-0 max-w-sm flex-col rounded-sm bg-white text-neutral-800 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 dark:text-neutral-50 sm:max-w-md md:mx-0 md:min-w-100 md:max-w-192">
     <div class="flex flex-col p-2 text-lg font-medium border-b-2 rounded-t h-14 min-h-min border-neutral-100 dark:border-neutral-600 dark:text-neutral-50">
         <div class="flex flex-wrap items-start justify-center gap-2">
             <div class="items-center justify-center flex-1 grow max-w-full align-middle min-w-max">
@@ -71,27 +71,31 @@
 
     {{-- data --}}
     <div class="p-2">
-        <table class="w-full">
+        <table class="w-full table-fixed">
+            <colgroup>
+                <col style="width: 5.5rem" />
+                <col />
+            </colgroup>
             <tbody>
                 <tr class="align-top border-b-2 h-8">
-                    <td class="pr-2 border-t-2 border-r-2">{{ __('person.firstname') }}{{ __('person.surname') }}</td>
-                    <td class="pl-2 break-words border-t-2 max-w-96">{{ $person->firstname }}{{ $person->surname }}</td>
+                    <td class="w-[5.5rem] pr-2 border-t-2 border-r-2 align-top">{{ __('person.firstname') }}{{ __('person.surname') }}</td>
+                    <td class="pl-2 break-words border-t-2">{{ $person->firstname }}{{ $person->surname }}</td>
                 </tr>
                 <tr class="align-top border-b-2 h-8">
-                    <td class="pr-2 border-r-2">{{ __('person.nickname') }}</td>
-                    <td class="pl-2 break-words max-w-96">{{ $person->nickname }}</td>
+                    <td class="w-[5.5rem] pr-2 border-r-2 align-top">{{ __('person.nickname') }}</td>
+                    <td class="pl-2 break-words">{{ $person->nickname }}</td>
                 </tr>
 
                 <tr class="align-top border-b-2 h-8">
-                    <td class="pr-2 border-r-2">{{ __('person.sex') }}</td>
+                    <td class="w-[5.5rem] pr-2 border-r-2 align-top">{{ __('person.sex') }}</td>
                     <td class="pl-2">
                         {{ $person->sex === 'm' ? __('app.male') : __('app.female') }}
                         <x-ts-icon icon="tabler.{{ $person->sex === 'm' ? 'gender-male' : 'gender-female' }}" class="inline-block size-5" />
                     </td>
                 </tr>
                 <tr class="align-top border-b-2 h-8">
-                    <td class="pr-2 border-r-2">{{ __('person.dob') }}</td>
-                    <td class="pl-2 break-words max-w-96">
+                    <td class="w-[5.5rem] pr-2 border-r-2 align-top">{{ __('person.dob') }}</td>
+                    <td class="pl-2 break-words">
                         @if($person->dob && $person->dob_lunar_year)
                             {{ $person->birth_formatted }} (阳历)<br>
                             {{ $person->lunar_birth_formatted }} (农历)
@@ -105,7 +109,7 @@
                 
                 @if ($person->isDeceased())
                     <tr class="align-top">
-                        <td class="pr-2 border-r-2">{{ __('person.dod') }}</td>
+                        <td class="w-[5.5rem] pr-2 border-r-2 align-top">{{ __('person.dod') }}</td>
                         <td class="pl-2">
                             @if($person->dod && $person->dod_lunar_year)
                                 {{ $person->death_formatted }} (阳历)<br>
@@ -121,15 +125,15 @@
                         </td>
                     </tr>
                     <tr class="align-top border-b-2">
-                        <td class="pr-2 border-r-2">{{ __('person.pod') }}</td>
-                        <td class="pl-2 break-words max-w-96">{{ $person->pod }}</td>
+                        <td class="w-[5.5rem] pr-2 border-r-2 align-top">{{ __('person.pod') }}</td>
+                        <td class="pl-2 break-words">{{ $person->pod }}</td>
                     </tr>
                     <tr class="align-top">
-                        <td class="pr-2 border-r-2">{{ __('person.cemetery') }}</td>
-                        <td class="pl-2 break-words max-w-96">{{ $person->getMetadataValue('cemetery_location_name') }}</td>
+                        <td class="w-[5.5rem] pr-2 border-r-2 align-top">{{ __('person.cemetery') }}</td>
+                        <td class="pl-2 break-words">{{ $person->getMetadataValue('cemetery_location_name') }}</td>
                     </tr>
                     <tr class="align-top">
-                        <td class="pr-2 border-b-2 border-r-2">
+                        <td class="w-[5.5rem] pr-2 border-b-2 border-r-2 align-top">
                             @if ($person->cemetery_google)
                                 <a target="_blank" href="{{ $person->cemetery_google }}">
                                     <x-ts-button color="cyan" class="p-2! mb-2 text-white" title="{{ __('app.show_on_google_maps') }}">
@@ -138,11 +142,11 @@
                                 </a>
                             @endif
                         </td>
-                        <td class="pl-2 break-words whitespace-pre-line border-b-2 max-w-96">{{ $person->getMetadataValue('cemetery_location_address') }}</td>
+                        <td class="pl-2 break-words whitespace-pre-line border-b-2">{{ $person->getMetadataValue('cemetery_location_address') }}</td>
                     </tr>
                 @else
                     <tr class="align-top">
-                        <td class="pr-2 border-b-2 border-r-2 h-8">
+                        <td class="w-[5.5rem] pr-2 border-b-2 border-r-2 h-8 align-top">
                             {{ __('person.address') }}<br />
                             @if ($person->address)
                                 <a target="_blank" href="{{ $person->address_google }}">
@@ -152,17 +156,17 @@
                                 </a>
                             @endif
                         </td>
-                        <td class="pl-2 break-words whitespace-pre-line border-b-2 max-w-96">{{ $person->address }}</td>
+                        <td class="pl-2 break-words whitespace-pre-line border-b-2">{{ $person->address }}</td>
                     </tr>
                     <tr class="align-top h-8">
-                        <td class="pr-2 border-b-2 border-r-2">{{ __('person.phone') }}</td>
-                        <td class="pl-2 break-words border-b-2 max-w-96">{{ $person->phone }}</td>
+                        <td class="w-[5.5rem] pr-2 border-b-2 border-r-2 align-top">{{ __('person.phone') }}</td>
+                        <td class="pl-2 break-words border-b-2">{{ $person->phone }}</td>
                     </tr>
                 @endif
 
                 <tr class="align-top border-b-2 h-8">
-                    <td class="pr-2 border-r-2">{{ __('person.summary') }}</td>
-                    <td class="pl-2 break-words whitespace-pre-line max-w-96">{{ $person->summary }}</td>
+                    <td class="w-[5.5rem] pr-2 border-r-2 align-top">{{ __('person.summary') }}</td>
+                    <td class="pl-2 break-words whitespace-pre-line">{{ $person->summary }}</td>
                 </tr>
             </tbody>
         </table>

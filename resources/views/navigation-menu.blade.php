@@ -3,8 +3,8 @@
      x-bind:class="{'fixed inset-0 z-50 overflow-y-auto': open, 'relative': !open}"
      x-on:scroll.window="if(open) $event.preventDefault()">
     {{-- primary navigation menu --}}
-    <div class="flex gap-5 px-2 min-h-16">
-        <div class="flex grow gap-5">
+    <div class="flex min-h-16 items-center gap-3 px-2 md:gap-5">
+        <div class="flex grow items-center gap-3 md:gap-5">
             {{-- logo --}}
             <div class="flex items-center shrink-0">
                 <a href="{{ route('home') }}" title="{{ __('app.home') }}">
@@ -12,8 +12,8 @@
                 </a>
             </div>
 
-            {{-- navigation links --}}
-            <div class="flex flex-wrap gap-5 py-2">
+            {{-- navigation links (desktop) --}}
+            <div class="hidden flex-wrap items-center gap-5 py-2 md:flex">
                 <div class="flex items-center gap-5">
                     <x-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
                         <x-ts-icon icon="tabler.home" class="mr-1 size-5" />
@@ -32,18 +32,28 @@
                         {{ __('birthday.birthdays') }}
                     </x-nav-link>
                 </div>
+
                 <div class="flex items-center gap-5">
                     <x-nav-link href="{{ route('events.index') }}" :active="request()->routeIs('events.index')">
                         <x-ts-icon icon="tabler.calendar-event" class="mr-1 size-5" />
                         {{ __('app.events') }}
                     </x-nav-link>
                 </div>
+
                 <div class="flex items-center gap-5">
                     <x-nav-link href="{{ route('ancient-text.index') }}" :active="request()->routeIs('ancient-text.index')">
                         <x-ts-icon icon="tabler.book" class="mr-1 size-5" />
                         {{ __('app.ancient_texts') }}
                     </x-nav-link>
                 </div>
+
+                <div class="flex items-center gap-5">
+                    <x-nav-link href="{{ route('people.clan-lineage') }}" :active="request()->routeIs('people.clan-lineage')">
+                        <x-ts-icon icon="tabler.binary-tree" class="mr-1 size-5" />
+                        {{ __('app.clan_lineage') }}
+                    </x-nav-link>
+                </div>
+
                 <div class="flex items-center gap-5">
                     <x-nav-link href="{{ route('help') }}" :active="request()->routeIs('help')">
                         <x-ts-icon icon="tabler.help" class="mr-1 size-5" />
@@ -193,8 +203,8 @@
             @endauth
         </div>
 
-         {{-- theme switch and offcanvas--}}
-        <div class="flex flex-col place-items-center">
+         {{-- theme switch and offcanvas (desktop) --}}
+        <div class="hidden flex-col place-items-center md:flex">
             <div class="hidden space-x-6 min-h-8 md:flex md:items-center md:ml-5">
                 <x-ts-theme-switch only-icons />
             </div>
@@ -203,8 +213,8 @@
             </div>
         </div>
 
-        {{-- hamburger --}}
-        <div class="flex items-center md:hidden">
+        {{-- hamburger (mobile) --}}
+        <div class="ml-auto flex items-center md:hidden">
             <button @click="open = ! open"
                 class="inline-flex items-center justify-center p-2 text-gray-400 transition duration-150 ease-in-out rounded-sm hover:text-gray-500 hover:bg-gray-300 focus:outline-hidden focus:bg-gray-300 focus:text-gray-500">
                 <svg class="size-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
@@ -217,8 +227,46 @@
 
     {{-- responsive navigation menu --}}
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden md:hidden">
+        {{-- primary navigation links (mobile) --}}
+        <div class="space-y-1 border-b border-gray-200 pb-2">
+            <x-nav-link-responsive href="{{ route('home') }}" :active="request()->routeIs('home')">
+                <x-ts-icon icon="tabler.home" class="inline-block mr-1 size-5" />
+                {{ __('app.home') }}
+            </x-nav-link-responsive>
+
+            <x-nav-link-responsive href="{{ route('people.search') }}" :active="request()->routeIs('people.search')">
+                <x-ts-icon icon="tabler.search" class="inline-block mr-1 size-5" />
+                {{ __('app.search') }}
+            </x-nav-link-responsive>
+
+            <x-nav-link-responsive href="{{ route('people.birthdays') }}" :active="request()->routeIs('people.birthdays')">
+                <x-ts-icon icon="tabler.cake" class="inline-block mr-1 size-5" />
+                {{ __('birthday.birthdays') }}
+            </x-nav-link-responsive>
+
+            <x-nav-link-responsive href="{{ route('events.index') }}" :active="request()->routeIs('events.index')">
+                <x-ts-icon icon="tabler.calendar-event" class="inline-block mr-1 size-5" />
+                {{ __('app.events') }}
+            </x-nav-link-responsive>
+
+            <x-nav-link-responsive href="{{ route('ancient-text.index') }}" :active="request()->routeIs('ancient-text.index')">
+                <x-ts-icon icon="tabler.book" class="inline-block mr-1 size-5" />
+                {{ __('app.ancient_texts') }}
+            </x-nav-link-responsive>
+
+            <x-nav-link-responsive href="{{ route('people.clan-lineage') }}" :active="request()->routeIs('people.clan-lineage')">
+                <x-ts-icon icon="tabler.binary-tree" class="inline-block mr-1 size-5" />
+                {{ __('app.clan_lineage') }}
+            </x-nav-link-responsive>
+
+            <x-nav-link-responsive href="{{ route('help') }}" :active="request()->routeIs('help')">
+                <x-ts-icon icon="tabler.help" class="inline-block mr-1 size-5" />
+                {{ __('app.help') }}
+            </x-nav-link-responsive>
+        </div>
+
         @guest
-            <div class="space-y-1 border-t border-gray-200">
+            <div class="space-y-1 border-t border-gray-200 pt-2">
                 <x-nav-link-responsive href="{{ route('login') }}" :active="request()->routeIs('login')">
                     <x-ts-icon icon="tabler.login-2" class="inline-block mr-1 size-5" />
                     {{ __('auth.login') }}

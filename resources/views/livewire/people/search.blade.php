@@ -88,9 +88,9 @@
 
     @if (count($people) > 0)
         {{-- people grid --}}
-        <div class="p-2 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 gap-2">
+        <div class="grid grid-cols-1 gap-2 p-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 [&>div]:h-full">
             @foreach ($people as $person)
-                <livewire:people.person :person="$person" :key="$person->id" />
+                <livewire:people.person :person="$person" :key="$person->id" class="block h-full" />
             @endforeach
         </div>
     @else
