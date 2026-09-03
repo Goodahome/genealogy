@@ -16,14 +16,27 @@ final class PeopleController extends Controller
         return view('back.people.search');
     }
 
-    public function birthdays(int $months = 2): View
+    public function birthdays(): View
     {
-        $people = Person::whereNotNull('dob')
-            ->whereRaw('CASE WHEN MONTH(NOW()) +' . $months . " > 12 THEN date_format(dob, '%m-%d') >= date_format(NOW(), '%m-%d') OR date_format(dob, '%m-%d') <= date_format(NOW() + INTERVAL " . $months . " MONTH, '%m-%d') ELSE date_format(dob, '%m-%d') >= date_format(NOW(), '%m-%d') AND date_format(dob, '%m-%d') <= date_format(NOW() + INTERVAL " . $months . " MONTH, '%m-%d') END")
-            ->orderByRaw("(case when date_format(dob, '%m-%d') >= date_format(now(), '%m-%d') then 0 else 1 end), date_format(dob, '%m-%d')")
-            ->get();
+        $people = Person::query()
+            ->whereNotNull('dob')
+            ->orderByRaw("DATE_FORMAT(dob, '%m-%d')")
+            ->orderBy('firstname')
+            ->get(['id', 'firstname', 'surname', 'sex', 'dob', 'dod', 'yod']);
 
-        return view('back.people.birthdays', ['months' => $months, 'people' => $people]);
+        $birthdays = $people->map(static fn (Person $person): array => [
+            'id' => $person->id,
+            'name' => $person->name,
+            'sex' => $person->sex,
+            'month' => (int) $person->dob->format('n'),
+            'day' => (int) $person->dob->format('j'),
+            'birth_year' => (int) $person->dob->format('Y'),
+            'deceased' => $person->isDeceased(),
+        ])->values();
+
+        return view('back.people.birthdays', [
+            'birthdays' => $birthdays,
+        ]);
     }
 
     public function add(): View

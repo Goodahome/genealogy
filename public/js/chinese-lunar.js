@@ -1,6 +1,5 @@
 /**
- * Gregorian → Chinese lunar calendar (1900-2100).
- * Returns { year, month, day, isLeap }.
+ * Chinese calendar helpers: lunar date, solar terms, festivals (1900-2100).
  */
 window.ChineseLunar = (function () {
     const LUNAR_INFO = [
@@ -27,6 +26,17 @@ window.ChineseLunar = (function () {
         0x0d520,
     ];
 
+    const TERM_INFO = [
+        0, 21208, 42467, 63836, 85337, 107014, 128867, 150921, 173149, 195551, 218072, 240693,
+        263343, 285989, 308563, 331033, 353350, 375494, 397447, 419210, 440795, 462224, 483532, 504758,
+    ];
+
+    const TERM_NAMES = [
+        '小寒', '大寒', '立春', '雨水', '惊蛰', '春分', '清明', '谷雨',
+        '立夏', '小满', '芒种', '夏至', '小暑', '大暑', '立秋', '处暑',
+        '白露', '秋分', '寒露', '霜降', '立冬', '小雪', '大雪', '冬至',
+    ];
+
     const MONTHS = {
         1: '正月', 2: '二月', 3: '三月', 4: '四月', 5: '五月', 6: '六月',
         7: '七月', 8: '八月', 9: '九月', 10: '十月', 11: '冬月', 12: '腊月',
@@ -44,6 +54,39 @@ window.ChineseLunar = (function () {
     const YEAR_DIGITS = {
         0: '零', 1: '一', 2: '二', 3: '三', 4: '四',
         5: '五', 6: '六', 7: '七', 8: '八', 9: '九',
+    };
+
+    // Solar fixed festivals / public holidays
+    const SOLAR_FESTIVALS = {
+        '1-1': '元旦',
+        '2-14': '情人节',
+        '3-8': '妇女节',
+        '3-12': '植树节',
+        '4-1': '愚人节',
+        '5-1': '劳动节',
+        '5-4': '青年节',
+        '6-1': '儿童节',
+        '7-1': '建党节',
+        '8-1': '建军节',
+        '9-10': '教师节',
+        '10-1': '国庆节',
+        '12-24': '平安夜',
+        '12-25': '圣诞节',
+    };
+
+    // Lunar festivals (non-leap month)
+    const LUNAR_FESTIVALS = {
+        '1-1': '春节',
+        '1-15': '元宵节',
+        '2-2': '龙抬头',
+        '5-5': '端午节',
+        '7-7': '七夕',
+        '7-15': '中元节',
+        '8-15': '中秋节',
+        '9-9': '重阳节',
+        '12-8': '腊八节',
+        '12-23': '小年',
+        '12-24': '小年',
     };
 
     function leapMonth(year) {
@@ -136,6 +179,76 @@ window.ChineseLunar = (function () {
         };
     }
 
+    function getTermDate(year, termIndex) {
+        const ms = 31556925974.7 * (year - 1900) + TERM_INFO[termIndex] * 60000;
+        return new Date(ms + Date.UTC(1900, 0, 6, 2, 5));
+    }
+
+    function getSolarTerm(year, month, day) {
+        for (let i = 0; i < 24; i++) {
+            const termDate = getTermDate(year, i);
+            if (
+                termDate.getFullYear() === year &&
+                termDate.getMonth() + 1 === month &&
+                termDate.getDate() === day
+            ) {
+                return TERM_NAMES[i];
+            }
+        }
+        return null;
+    }
+
+    function getFestivals(year, month, day, lunar) {
+        const festivals = [];
+        const solarKey = month + '-' + day;
+        if (SOLAR_FESTIVALS[solarKey]) {
+            festivals.push(SOLAR_FESTIVALS[solarKey]);
+        }
+
+        if (lunar && !lunar.isLeap) {
+            const lunarKey = lunar.month + '-' + lunar.day;
+            if (LUNAR_FESTIVALS[lunarKey]) {
+                festivals.push(LUNAR_FESTIVALS[lunarKey]);
+            }
+
+            // 除夕：腊月最后一天
+            if (lunar.month === 12) {
+                const lastDay = monthDays(lunar.year, 12);
+                if (lunar.day === lastDay) {
+                    festivals.push('除夕');
+                }
+            }
+        }
+
+        return festivals;
+    }
+
+    function dayInfo(year, month, day) {
+        const lunar = solarToLunar(year, month, day);
+        const solarTerm = getSolarTerm(year, month, day);
+        const festivals = getFestivals(year, month, day, lunar);
+        const lunarText = lunar
+            ? (lunar.day === 1
+                ? ((lunar.isLeap ? '闰' : '') + (MONTHS[lunar.month] || (lunar.month + '月')))
+                : (DAYS[lunar.day] || (lunar.day + '日')))
+            : '';
+
+        const holidayNames = ['元旦', '春节', '清明', '劳动节', '端午节', '中秋节', '国庆节', '除夕'];
+        const isHoliday = Boolean(
+            (solarTerm === '清明') ||
+            festivals.some((name) => holidayNames.includes(name))
+        );
+
+        return {
+            lunar: lunar,
+            lunarText: lunarText,
+            solarTerm: solarTerm,
+            festivals: festivals,
+            isHoliday: isHoliday,
+            label: festivals[0] || solarTerm || lunarText,
+        };
+    }
+
     function format(date) {
         const lunar = solarToLunar(date.getFullYear(), date.getMonth() + 1, date.getDate());
         if (!lunar) {
@@ -151,5 +264,8 @@ window.ChineseLunar = (function () {
     return {
         solarToLunar: solarToLunar,
         format: format,
+        dayInfo: dayInfo,
+        months: MONTHS,
+        days: DAYS,
     };
 })();

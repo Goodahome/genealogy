@@ -1,0 +1,154 @@
+.birthday-calendar {
+    --bc-border: #e5e7eb;
+    --bc-today: #3370ff;
+    --bc-holiday: #f54a45;
+    --bc-muted: #8f959e;
+    --bc-chip: #eef3ff;
+    --bc-chip-text: #3370ff;
+    --bc-chip-dead: #fde8e8;
+    --bc-chip-dead-text: #c23631;
+}
+
+.dark .birthday-calendar {
+    --bc-border: #525252;
+    --bc-today: #4c82ff;
+    --bc-holiday: #ff7b76;
+    --bc-muted: #a3a3a3;
+    --bc-chip: #1e3a5f;
+    --bc-chip-text: #93c5fd;
+    --bc-chip-dead: #4a1d1d;
+    --bc-chip-dead-text: #fca5a5;
+}
+
+.birthday-calendar__grid {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+    border-top: 1px solid var(--bc-border);
+    border-left: 1px solid var(--bc-border);
+}
+
+.birthday-calendar__weekday,
+.birthday-calendar__cell {
+    border-right: 1px solid var(--bc-border);
+    border-bottom: 1px solid var(--bc-border);
+}
+
+.birthday-calendar__weekday {
+    padding: 0.5rem;
+    text-align: center;
+    font-size: 0.8125rem;
+    color: var(--bc-muted);
+    background: rgba(0, 0, 0, 0.02);
+}
+
+.dark .birthday-calendar__weekday {
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.birthday-calendar__weekday.is-weekend {
+    color: var(--bc-holiday);
+}
+
+.birthday-calendar__cell {
+    min-height: 7.5rem;
+    padding: 0.375rem;
+    vertical-align: top;
+    background: transparent;
+}
+
+@media (min-width: 768px) {
+    .birthday-calendar__cell {
+        min-height: 9rem;
+    }
+}
+
+.birthday-calendar__cell.is-outside {
+    opacity: 0.45;
+    background: rgba(0, 0, 0, 0.015);
+}
+
+.dark .birthday-calendar__cell.is-outside {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+.birthday-calendar__cell.is-today {
+    background: rgba(51, 112, 255, 0.06);
+}
+
+.dark .birthday-calendar__cell.is-today {
+    background: rgba(76, 130, 255, 0.12);
+}
+
+.birthday-calendar__daynum {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 1.5rem;
+    height: 1.5rem;
+    padding: 0 0.25rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1;
+}
+
+.birthday-calendar__cell.is-today .birthday-calendar__daynum {
+    background: var(--bc-today);
+    color: #fff;
+}
+
+.birthday-calendar__cell.is-weekend .birthday-calendar__daynum,
+.birthday-calendar__cell.is-holiday .birthday-calendar__meta {
+    color: var(--bc-holiday);
+}
+
+.birthday-calendar__meta {
+    font-size: 0.6875rem;
+    color: var(--bc-muted);
+    line-height: 1.2;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.birthday-calendar__meta.is-festive {
+    color: var(--bc-holiday);
+    font-weight: 600;
+}
+
+.birthday-calendar__chips {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-top: 0.375rem;
+}
+
+.birthday-calendar__chip {
+    display: block;
+    padding: 0.125rem 0.375rem;
+    border-radius: 0.25rem;
+    background: var(--bc-chip);
+    color: var(--bc-chip-text);
+    font-size: 0.6875rem;
+    line-height: 1.35;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-decoration: none;
+}
+
+.birthday-calendar__chip:hover {
+    filter: brightness(0.95);
+}
+
+.birthday-calendar__chip.is-deceased {
+    background: var(--bc-chip-dead);
+    color: var(--bc-chip-dead-text);
+}
+
+.birthday-calendar__more {
+    font-size: 0.6875rem;
+    color: var(--bc-muted);
+    padding: 0 0.25rem;
+}
