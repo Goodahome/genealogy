@@ -120,39 +120,6 @@ final class Profile extends Component
         }
     }
 
-    /** 由前端农历库换算后一次性回填农历（避免多次 set 往返）。 */
-    public function applyLunarBirth(?int $year, ?int $month, ?int $day, bool $leap = false): void
-    {
-        $this->profileForm->dob_year = $year;
-        $this->profileForm->dob_month = $month;
-        $this->profileForm->dob_day = $day;
-        $this->profileForm->dob_leap = $leap;
-    }
-
-    /** 由前端农历库换算后一次性回填阳历。 */
-    public function applySolarBirth(?int $year, ?int $month, ?int $day): void
-    {
-        $this->profileForm->solar_year = $year;
-        $this->profileForm->solar_month = $month;
-        $this->profileForm->solar_day = $day;
-    }
-
-    /** 阳历变更：同时写入阳历与换算后的农历，避免 deferred model 竞态。 */
-    public function syncBirthFromSolar(int $year, int $month, int $day, int $lunarYear, int $lunarMonth, int $lunarDay, bool $leap = false): void
-    {
-        $this->profileForm->solar_year = $year;
-        $this->profileForm->solar_month = $month;
-        $this->profileForm->solar_day = $day;
-        $this->applyLunarBirth($lunarYear, $lunarMonth, $lunarDay, $leap);
-    }
-
-    /** 农历变更：同时写入农历与换算后的阳历。 */
-    public function syncBirthFromLunar(int $lunarYear, int $lunarMonth, int $lunarDay, bool $leap, int $year, int $month, int $day): void
-    {
-        $this->applyLunarBirth($lunarYear, $lunarMonth, $lunarDay, $leap);
-        $this->applySolarBirth($year, $month, $day);
-    }
-
     public function isDirty(): bool
     {
         [$solarYear, $solarMonth, $solarDay] = $this->currentSolarParts();

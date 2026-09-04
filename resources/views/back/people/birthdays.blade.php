@@ -11,6 +11,7 @@
         {{ __('birthday.birthdays') }}
     </x-slot>
 
+    <script src="{{ asset('js/lunar.js') }}"></script>
     <script src="{{ asset('js/chinese-lunar.js') }}"></script>
     <script>
         window.birthdayCalendar = function (people) {

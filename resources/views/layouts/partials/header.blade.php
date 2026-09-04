@@ -21,6 +21,7 @@
     @endif
 </header>
 
+<script src="{{ asset('js/lunar.js') }}"></script>
 <script src="{{ asset('js/chinese-lunar.js') }}"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {

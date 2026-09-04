@@ -1256,6 +1256,78 @@
     color: #2a2118;
   }
 
+  /* 编辑人物弹窗外壳：与简介 zp-paper-card 同款不透明宣纸底 */
+  .zp-shell #edit-person-profile .bg-white,
+  .zp-shell #edit-person-contact .bg-white,
+  .zp-shell #edit-person-death .bg-white,
+  .zp-shell #edit-person-profile .dark\:bg-dark-700,
+  .zp-shell #edit-person-contact .dark\:bg-dark-700,
+  .zp-shell #edit-person-death .dark\:bg-dark-700,
+  html.dark .zp-shell #edit-person-profile .bg-white,
+  html.dark .zp-shell #edit-person-contact .bg-white,
+  html.dark .zp-shell #edit-person-death .bg-white,
+  html.dark .zp-shell #edit-person-profile .dark\:bg-dark-700,
+  html.dark .zp-shell #edit-person-contact .dark\:bg-dark-700,
+  html.dark .zp-shell #edit-person-death .dark\:bg-dark-700 {
+    background-color: #faf6eb !important;
+    background-image:
+      linear-gradient(180deg, rgba(255, 252, 245, 0.72) 0%, rgba(245, 236, 214, 0.45) 100%),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 11px,
+        rgba(138, 107, 42, 0.028) 11px,
+        rgba(138, 107, 42, 0.028) 12px
+      ) !important;
+    background-size: auto, auto !important;
+    background-repeat: no-repeat, repeat !important;
+    border: 1px solid rgba(138, 107, 42, 0.32) !important;
+    border-radius: var(--zp-radius) !important;
+    box-shadow:
+      0 1px 0 rgba(255, 248, 230, 0.55),
+      0 8px 18px -12px rgba(74, 52, 32, 0.35) !important;
+    color: #2a2118 !important;
+  }
+
+  .zp-shell #edit-person-profile .border-b-gray-100,
+  .zp-shell #edit-person-contact .border-b-gray-100,
+  .zp-shell #edit-person-death .border-b-gray-100,
+  .zp-shell #edit-person-profile .dark\:border-b-dark-600,
+  .zp-shell #edit-person-contact .dark\:border-b-dark-600,
+  .zp-shell #edit-person-death .dark\:border-b-dark-600 {
+    border-color: rgba(138, 107, 42, 0.22) !important;
+  }
+
+  .zp-shell #edit-person-profile h3,
+  .zp-shell #edit-person-contact h3,
+  .zp-shell #edit-person-death h3 {
+    color: #2a2118 !important;
+  }
+
+  /* 日期字段：年/月/日控件统一高度与外观 */
+  .zp-edit-modal-panel .zp-date-field {
+    box-sizing: border-box;
+    min-height: 2.625rem;
+    height: 2.625rem;
+    padding: 0.5rem 0.75rem;
+    line-height: 1.25;
+    font-size: 0.875rem;
+    border-radius: var(--zp-radius);
+  }
+
+  .zp-edit-modal-panel input.zp-date-field[type='text'],
+  .zp-edit-modal-panel input.zp-date-field[type='number'] {
+    width: 5.5rem;
+    appearance: textfield;
+    -moz-appearance: textfield;
+  }
+
+  .zp-edit-modal-panel input.zp-date-field::-webkit-outer-spin-button,
+  .zp-edit-modal-panel input.zp-date-field::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
   .zp-shell main .zp-edit-modal-panel,
   .zp-shell main .zp-edit-modal-panel :where(
     p, span, div, label, li, a, td, th, h1, h2, h3, h4, h5, h6, small, strong

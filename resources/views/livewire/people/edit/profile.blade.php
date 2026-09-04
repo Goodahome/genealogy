@@ -78,7 +78,7 @@
                 
                 <x-hr.narrow class="col-span-6 my-0!" />
 
-                {{-- 阳历 / 农历：同一行；填齐年月日后互相同步（约 1900–2100） --}}
+                {{-- 阳历 / 农历：同一行；填齐年月日后互相同步（6tail lunar-javascript，约 1–9999） --}}
                 <div class="col-span-6 grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-5"
                      x-data="{
                         syncing: false,
@@ -86,6 +86,10 @@
                             if (v === null || v === undefined || v === '') return null;
                             const n = parseInt(v, 10);
                             return Number.isFinite(n) ? n : null;
+                        },
+                        async setLocal(path, value) {
+                            // 第三个参数 false：只改前端状态，不发请求，避免重置 wire:dirty
+                            await $wire.set(path, value, false);
                         },
                         async syncSolarToLunar() {
                             if (this.syncing || !window.ChineseLunar?.solarToLunar) return;
@@ -97,7 +101,13 @@
                             if (!lunar) return;
                             this.syncing = true;
                             try {
-                                await $wire.syncBirthFromSolar(y, m, d, lunar.year, lunar.month, lunar.day, !!lunar.isLeap);
+                                await this.setLocal('profileForm.solar_year', y);
+                                await this.setLocal('profileForm.solar_month', m);
+                                await this.setLocal('profileForm.solar_day', d);
+                                await this.setLocal('profileForm.dob_year', lunar.year);
+                                await this.setLocal('profileForm.dob_month', lunar.month);
+                                await this.setLocal('profileForm.dob_day', lunar.day);
+                                await this.setLocal('profileForm.dob_leap', !!lunar.isLeap);
                             } finally {
                                 this.syncing = false;
                             }
@@ -113,7 +123,13 @@
                             if (!solar) return;
                             this.syncing = true;
                             try {
-                                await $wire.syncBirthFromLunar(y, m, d, leap, solar.year, solar.month, solar.day);
+                                await this.setLocal('profileForm.dob_year', y);
+                                await this.setLocal('profileForm.dob_month', m);
+                                await this.setLocal('profileForm.dob_day', d);
+                                await this.setLocal('profileForm.dob_leap', leap);
+                                await this.setLocal('profileForm.solar_year', solar.year);
+                                await this.setLocal('profileForm.solar_month', solar.month);
+                                await this.setLocal('profileForm.solar_day', solar.day);
                             } finally {
                                 this.syncing = false;
                             }
@@ -122,31 +138,23 @@
                     {{-- 阳历出生：年 / 月 / 日 --}}
                     <div>
                         <label class="mb-2 block text-sm font-bold text-[#2a2118]">{{ __('person.dob') }} (阳历):</label>
-                        <div class="flex flex-wrap gap-2">
-                            <select wire:model="profileForm.solar_year"
-                                    id="solar_year"
-                                    x-ref="solarYear"
-                                    x-on:change="syncSolarToLunar()"
-                                    class="block rounded-sm border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500">
-                                <option value="">年</option>
-                                @php
-                                    $solarYearMax = (int) date('Y');
-                                    $solarYearMin = 1000;
-                                    $currentSolarYear = (int) ($profileForm->solar_year ?? 0);
-                                    if ($currentSolarYear > 0 && $currentSolarYear < $solarYearMin) {
-                                        $solarYearMin = $currentSolarYear;
-                                    }
-                                @endphp
-                                @for ($year = $solarYearMax; $year >= $solarYearMin; $year--)
-                                    <option value="{{ $year }}">{{ $year }}年</option>
-                                @endfor
-                            </select>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <input type="text"
+                                   inputmode="numeric"
+                                   pattern="[0-9]*"
+                                   wire:model="profileForm.solar_year"
+                                   id="solar_year"
+                                   x-ref="solarYear"
+                                   x-on:change="syncSolarToLunar()"
+                                   maxlength="4"
+                                   placeholder="年"
+                                   class="zp-date-field" />
 
                             <select wire:model="profileForm.solar_month"
                                     id="solar_month"
                                     x-ref="solarMonth"
                                     x-on:change="syncSolarToLunar()"
-                                    class="block rounded-sm border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500">
+                                    class="zp-date-field">
                                 <option value="">月</option>
                                 @for ($month = 1; $month <= 12; $month++)
                                     <option value="{{ $month }}">{{ $month }}月</option>
@@ -157,7 +165,7 @@
                                     id="solar_day"
                                     x-ref="solarDay"
                                     x-on:change="syncSolarToLunar()"
-                                    class="block rounded-sm border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500">
+                                    class="zp-date-field">
                                 <option value="">日</option>
                                 @for ($day = 1; $day <= 31; $day++)
                                     <option value="{{ $day }}">{{ $day }}日</option>
@@ -169,38 +177,53 @@
                     {{-- 农历出生：年 / 月 / 日 / 闰月 --}}
                     <div>
                         <label class="mb-2 block text-sm font-bold text-[#2a2118]">{{ __('person.dob') }} (农历):</label>
-                        <div class="flex flex-wrap gap-2">
-                            <select wire:model="profileForm.dob_year"
-                                    x-ref="lunarYear"
-                                    x-on:change="syncLunarToSolar()"
-                                    class="block rounded-sm border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500">
-                                <option value="">年</option>
-                                @for ($year = 1900; $year <= 2100; $year++)
-                                    <option value="{{ $year }}">{{ $year }}年</option>
-                                @endfor
-                            </select>
+                        <div class="flex flex-wrap items-center gap-2">
+                            @php
+                                $lunarMonths = [
+                                    1 => '正月', 2 => '二月', 3 => '三月', 4 => '四月',
+                                    5 => '五月', 6 => '六月', 7 => '七月', 8 => '八月',
+                                    9 => '九月', 10 => '十月', 11 => '冬月', 12 => '腊月',
+                                ];
+                                $lunarDays = [
+                                    1 => '初一', 2 => '初二', 3 => '初三', 4 => '初四', 5 => '初五',
+                                    6 => '初六', 7 => '初七', 8 => '初八', 9 => '初九', 10 => '初十',
+                                    11 => '十一', 12 => '十二', 13 => '十三', 14 => '十四', 15 => '十五',
+                                    16 => '十六', 17 => '十七', 18 => '十八', 19 => '十九', 20 => '二十',
+                                    21 => '廿一', 22 => '廿二', 23 => '廿三', 24 => '廿四', 25 => '廿五',
+                                    26 => '廿六', 27 => '廿七', 28 => '廿八', 29 => '廿九', 30 => '三十',
+                                ];
+                            @endphp
+                            <input type="text"
+                                   inputmode="numeric"
+                                   pattern="[0-9]*"
+                                   wire:model="profileForm.dob_year"
+                                   x-ref="lunarYear"
+                                   x-on:change="syncLunarToSolar()"
+                                   maxlength="4"
+                                   placeholder="年"
+                                   class="zp-date-field" />
 
                             <select wire:model="profileForm.dob_month"
                                     x-ref="lunarMonth"
                                     x-on:change="syncLunarToSolar()"
-                                    class="block rounded-sm border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500">
+                                    class="zp-date-field">
                                 <option value="">月</option>
-                                @for ($month = 1; $month <= 12; $month++)
-                                    <option value="{{ $month }}">{{ $month }}月</option>
-                                @endfor
+                                @foreach ($lunarMonths as $month => $label)
+                                    <option value="{{ $month }}">{{ $label }}</option>
+                                @endforeach
                             </select>
 
                             <select wire:model="profileForm.dob_day"
                                     x-ref="lunarDay"
                                     x-on:change="syncLunarToSolar()"
-                                    class="block rounded-sm border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-blue-500 focus:ring-blue-500">
+                                    class="zp-date-field">
                                 <option value="">日</option>
-                                @for ($day = 1; $day <= 30; $day++)
-                                    <option value="{{ $day }}">{{ $day }}日</option>
-                                @endfor
+                                @foreach ($lunarDays as $day => $label)
+                                    <option value="{{ $day }}">{{ $label }}</option>
+                                @endforeach
                             </select>
 
-                            <div class="flex items-center">
+                            <div class="flex h-[2.625rem] items-center">
                                 <input type="checkbox"
                                        id="dob_leap"
                                        x-ref="lunarLeap"
@@ -211,8 +234,6 @@
                             </div>
                         </div>
                     </div>
-
-                    <p class="col-span-full text-xs text-[#6b542e]">可只填阳历年份；填齐任一侧年月日会自动换算另一侧（约 1900–2100）。</p>
                 </div>
 
                 {{-- pob --}}

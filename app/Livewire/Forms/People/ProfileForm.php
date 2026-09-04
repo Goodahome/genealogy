@@ -74,19 +74,19 @@ final class ProfileForm extends Form
             'sex' => ['required', 'in:m,f'],
             'gender_id' => ['nullable', 'integer'],
 
-            'solar_year' => ['nullable', 'integer', 'min:1', 'max:' . date('Y')],
+            'solar_year' => ['nullable', 'integer', 'min:1', 'max:9999'],
             'solar_month' => ['nullable', 'integer', 'min:1', 'max:12'],
             'solar_day' => ['nullable', 'integer', 'min:1', 'max:31'],
 
             'pob' => ['nullable', 'string', 'max:255'],
             'summary' => ['nullable', 'string', 'max:65535'],
 
-            'dob_year' => ['nullable', 'integer', 'min:1900', 'max:2100'],
+            'dob_year' => ['nullable', 'integer', 'min:1', 'max:9999'],
             'dob_month' => ['nullable', 'integer', 'min:1', 'max:12'],
             'dob_day' => ['nullable', 'integer', 'min:1', 'max:30'],
             'dob_leap' => ['boolean'],
 
-            'dod_year' => ['nullable', 'integer', 'min:1900', 'max:2100'],
+            'dod_year' => ['nullable', 'integer', 'min:1', 'max:9999'],
             'dod_month' => ['nullable', 'integer', 'min:1', 'max:12'],
             'dod_day' => ['nullable', 'integer', 'min:1', 'max:30'],
             'dod_leap' => ['boolean'],

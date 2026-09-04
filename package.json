@@ -3,7 +3,9 @@
     "type": "module",
     "scripts": {
         "build": "vite build",
-        "dev": "vite"
+        "dev": "vite",
+        "sync-lunar": "node -e \"require('fs').copyFileSync('node_modules/lunar-javascript/lunar.js','public/js/lunar.js')\"",
+        "postinstall": "npm run sync-lunar"
     },
     "devDependencies": {
         "@tabler/icons": "^3.30",
@@ -15,5 +17,8 @@
         "laravel-vite-plugin": "^1.2",
         "tailwindcss": "^4.1",
         "vite": "^6.3"
+    },
+    "dependencies": {
+        "lunar-javascript": "^1.7.7"
     }
 }
