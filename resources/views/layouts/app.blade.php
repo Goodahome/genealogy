@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) ?: 'zh_cn' }}" dir="ltr" x-data="tallstackui_darkTheme({ dark: true })" x-bind:class="{'dark bg-gray-900': darkTheme, 'bg-gray-100': !darkTheme}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) ?: 'zh_cn' }}" dir="ltr" x-data="tallstackui_darkTheme({ dark: true })" x-bind:class="{'dark bg-[#3d3224]': darkTheme, 'bg-[#3d3224]': !darkTheme}">
 
 <head>
     <meta charset="utf-8">
@@ -15,8 +15,9 @@
     <link rel="icon" type="image/png" href="{{ asset('img/favicon/favicon-96x96.png') }}" sizes="96x96">
 
     <!-- fonts -->
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link rel="stylesheet" href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;600;700&family=Noto+Serif+SC:wght@500;600;700&family=ZCOOL+XiaoWei&display=swap" rel="stylesheet">
 
     <!-- scripts -->
     <tallstackui:script />
@@ -29,7 +30,7 @@
 </head>
 
 <body class="font-sans antialiased">
-    <div class="min-h-screen">
+    <div class="zp-shell">
         <!-- notifications -->
         <x-ts-toast />
         <x-ts-dialog />

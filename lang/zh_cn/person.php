@@ -80,7 +80,7 @@ return [
     'names'       => '姓名',
     'firstname'   => '姓',
     'surname'     => '名',
-    'birthname'   => '出生名',
+    'occupation'  => '职业',
     'nickname'    => '昵称',
     'sex'         => '性别',
     'gender'      => '性别认同',

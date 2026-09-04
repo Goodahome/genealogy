@@ -1,6 +1,6 @@
-<footer class="text-center print:hidden text-neutral-600 dark:text-neutral-200 lg:text-left">
+<footer class="zp-wood-text text-center print:hidden lg:text-left">
     <!-- Top Section: Social Media Links -->
-    <div class="flex items-center justify-center p-2 border-b-2 border-neutral-200 dark:border-neutral-500 lg:justify-between bg-neutral-200 dark:bg-neutral-700">
+    <div class="zp-wood flex items-center justify-center border-b border-[rgba(160,120,55,0.35)] p-2 lg:justify-between">
         <!-- Social Media Header (Visible on Large Screens) -->
         <div class="hidden mr-12 lg:block">
             <span>{{ __('app.connected_social') }}:</span>
@@ -9,28 +9,28 @@
         <!-- Social Media Icons -->
         <div class="flex justify-center">
             <a href="https://www.facebook.com/" class="mr-6" target="_blank" aria-label="Visit Facebook" title="Facebook">
-                <x-ts-icon icon="tabler.brand-facebook" class="text-neutral-900 dark:text-neutral-200" />
+                <x-ts-icon icon="tabler.brand-facebook" class="text-[var(--zp-wood-text-paint)] hover:text-[var(--zp-wood-text-active)]" />
             </a>
             <a href="https://twitter.com/Kreaweb_be" class="mr-6" target="_blank" aria-label="Visit X (formerly Twitter)" title="X">
-                <x-ts-icon icon="tabler.brand-x" class="text-neutral-900 dark:text-neutral-200" />
+                <x-ts-icon icon="tabler.brand-x" class="text-[var(--zp-wood-text-paint)] hover:text-[var(--zp-wood-text-active)]" />
             </a>
             <a href="https://www.instagram.com/" class="mr-6" target="_blank" aria-label="Visit Instagram" title="Instagram">
-                <x-ts-icon icon="tabler.brand-instagram" class="text-neutral-900 dark:text-neutral-200" />
+                <x-ts-icon icon="tabler.brand-instagram" class="text-[var(--zp-wood-text-paint)] hover:text-[var(--zp-wood-text-active)]" />
             </a>
             <a href="https://www.linkedin.com/" class="mr-6" target="_blank" aria-label="Visit LinkedIn" title="LinkedIn">
-                <x-ts-icon icon="tabler.brand-linkedin" class="text-neutral-900 dark:text-neutral-200" />
+                <x-ts-icon icon="tabler.brand-linkedin" class="text-[var(--zp-wood-text-paint)] hover:text-[var(--zp-wood-text-active)]" />
             </a>
             <a href="https://www.youtube.com/channel/UClUVszEUeb-nY7qM00ERCHg" class="mr-6" target="_blank" aria-label="Visit YouTube" title="YouTube">
-                <x-ts-icon icon="tabler.brand-youtube" class="text-neutral-900 dark:text-neutral-200" />
+                <x-ts-icon icon="tabler.brand-youtube" class="text-[var(--zp-wood-text-paint)] hover:text-[var(--zp-wood-text-active)]" />
             </a>
             <a href="https://github.com/MGeurts" class="" target="_blank" aria-label="Visit GitHub" title="GitHub">
-                <x-ts-icon icon="tabler.brand-github" class="text-neutral-900 dark:text-neutral-200" />
+                <x-ts-icon icon="tabler.brand-github" class="text-[var(--zp-wood-text-paint)] hover:text-[var(--zp-wood-text-active)]" />
             </a>
         </div>
     </div>
 
     <!-- Middle Section: Main Content -->
-    <div class="p-2 text-center md:text-left bg-neutral-100 dark:bg-neutral-600">
+    <div class="zp-paper-bar p-2 text-center md:text-left">
         <div class="grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
             <!-- Logo Section -->
             <div class="flex justify-center md:justify-start">

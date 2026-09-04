@@ -106,7 +106,7 @@ final class Photos extends Component
 
             $this->toast()->success(__('app.save'), trans_choice('person.photos_saved', count($this->uploads)))->flash()->send();
 
-            $this->redirect(route('people.edit-photos', ['person' => $this->person->id]));
+            $this->redirect(route('people.show', $this->person) . '?panel=photos');
         }
     }
 

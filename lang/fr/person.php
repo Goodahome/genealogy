@@ -68,7 +68,7 @@ return [
     'names'                          => 'Noms',
     'firstname'                      => 'Prénom',
     'surname'                        => 'Nom de famille',
-    'birthname'                      => 'Nom de naissance',
+    'occupation'                     => 'Profession',
     'nickname'                       => 'Surnom',
     'sex'                            => 'Sexe',
     'gender'                         => 'Identité de genre',

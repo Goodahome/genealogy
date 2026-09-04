@@ -8,10 +8,6 @@
     </x-slot>
 
     <x-authentication-card>
-        <x-slot name="logo">
-            <x-authentication-card-logo />
-        </x-slot>
-
         <x-slot name="header">
             {{ __('auth.login') }}
         </x-slot>
@@ -50,7 +46,7 @@
                     </a>
                 @endif
 
-                <x-ts-button type="submit" color="primary" class="ms-4">
+                <x-ts-button type="submit" color="primary" class="ms-4 shrink-0 whitespace-nowrap">
                     {{ __('auth.login') }}
                 </x-ts-button>
             </div>

@@ -21,6 +21,8 @@ final class Contact extends Component
 
     public ContactForm $contactForm;
 
+    public bool $asModal = false;
+
     // -----------------------------------------------------------------------
     public function mount(): void
     {
@@ -40,16 +42,26 @@ final class Contact extends Component
             $validated = $this->contactForm->validate();
 
             $this->person->update($validated);
+            $this->person->refresh();
+            $this->mount();
 
             $this->dispatch('person_updated');
 
             $this->toast()->success(__('app.save'), __('app.saved'))->send();
+
+            if ($this->asModal) {
+                $this->js('$modalClose("edit-person-contact")');
+            }
         }
     }
 
     public function resetContact(): void
     {
         $this->mount();
+
+        if ($this->asModal) {
+            $this->js('$modalClose("edit-person-contact")');
+        }
     }
 
     public function isDirty(): bool

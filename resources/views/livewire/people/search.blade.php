@@ -1,25 +1,45 @@
-<div>
-    {{-- search box section --}}
-    <div class="p-2 sticky top-[6.5rem] z-20 bg-gray-100 dark:bg-gray-900">
-        <div class="p-2 flex flex-col rounded-sm dark:text-neutral-200 bg-white dark:bg-neutral-700 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)]">
-            {{-- header with toggle button for mobile --}}
-            <div class="flex flex-wrap mb-2 text-lg items-center md:cursor-default cursor-pointer" 
-                 x-data="{}" 
-                 x-on:click="$dispatch('toggle-search')"
-                 x-bind:class="{'hover:bg-gray-100 dark:hover:bg-gray-600': window.innerWidth < 768}">
-                
-                {{-- 添加折叠/展开按钮指示器 --}}
-                <div class="flex-1 grow max-w-full text-left" x-on:click.stop>
-                    @if (auth()->user()->hasPermission('person:create'))
-                        {{-- add button --}}
-                        <x-ts-button href="/people/add" color="emerald" class="text-sm">
-                            <x-ts-icon icon="tabler.user-plus" class="size-5" />
-                            {{ __('person.add_person') }}
-                        </x-ts-button>
-                    @endif
-                </div>
-
-                <div class="flex-1 grow max-w-full text-end">
+<div class="w-full"
+     x-data="{
+        barH: 0,
+        headerBottom: 92,
+        sync() {
+            const header = document.querySelector('header.sticky, header');
+            // 用视口底部坐标贴齐面包屑，再上叠 2px 封死缝隙
+            const bottom = header ? header.getBoundingClientRect().bottom : 92;
+            this.headerBottom = Math.max(0, Math.round(bottom) - 2);
+            this.$nextTick(() => {
+                this.barH = this.$refs.searchBar ? this.$refs.searchBar.offsetHeight : 0;
+            });
+        },
+     }"
+     x-init="
+        if (!Alpine.store('peopleSearch')) {
+            Alpine.store('peopleSearch', { expanded: window.innerWidth >= 768 });
+        }
+        sync();
+        if ($refs.searchBar) {
+            new ResizeObserver(() => sync()).observe($refs.searchBar);
+        }
+        const header = document.querySelector('header.sticky, header');
+        if (header) {
+            new ResizeObserver(() => sync()).observe(header);
+        }
+        $watch(() => $store.peopleSearch.expanded, () => setTimeout(() => sync(), 220));
+     "
+     x-on:resize.window="sync()">
+    {{-- 固定搜索条：贴紧顶栏下沿，上叠 2px 避免透出列表 --}}
+    <div x-ref="searchBar"
+         class="zp-search-fixed zp-sticky-surface fixed left-0 right-0 z-20 w-full p-2 pt-2"
+         x-bind:style="'top:' + headerBottom + 'px'">
+        <div class="flex w-full max-w-none flex-col rounded-sm p-2 dark:text-neutral-200 bg-white dark:bg-neutral-700 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)]">
+            {{-- 点击此行展开/折叠搜索区 --}}
+            <div class="mb-2 flex w-full cursor-pointer flex-wrap items-center gap-2 text-lg"
+                 role="button"
+                 tabindex="0"
+                 title="{{ __('app.search') }}"
+                 x-on:click="$store.peopleSearch.expanded = !$store.peopleSearch.expanded"
+                 x-on:keydown.enter.prevent="$store.peopleSearch.expanded = !$store.peopleSearch.expanded">
+                <div class="min-w-0 flex-1 grow text-end text-base sm:text-lg">
                     @if ($search)
                         {!! __('app.people_found', [
                             'found' => $people->total(),
@@ -34,63 +54,73 @@
                         ]) !!}
                     @endif
                 </div>
+                <span class="inline-flex shrink-0 transition-transform duration-200"
+                      x-bind:class="$store.peopleSearch.expanded ? 'rotate-180' : ''">
+                    <x-ts-icon icon="tabler.chevron-down" class="size-5" />
+                </span>
             </div>
 
             {{-- 可折叠的搜索区域 --}}
-            <div x-data="{}" 
-                 x-init="$store.searchExpanded = window.innerWidth >= 768" 
-                 x-on:toggle-search.window="$store.searchExpanded = !$store.searchExpanded"
-                 x-show="$store.searchExpanded"
+            <div class="w-full"
+                 x-show="$store.peopleSearch.expanded"
+                 x-cloak
                  x-transition:enter="transition ease-out duration-200"
-                 x-transition:enter-start="opacity-0 transform -translate-y-2"
-                 x-transition:enter-end="opacity-100 transform translate-y-0"
+                 x-transition:enter-start="opacity-0 -translate-y-1"
+                 x-transition:enter-end="opacity-100 translate-y-0"
                  x-transition:leave="transition ease-in duration-150"
-                 x-transition:leave-start="opacity-100 transform translate-y-0"
-                 x-transition:leave-end="opacity-0 transform -translate-y-2"
-                 class="md:block">
-                 <div x-data="{}" x-init="
-                        if (!window.Alpine.store('search')) {
-                            window.Alpine.store('search', {
-                                expanded: window.innerWidth >= 768
-                            });
-                        }
-                        $store.searchExpanded = window.Alpine.store('search').expanded;
-                    ">
-                
-                {{-- search box --}}
-                <div class="flex flex-wrap items-start gap-2">
-                    <div class="flex-1 grow w-full">
-                        <x-ts-input wire:model.live.debounce.500ms="search" icon="tabler.search" hint="{{ __('app.people_search_tip') }}" placeholder="{{ __('app.people_search_placeholder') }}" autofocus clearable />
+                 x-transition:leave-start="opacity-100 translate-y-0"
+                 x-transition:leave-end="opacity-0 -translate-y-1">
+                {{-- search + perpage + add + help --}}
+                <div class="flex w-full flex-wrap items-end gap-2">
+                    <div class="min-w-0 w-full flex-1 grow">
+                        <x-ts-input wire:model.live.debounce.500ms="search" icon="tabler.search" placeholder="{{ __('app.people_search_tip') }}" autofocus clearable />
                     </div>
 
-                    <div class="flex-1 max-w-max">
-                        <x-ts-button color="cyan" title="{{ __('app.help') }}" x-on:click="$modalOpen('search-help')" class="pb-1! p-1.5! mt-1! text-sm text-white">
-                            <x-ts-icon icon="tabler.help" />
-                        </x-ts-button>
-                    </div>
-                </div>
-
-                {{-- footer : perpage and pagination --}}
-                @if (count($people) > 0)
-                    <div class="flex flex-wrap items-center justify-center gap-2 mt-2">
-                        <div class="flex-1 grow min-w-max max-w-36">
+                    @if (count($people) > 0)
+                        <div class="w-[5.5rem] max-w-full shrink-0 self-start">
                             <x-ts-select.styled wire:model.live="perpage" name="perpage" id="perpage" :options="$options" select="label:label|value:value" required />
                         </div>
+                    @endif
 
-                        <div class="flex-1 grow max-w-full min-w-max text-end">
-                            {{ $people->links('livewire/pagination/tailwind') }}
-                        </div>
+                    @if (auth()->user()->hasPermission('person:create'))
+                        <a href="/people/add"
+                           title="{{ __('person.add_person') }}"
+                           aria-label="{{ __('person.add_person') }}"
+                           class="zp-search-action shrink-0 self-start">
+                            <x-ts-icon icon="tabler.user-plus" class="size-5" />
+                        </a>
+                    @endif
+
+                    <button type="button"
+                            title="{{ __('app.help') }}"
+                            aria-label="{{ __('app.help') }}"
+                            x-on:click="$modalOpen('search-help')"
+                            class="zp-search-action shrink-0 self-start">
+                        <x-ts-icon icon="tabler.help" class="size-5" />
+                    </button>
+                </div>
+
+                {{-- pagination --}}
+                @if (count($people) > 0)
+                    <div class="mt-2 flex w-full flex-wrap items-center justify-end gap-2">
+                        {{ $people->links('livewire/pagination/tailwind') }}
                     </div>
                 @endif
             </div>
         </div>
     </div>
 
+    {{-- 占位：高度与固定搜索条一致，避免列表被挡住 --}}
+    <div class="w-full shrink-0" x-bind:style="'height:' + barH + 'px'" aria-hidden="true"></div>
+
     @if (count($people) > 0)
-        {{-- people grid --}}
-        <div class="grid grid-cols-1 gap-2 p-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 2xl:grid-cols-6 [&>div]:h-full">
+        {{-- 墙面：独立墙面背景 + 散落 A4 纸张（非整齐 Card Grid） --}}
+        <div class="zp-paper-wall">
             @foreach ($people as $person)
-                <livewire:people.person :person="$person" :key="$person->id" class="block h-full" />
+                <div class="zp-paper-wall__cell" wire:key="person-cell-{{ $person->id }}">
+                    {{-- 纯 Blade 卡片，避免每张再挂一个 Livewire 实例 --}}
+                    @include('livewire.people.person', ['person' => $person])
+                </div>
             @endforeach
         </div>
     @else
@@ -105,8 +135,8 @@
         </div>
     @endif
 
-    {{-- search help modal --}}
-    <x-ts-modal id="search-help" size="6xl" blur>
+    {{-- search help modal：居中 + 提高层级，避免被 sticky 顶栏盖住 --}}
+    <x-ts-modal id="search-help" size="6xl" blur center z-index="z-[100]">
         <x-slot:title>
             <x-ts-icon icon="tabler.help" class="inline-block" />{{ __('app.help') }}
         </x-slot:title>

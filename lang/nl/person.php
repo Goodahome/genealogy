@@ -80,7 +80,7 @@ return [
     'names'       => 'Namen',
     'firstname'   => 'Voornaam',
     'surname'     => 'Achternaam',
-    'birthname'   => 'Geboortenaam',
+    'occupation'  => 'Beroep',
     'nickname'    => 'Bijnaam',
     'sex'         => 'Geslacht',
     'gender'      => 'Gender identiteit',

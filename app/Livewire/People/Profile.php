@@ -18,9 +18,15 @@ final class Profile extends Component
 
     // -----------------------------------------------------------------------
     protected $listeners = [
-        'person_updated' => 'render',
-        'couple_deleted' => 'render',
+        'person_updated' => 'refreshPerson',
+        'photos_updated' => 'refreshPerson',
+        'couple_deleted' => 'refreshPerson',
     ];
+
+    public function refreshPerson(): void
+    {
+        $this->person->refresh();
+    }
 
     // -----------------------------------------------------------------------
     public function confirm(): void

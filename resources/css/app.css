@@ -15,54 +15,51 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  /* TallStackUI START ------------------------------------------------------------------ */
-  --color-dark-50: #f1f5fb;
-  --color-dark-100: #ebeef3;
-  --color-dark-200: #d3d9e4;
-  --color-dark-300: #acb8cd;
-  --color-dark-400: #7f92b1;
-  --color-dark-500: #5f7498;
-  --color-dark-600: #4b5d7e;
-  --color-dark-700: #3f4d69;
-  --color-dark-800: #364156;
-  --color-dark-900: #30384a;
-  --color-dark-950: #202531;
+  /* TallStackUI / 族谱朱砂·茶墨 ----------------------------------------------- */
+  --color-dark-50: #f7f0dd;
+  --color-dark-100: #efe6cf;
+  --color-dark-200: #d9c9a8;
+  --color-dark-300: #b8a07a;
+  --color-dark-400: #8a6b2a;
+  --color-dark-500: #5a3d22;
+  --color-dark-600: #3d3224;
+  --color-dark-700: #2a2218;
+  --color-dark-800: #1e1810;
+  --color-dark-900: #15110c;
+  --color-dark-950: #0c0a08;
 
-  --color-primary-50: #f1f5fb;
-  --color-primary-100: #e3ebf7;
-  --color-primary-200: #c7d7f0;
-  --color-primary-300: #abc2e8;
-  --color-primary-400: #8faee0;
-  --color-primary-500: #6590d5;
-  --color-primary-600: #3061af;
-  --color-primary-700: #285192;
-  --color-primary-800: #204075;
-  --color-primary-900: #183058;
-  --color-primary-950: #183058;
+  --color-primary-50: #fdf5f3;
+  --color-primary-100: #f8e4e0;
+  --color-primary-200: #f0c5bc;
+  --color-primary-300: #e39a8c;
+  --color-primary-400: #d06b5a;
+  --color-primary-500: #b23a2d;
+  --color-primary-600: #8f2d23;
+  --color-primary-700: #75261e;
+  --color-primary-800: #5f211b;
+  --color-primary-900: #501e1a;
+  --color-primary-950: #2c0d0b;
 
-  --color-secondary-50: #f8f9f9;
-  --color-secondary-100: #f1f2f4;
-  --color-secondary-200: #e4e6e9;
-  --color-secondary-300: #d6d9de;
-  --color-secondary-400: #c8ccd3;
-  --color-secondary-500: #b3b9c2;
-  --color-secondary-600: #848d9c;
-  --color-secondary-700: #6b7585;
-  --color-secondary-800: #565d6b;
-  --color-secondary-900: #404650;
-  --color-secondary-950: #404650;
-  /* TallStackUI END -------------------------------------------------------------------- */
+  --color-secondary-50: #f7f5f2;
+  --color-secondary-100: #ebe6de;
+  --color-secondary-200: #d6cdb8;
+  --color-secondary-300: #b8a98e;
+  --color-secondary-400: #9a8768;
+  --color-secondary-500: #7a6850;
+  --color-secondary-600: #5f5240;
+  --color-secondary-700: #4a4134;
+  --color-secondary-800: #3d362c;
+  --color-secondary-900: #342e27;
+  --color-secondary-950: #1c1914;
 
-  --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-sans: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+  --font-serif: 'ZCOOL XiaoWei', 'Noto Serif SC', 'Songti SC', 'SimSun', ui-serif, serif;
 }
 
 /*
   The default border color has changed to `currentColor` in Tailwind CSS v4,
   so we've added these compatibility styles to make sure everything still
   looks the same as it did with Tailwind CSS v3.
-
-  If we ever want to remove these styles, we need to add an explicit border
-  color utility to any element that depends on these defaults.
 */
 @layer base {
   *,
@@ -72,10 +69,1400 @@
   ::file-selector-button {
     border-color: var(--color-gray-200, currentColor);
   }
+
+  :root {
+    /* 告示牌木面：浅金墨正文（对齐 Jinanghu hero-app） */
+    --zp-ink: #f7f0dd;
+    --zp-ink-soft: #e8dcc0;
+    --zp-seal: #b23a2d;
+    --zp-seal-dark: #8f2d23;
+    --zp-mist: rgba(247, 240, 221, 0.1);
+    --zp-paper: transparent;
+    --zp-line: rgba(196, 163, 90, 0.38);
+    --zp-muted: rgba(247, 240, 221, 0.62);
+    --zp-gold: #c4a35a;
+    --zp-gold-bright: #e4c878;
+    --zp-gold-deep: #8a6b2a;
+    --zp-board: #2a2218;
+    --zp-board-mid: #3d3224;
+    --zp-plaque: #f7f0dd;
+    /* 导航木牌（jinbang） */
+    --zp-wood-base: #2a1c12;
+    --zp-wood-image: url('/img/textures/jinbang-wood.png');
+    --zp-paper-image: url('/img/textures/rice-paper.png');
+    --zp-street-image: url('/img/textures/ancient-street.png');
+    /* 告示牌内容面贴图：轻罩色（过重会显脏、与 sticky 叠色不一致） */
+    --zp-notice-wood-image: url('/img/textures/notice-wood.png');
+    --zp-board-face-overlay: linear-gradient(
+      180deg,
+      rgba(62, 48, 32, 0.22),
+      rgba(42, 34, 24, 0.12)
+    );
+    --zp-board-face-size: auto, 280px 280px;
+    --zp-board-face-position: 0 0;
+    --zp-board-face-attachment: fixed;
+    --zp-wood-overlay: linear-gradient(
+      180deg,
+      rgba(60, 40, 22, 0.22) 0%,
+      rgba(24, 16, 10, 0.32) 100%
+    );
+    --zp-wood-grain: repeating-linear-gradient(
+      92deg,
+      transparent 0 1px,
+      rgba(210, 170, 90, 0.05) 1px 2px,
+      transparent 2px 5px
+    );
+    --zp-wood-text-paint: #f3e6c8;
+    --zp-wood-text-paint-deep: #d8c49a;
+    --zp-wood-text-active: #f0a090;
+    --zp-wood-text-shine:
+      -0.5px -0.5px 0 rgba(8, 4, 2, 0.55),
+      0.5px 0.5px 0 rgba(255, 230, 170, 0.22);
+    --zp-font-display: 'ZCOOL XiaoWei', 'Noto Serif SC', 'Songti SC', serif;
+    --zp-font-body: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+    --zp-radius: 4px;
+  }
+
+  html {
+    color: var(--zp-ink);
+    background-color: #3d3224;
+  }
+
+  body {
+    font-family: var(--zp-font-body);
+    color: var(--zp-ink);
+    /* 木面改由 ::before fixed 层绘制，移动端滚动时背景不跟着走 */
+    background: transparent;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background-color: #3d3224;
+    background-image: var(--zp-board-face-overlay), var(--zp-notice-wood-image);
+    background-size: var(--zp-board-face-size);
+    background-position: var(--zp-board-face-position);
+    background-repeat: repeat, repeat;
+  }
+
+  .dark body,
+  html.dark body {
+    background: transparent;
+    color: var(--zp-ink);
+  }
+
+  .dark body::before,
+  html.dark body::before {
+    background-color: #3d3224;
+    background-image: var(--zp-board-face-overlay), var(--zp-notice-wood-image);
+    background-size: var(--zp-board-face-size);
+    background-position: var(--zp-board-face-position);
+    background-repeat: repeat, repeat;
+  }
+}
+
+@layer components {
+  .zp-shell {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    color: var(--zp-ink);
+    /* 不重复铺木面，避免与 body 双层遮罩叠色 */
+    background: transparent;
+  }
+
+  main {
+    flex: 1 1 auto;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
+    color: var(--zp-ink);
+    background: transparent;
+  }
+
+  .zp-display {
+    font-family: var(--zp-font-display);
+    letter-spacing: 0.04em;
+  }
+
+  .zp-wood {
+    background-color: var(--zp-wood-base) !important;
+    background-image: var(--zp-wood-overlay), var(--zp-wood-grain), var(--zp-wood-image) !important;
+    background-size: auto, auto, 180px 180px !important;
+    background-position: center, center, center !important;
+    background-repeat: no-repeat, repeat, repeat !important;
+    background-blend-mode: multiply, normal, normal !important;
+    border-color: rgba(196, 163, 90, 0.45) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 220, 160, 0.18),
+      inset 0 -2px 4px rgba(0, 0, 0, 0.35),
+      0 1px 2px rgba(0, 0, 0, 0.28) !important;
+    color: var(--zp-wood-text-paint) !important;
+    text-shadow: var(--zp-wood-text-shine) !important;
+  }
+
+  .zp-wood:hover {
+    background-image:
+      linear-gradient(180deg, rgba(90, 60, 30, 0.28) 0%, rgba(30, 20, 12, 0.38) 100%),
+      var(--zp-wood-grain),
+      var(--zp-wood-image) !important;
+    background-blend-mode: multiply, normal, normal !important;
+    filter: brightness(1.08);
+  }
+
+  .zp-wood-text {
+    color: var(--zp-wood-text-paint) !important;
+    text-shadow: var(--zp-wood-text-shine) !important;
+  }
+
+  .zp-wood-active,
+  .zp-wood.is-active {
+    color: var(--zp-wood-text-active) !important;
+    text-shadow:
+      -0.5px -0.5px 0 rgba(50, 12, 8, 0.55),
+      0.5px 0.5px 0 rgba(255, 200, 170, 0.35) !important;
+  }
+
+  .zp-paper-bar {
+    /* 与 body 同一套 fixed 木面，纹路连续 */
+    background-color: #3d3224;
+    background-image: var(--zp-board-face-overlay), var(--zp-notice-wood-image);
+    background-size: var(--zp-board-face-size);
+    background-position: var(--zp-board-face-position);
+    background-repeat: repeat, repeat;
+    background-attachment: var(--zp-board-face-attachment);
+    border-bottom: 1px solid var(--zp-line);
+    color: var(--zp-ink-soft);
+    box-shadow: inset 0 -1px 0 rgba(196, 163, 90, 0.18);
+  }
+
+  .zp-card {
+    background: transparent !important;
+    border: 1px solid var(--zp-line) !important;
+    border-radius: var(--zp-radius) !important;
+    box-shadow: none !important;
+    color: var(--zp-ink);
+  }
+
+  /* 人物页宣纸卡片（不透明，覆盖全局透明底规则） */
+  .zp-paper-card,
+  .zp-shell main .zp-paper-card,
+  .zp-shell .zp-paper-card {
+    background-color: #faf6eb !important;
+    background-image:
+      linear-gradient(180deg, rgba(255, 252, 245, 0.72) 0%, rgba(245, 236, 214, 0.45) 100%),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 11px,
+        rgba(138, 107, 42, 0.028) 11px,
+        rgba(138, 107, 42, 0.028) 12px
+      ) !important;
+    background-size: auto, auto !important;
+    background-repeat: no-repeat, repeat !important;
+    border: 1px solid rgba(138, 107, 42, 0.32) !important;
+    border-radius: var(--zp-radius) !important;
+    box-shadow:
+      0 1px 0 rgba(255, 248, 230, 0.55),
+      0 8px 18px -12px rgba(74, 52, 32, 0.35) !important;
+    color: #2a2118 !important;
+  }
+
+  .zp-paper-card a {
+    color: #5a3d22;
+  }
+
+  .zp-paper-card a:hover {
+    color: var(--zp-seal);
+  }
+
+  /* 纸卡内文字强制茶墨，避免继承木面浅金墨 */
+  .zp-shell main .zp-paper-card,
+  .zp-shell main .zp-paper-card :where(p, span, td, th, div, label, h1, h2, h3, h4) {
+    color: #2a2118;
+  }
+
+  .zp-paper-card .border-neutral-100,
+  .zp-paper-card .border-neutral-600,
+  .zp-paper-card .dark\:border-neutral-600 {
+    border-color: rgba(138, 107, 42, 0.22) !important;
+  }
+
+  /* ---------- 墙面 + 独立 A4 实体纸（固定列宽，每行多张） ---------- */
+  .zp-paper-wall {
+    --zp-sheet-w: 12.5rem;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, var(--zp-sheet-w));
+    justify-content: center;
+    align-items: start;
+    column-gap: 1.5rem;
+    row-gap: 1rem;
+    overflow: visible;
+    margin: 0.15rem 0.5rem 1.25rem;
+    padding: 0.5rem 1rem 2rem;
+    min-height: 28rem;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+  }
+
+  .zp-paper-wall__cell {
+    position: relative;
+    z-index: 1;
+    width: var(--zp-sheet-w);
+    max-width: var(--zp-sheet-w);
+    min-width: 0;
+    /* 给旋转留出角部空间，避免被格子间距裁切遮挡 */
+    padding: 0.55rem 0.45rem;
+    margin: 0.15rem 0;
+    overflow: visible;
+    box-sizing: border-box;
+  }
+
+  .zp-paper-wall > * {
+    width: var(--zp-sheet-w);
+    max-width: var(--zp-sheet-w);
+    min-width: 0;
+    box-sizing: border-box;
+    overflow: visible;
+  }
+
+  .zp-paper-wall__cell > * {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .zp-paper-wall__cell:hover {
+    z-index: 20;
+  }
+
+  /* 仅上下错位（幅度收小，减少角部探出） */
+  .zp-paper-wall__cell:nth-child(8n + 1) { margin-top: 0.1rem; margin-bottom: 0.45rem; }
+  .zp-paper-wall__cell:nth-child(8n + 2) { margin-top: 0.45rem; margin-bottom: 0.2rem; }
+  .zp-paper-wall__cell:nth-child(8n + 3) { margin-top: 0.1rem; margin-bottom: 0.5rem; }
+  .zp-paper-wall__cell:nth-child(8n + 4) { margin-top: 0.55rem; margin-bottom: 0.2rem; }
+  .zp-paper-wall__cell:nth-child(8n + 5) { margin-top: 0.2rem; margin-bottom: 0.4rem; }
+  .zp-paper-wall__cell:nth-child(8n + 6) { margin-top: 0.4rem; margin-bottom: 0.15rem; }
+  .zp-paper-wall__cell:nth-child(8n + 7) { margin-top: 0.05rem; margin-bottom: 0.5rem; }
+  .zp-paper-wall__cell:nth-child(8n + 8) { margin-top: 0.35rem; margin-bottom: 0.25rem; }
+
+  /* 轻旋转：仅桌面指针设备；原点居中，角部更不易被邻格间距挡住 */
+  @media (hover: hover) and (pointer: fine) {
+    .zp-paper-wall__cell:nth-child(8n + 1) .zp-wall-sheet { transform: rotate(-1.6deg); }
+    .zp-paper-wall__cell:nth-child(8n + 2) .zp-wall-sheet { transform: rotate(1.2deg); }
+    .zp-paper-wall__cell:nth-child(8n + 3) .zp-wall-sheet { transform: rotate(-0.9deg); }
+    .zp-paper-wall__cell:nth-child(8n + 4) .zp-wall-sheet { transform: rotate(1.8deg); }
+    .zp-paper-wall__cell:nth-child(8n + 5) .zp-wall-sheet { transform: rotate(-1.9deg); }
+    .zp-paper-wall__cell:nth-child(8n + 6) .zp-wall-sheet { transform: rotate(0.7deg); }
+    .zp-paper-wall__cell:nth-child(8n + 7) .zp-wall-sheet { transform: rotate(-1.2deg); }
+    .zp-paper-wall__cell:nth-child(8n + 8) .zp-wall-sheet { transform: rotate(1.5deg); }
+
+    .zp-paper-wall__cell:hover .zp-wall-sheet {
+      transform: translateY(-4px);
+      box-shadow: 0 6px 16px rgba(20, 12, 6, 0.22);
+    }
+  }
+
+  .zp-wall-sheet {
+    position: relative;
+    display: block;
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 210 / 297;
+    transform-origin: center center;
+    background-color: #faf6eb;
+    box-shadow: 0 2px 8px rgba(20, 12, 6, 0.18);
+    box-sizing: border-box;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .zp-wall-sheet {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+  }
+
+  .zp-wall-sheet__face {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    height: 100%;
+    min-height: 0;
+    overflow: hidden;
+    /* 内容整体略下移，顶部留白 */
+    padding-top: 0.65rem;
+    background-color: #faf6eb;
+    background-image:
+      linear-gradient(180deg, rgba(255, 252, 245, 0.72) 0%, rgba(245, 236, 214, 0.4) 100%),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 11px,
+        rgba(138, 107, 42, 0.028) 11px,
+        rgba(138, 107, 42, 0.028) 12px
+      );
+    border: 1px solid rgba(138, 107, 42, 0.28);
+    border-radius: 1px;
+    color: #2a2118;
+    box-shadow: inset 0 0 0 1px rgba(210, 190, 150, 0.45);
+  }
+
+  .zp-wall-sheet__face > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* 轻折痕：无 mix-blend-mode，避免黑闪与高 GPU 开销 */
+  .zp-wall-sheet__face::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    background: linear-gradient(
+      98deg,
+      transparent 47%,
+      rgba(90, 70, 40, 0.06) 49.5%,
+      rgba(255, 255, 255, 0.22) 50%,
+      rgba(90, 70, 40, 0.04) 50.8%,
+      transparent 54%
+    );
+    opacity: 0.7;
+  }
+
+  .zp-wall-sheet a {
+    color: #5a3d22;
+  }
+
+  .zp-wall-sheet a:hover {
+    color: var(--zp-seal);
+  }
+
+  .zp-sheet-actions {
+    display: flex;
+    gap: 0.375rem;
+    width: 100%;
+  }
+
+  .zp-sheet-btn {
+    display: inline-flex;
+    flex: 1 1 0;
+    min-width: 0;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    height: 1.75rem;
+    padding: 0 0.35rem;
+    border: 1px solid rgba(138, 107, 42, 0.35);
+    border-radius: 0;
+    background: rgba(255, 252, 245, 0.85);
+    color: #5a3d22 !important;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .zp-sheet-btn:hover {
+    background: rgba(247, 240, 221, 0.98);
+    border-color: rgba(178, 58, 45, 0.45);
+    color: var(--zp-seal) !important;
+  }
+
+  @media (max-width: 640px) {
+    .zp-paper-wall {
+      --zp-sheet-w: min(11.25rem, 46vw);
+      padding: 0.35rem 0.65rem 1.5rem;
+      margin: 0.1rem 0.25rem 1rem;
+      column-gap: 0.75rem;
+      row-gap: 0.65rem;
+    }
+
+    .zp-paper-wall__cell {
+      padding: 0.35rem 0.25rem;
+      margin-top: 0.15rem !important;
+      margin-bottom: 0.15rem !important;
+    }
+  }
+
+  /* 搜索区操作钮：与输入框同高、木牌统一样式 */
+  .zp-search-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.375rem;
+    height: 2.375rem;
+    padding: 0;
+    border: 1px solid rgba(210, 170, 90, 0.45);
+    border-radius: var(--zp-radius);
+    background-color: var(--zp-wood-base);
+    background-image: var(--zp-wood-overlay), var(--zp-wood-grain), var(--zp-wood-image);
+    background-size: auto, auto, 180px 180px;
+    background-position: center, center, center;
+    background-repeat: no-repeat, repeat, repeat;
+    background-blend-mode: multiply, normal, normal;
+    color: var(--zp-wood-text-paint);
+    text-shadow: var(--zp-wood-text-shine);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 220, 160, 0.18),
+      inset 0 -2px 4px rgba(0, 0, 0, 0.35),
+      0 1px 2px rgba(0, 0, 0, 0.28);
+    cursor: pointer;
+    transition: filter 0.15s ease, color 0.15s ease;
+  }
+
+  .zp-search-action:hover {
+    filter: brightness(1.08);
+    color: var(--zp-wood-text-active);
+  }
+
+  /*
+    卡片/面板：透明底 + 金线（勿在属性选择器里写 shadow-[...]，] 会截断选择器导致整条规则失效）
+  */
+  .zp-shell main .bg-white,
+  .zp-shell main .bg-gray-50,
+  .zp-shell main .bg-gray-100,
+  .zp-shell main .bg-neutral-50,
+  .zp-shell main .bg-neutral-100,
+  .zp-shell .bg-white,
+  html.dark .zp-shell main .bg-neutral-700,
+  html.dark .zp-shell main .bg-neutral-800,
+  html.dark .zp-shell main .bg-gray-700,
+  html.dark .zp-shell main .bg-gray-800,
+  html.dark .zp-shell main .bg-dark-800,
+  html.dark .zp-shell .bg-white {
+    background-color: transparent !important;
+    background-image: none !important;
+    border-width: 1px !important;
+    border-style: solid !important;
+    border-color: var(--zp-line) !important;
+    color: var(--zp-ink) !important;
+    box-shadow: none !important;
+  }
+
+  /* 登录/认证：在顶栏下方剩余空间居中，表单保持内容高度不被拉长 */
+  .zp-auth-wrap {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 0;
+    padding: 1rem;
+  }
+
+  .zp-auth-frame {
+    display: flex;
+    width: 100%;
+    max-width: 56rem; /* 原 sm:max-w-4xl */
+    flex-shrink: 0;
+    overflow: hidden;
+    border: 1px solid var(--zp-line);
+    border-radius: var(--zp-radius);
+    /* 高度只跟表单内容走 */
+    height: auto;
+    align-items: stretch;
+  }
+
+  .zp-auth-media {
+    display: none;
+    position: relative;
+    width: 33.333%;
+    flex-shrink: 0;
+    overflow: hidden;
+    /* 不参与固有高度计算，高度由右侧表单撑开 */
+    min-height: 0;
+  }
+
+  .zp-auth-media img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .zp-auth-panel {
+    width: 100%;
+    flex: 1 1 auto;
+    padding: 2rem;
+    background: transparent !important;
+    border: none;
+    border-radius: var(--zp-radius);
+    color: var(--zp-ink);
+    box-shadow: none;
+    /* 内容高度，不拉伸 */
+    height: auto;
+    align-self: flex-start;
+  }
+
+  /* 登录/注册按钮文字不换行 */
+  .zp-auth-panel button,
+  .zp-auth-panel a[type],
+  .zp-auth-panel [type='submit'] {
+    white-space: nowrap !important;
+  }
+
+  @media (min-width: 768px) {
+    .zp-auth-media {
+      display: block;
+    }
+
+    .zp-auth-panel {
+      width: 66.666%;
+      align-self: stretch;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .zp-auth-wrap {
+      justify-content: flex-start;
+      padding: 0.75rem;
+      overflow-y: auto;
+    }
+
+    .zp-auth-frame {
+      max-width: 100%;
+    }
+
+    .zp-auth-panel {
+      padding: 1.25rem;
+    }
+
+    .zp-auth-panel .zp-display {
+      margin-bottom: 1.25rem;
+      font-size: 1.75rem;
+    }
+  }
+
+  /* 输入框 / 文本域 / 下拉：透明底 + 金色描边（Jetstream + TallStackUI） */
+  .zp-shell input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='file']):not([type='hidden']):not([type='submit']):not([type='button']):not([type='image']),
+  .zp-shell textarea,
+  .zp-shell select,
+  .zp-shell .ts-input,
+  .zp-shell [data-slot='control'] {
+    background-color: transparent !important;
+    background-image: none !important;
+    color: var(--zp-ink) !important;
+    border-color: var(--zp-line) !important;
+    caret-color: var(--zp-gold-bright);
+  }
+
+  .zp-shell input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='file']):not([type='hidden']):focus,
+  .zp-shell textarea:focus,
+  .zp-shell select:focus {
+    border-color: var(--zp-gold) !important;
+    outline: none !important;
+    --tw-ring-color: rgba(196, 163, 90, 0.45) !important;
+    box-shadow: 0 0 0 1px rgba(196, 163, 90, 0.45) !important;
+  }
+
+  .zp-shell input::placeholder,
+  .zp-shell textarea::placeholder {
+    color: rgba(247, 240, 221, 0.42) !important;
+  }
+
+  /* TallStackUI 输入外壳：bg-white / dark:bg-dark-800 + ring */
+  .zp-shell div.flex.rounded-md.ring-1,
+  .zp-shell div[class*='ring-1'][class*='rounded-md'][class*='bg-white'],
+  html.dark .zp-shell div[class*='ring-1'][class*='rounded-md'][class*='bg-dark-800'],
+  html.dark .zp-shell div[class*='ring-1'][class*='rounded-md'][class*='dark:bg-dark-800'] {
+    background-color: transparent !important;
+    background-image: none !important;
+    --tw-ring-color: var(--zp-line) !important;
+    color: var(--zp-ink) !important;
+  }
+
+  .zp-shell div.flex.rounded-md.ring-1:focus-within,
+  .zp-shell div[class*='ring-1'][class*='rounded-md']:focus-within {
+    --tw-ring-color: var(--zp-gold) !important;
+  }
+
+  /* 卡片内部分割线 */
+  .zp-shell main .border-neutral-100,
+  .zp-shell main .border-neutral-600,
+  .zp-shell main .border-gray-200,
+  .zp-shell main .border-gray-700 {
+    border-color: var(--zp-line) !important;
+  }
+
+  /* 中性文字在木面上改为浅金墨 */
+  .zp-shell main .text-neutral-800,
+  .zp-shell main .text-neutral-50,
+  .zp-shell .text-neutral-800 {
+    color: var(--zp-ink) !important;
+  }
+
+  .zp-sticky-surface {
+    /* 与 body::before 同一套 viewport-fixed 木面，纹路连续不断层 */
+    background-color: #3d3224 !important;
+    background-image: var(--zp-board-face-overlay), var(--zp-notice-wood-image) !important;
+    background-size: var(--zp-board-face-size) !important;
+    background-position: var(--zp-board-face-position) !important;
+    background-repeat: repeat, repeat !important;
+    background-attachment: fixed !important;
+  }
+
+  /* 搜索条视口固定：全宽，贴紧顶栏，上沿延伸封缝 */
+  .zp-search-fixed {
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    box-sizing: border-box;
+  }
+
+  .zp-search-fixed::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -4px;
+    height: 6px;
+    background-color: #3d3224;
+    background-image: var(--zp-board-face-overlay), var(--zp-notice-wood-image);
+    background-size: var(--zp-board-face-size);
+    background-position: var(--zp-board-face-position);
+    background-repeat: repeat, repeat;
+    background-attachment: fixed;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .zp-nav {
+    border-bottom: 1px solid rgba(120, 85, 40, 0.55);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.22);
+  }
+
+  /* 导航木牌按钮：与整条木纹顶栏分离，有描边与凹凸 */
+  .zp-nav-link {
+    font-family: var(--zp-font-display);
+    letter-spacing: 0.04em;
+    font-weight: 600;
+    border: 1px solid rgba(210, 170, 90, 0.42) !important;
+    border-radius: var(--zp-radius);
+    padding: 0.4rem 0.75rem;
+    line-height: 1.25;
+    white-space: nowrap;
+    transition: color 0.15s ease, filter 0.15s ease, box-shadow 0.15s ease, border-color 0.15s ease;
+  }
+
+  .zp-nav-link.zp-wood-active {
+    border-color: rgba(240, 160, 144, 0.65) !important;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 220, 160, 0.22),
+      inset 0 -2px 5px rgba(0, 0, 0, 0.42),
+      0 0 0 1px rgba(178, 58, 45, 0.35),
+      0 1px 3px rgba(0, 0, 0, 0.3) !important;
+  }
+
+  /* 人物简介侧栏内容开关 */
+  .zp-panel-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.2rem 0.55rem;
+    border: 1px solid rgba(196, 163, 90, 0.4);
+    border-radius: var(--zp-radius);
+    background: rgba(61, 50, 36, 0.55);
+    color: var(--zp-ink-soft);
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.25;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .zp-panel-toggle:hover {
+    border-color: rgba(228, 200, 120, 0.55);
+    color: var(--zp-ink);
+  }
+
+  .zp-panel-toggle.is-on {
+    background: rgba(178, 58, 45, 0.28);
+    border-color: rgba(240, 160, 144, 0.7);
+    color: #f0a090;
+    box-shadow: inset 0 0 0 1px rgba(178, 58, 45, 0.25);
+  }
+
+  /* 简介页右侧统一内容卡（高度由简介卡同步） */
+  .zp-side-panel {
+    flex: 0 0 auto;
+    width: min(42rem, 100%);
+    max-width: 100%;
+    align-self: flex-start;
+    z-index: 10;
+  }
+
+  .zp-side-panel-shell {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .zp-side-panel-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    flex: 0 0 auto;
+    padding: 0.55rem 0.6rem;
+    border-bottom: 1px solid rgba(138, 107, 42, 0.28);
+    background: rgba(255, 250, 236, 0.55);
+  }
+
+  .zp-side-panel-tablist {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .zp-side-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.28rem;
+    padding: 0.28rem 0.55rem;
+    border: 1px solid rgba(138, 107, 42, 0.28);
+    border-radius: var(--zp-radius);
+    background: rgba(250, 246, 235, 0.85);
+    color: #5a3d22;
+    font-size: 0.72rem;
+    font-weight: 600;
+    line-height: 1.2;
+    white-space: nowrap;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .zp-side-tab:hover {
+    border-color: rgba(178, 58, 45, 0.45);
+    color: var(--zp-seal);
+  }
+
+  .zp-side-tab.is-on {
+    background: rgba(178, 58, 45, 0.12);
+    border-color: rgba(178, 58, 45, 0.55);
+    color: var(--zp-seal);
+    box-shadow: inset 0 0 0 1px rgba(178, 58, 45, 0.12);
+  }
+
+  .zp-side-panel-body {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: auto;
+    padding: 0.35rem 0.5rem 0.5rem;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .zp-side-panel-body .min-w-80,
+  .zp-side-panel-body .min-w-max,
+  .zp-side-panel-body .max-w-5xl,
+  .zp-side-panel-body .max-w-192,
+  .zp-side-panel-body .max-w-sm {
+    min-width: 0 !important;
+    max-width: none !important;
+  }
+
+  /*
+   * 文件/祖先/后代/历史：拆掉内嵌纸卡外壳
+   * 提高优先级，压过 .zp-shell main .zp-paper-card
+   */
+  .zp-shell main .zp-side-panel-body .zp-embed-flat .zp-paper-card,
+  .zp-shell main .zp-side-panel-body .zp-embed-flat .zp-paper-card.zp-paper-card {
+    background: transparent !important;
+    background-image: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    width: 100% !important;
+    height: auto !important;
+    color: #2a2118 !important;
+  }
+
+  .zp-shell main .zp-side-panel-body .zp-embed-flat .zp-paper-card > .h-14,
+  .zp-shell main .zp-side-panel-body .zp-embed-flat .zp-paper-card > div.h-14,
+  .zp-shell main .zp-side-panel-body .zp-embed-flat .zp-paper-card > div.border-b-2,
+  .zp-shell main .zp-side-panel-body .zp-embed-flat .zp-paper-card > div[class*='border-b'] {
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 0 0.35rem !important;
+    padding: 0.15rem 0 !important;
+    border: none !important;
+    border-bottom: none !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+
+  /* 标题已由顶栏 tab 表达，弱化内嵌大标题样式 */
+  .zp-side-panel-body .zp-embed-flat .text-lg {
+    font-size: 0.875rem !important;
+  }
+
+  .zp-shell main .zp-side-panel-body .zp-embed-flat [class*='shadow-['],
+  .zp-shell main .zp-side-panel-body .zp-embed-flat .shadow,
+  .zp-shell main .zp-side-panel-body .zp-embed-flat .shadow-sm,
+  .zp-shell main .zp-side-panel-body .zp-embed-flat .shadow-md {
+    box-shadow: none !important;
+  }
+
+  .zp-shell main .zp-side-panel-body .zp-embed-flat .bg-neutral-200,
+  .zp-shell main .zp-side-panel-body .zp-embed-flat .dark\:bg-neutral-600 {
+    background: rgba(138, 107, 42, 0.1) !important;
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0.25rem !important;
+  }
+
+  /* 相簿编辑：去掉白底独立卡外壳 */
+  .zp-shell main .zp-side-panel-body .zp-embed-photos .bg-white,
+  .zp-shell main .zp-side-panel-body .zp-embed-photos .dark\:bg-neutral-700,
+  .zp-shell main .zp-side-panel-body .zp-embed-photos [class*='shadow-['] {
+    background: transparent !important;
+    background-image: none !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    max-width: none !important;
+    width: 100% !important;
+  }
+
+  .zp-shell main .zp-side-panel-body .zp-embed-photos .border-t-2,
+  .zp-shell main .zp-side-panel-body .zp-embed-photos .border-b-2,
+  .zp-shell main .zp-side-panel-body .zp-embed-photos .border-neutral-100,
+  .zp-shell main .zp-side-panel-body .zp-embed-photos .dark\:border-neutral-600 {
+    border: none !important;
+  }
+
+  .zp-shell main .zp-side-panel-body .zp-embed-photos .md\:w-192 {
+    width: 100% !important;
+    max-width: none !important;
+  }
+
+  /* 相簿瀑布流 */
+  .zp-album {
+    position: relative;
+    min-height: 4rem;
+  }
+
+  .zp-album-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.35rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .zp-album-tool {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.85rem;
+    height: 1.85rem;
+    border: 1px solid rgba(138, 107, 42, 0.35);
+    border-radius: var(--zp-radius);
+    background: rgba(250, 246, 235, 0.9);
+    color: #5a3d22;
+    cursor: pointer;
+  }
+
+  .zp-album-tool.is-on,
+  .zp-album-tool:hover {
+    border-color: rgba(178, 58, 45, 0.55);
+    color: var(--zp-seal);
+    background: rgba(178, 58, 45, 0.12);
+  }
+
+  .zp-album-masonry {
+    column-count: 2;
+    column-gap: 0.55rem;
+  }
+
+  .zp-album-item {
+    position: relative;
+    display: block;
+    break-inside: avoid;
+    margin: 0 0 0.55rem;
+    overflow: hidden;
+    border-radius: var(--zp-radius);
+    background: rgba(138, 107, 42, 0.06);
+  }
+
+  .zp-album-item img {
+    display: block;
+    width: 100%;
+    height: auto;
+    vertical-align: top;
+  }
+
+  .zp-album-badge-primary {
+    position: absolute;
+    top: 0.35rem;
+    left: 0.35rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 999px;
+    background: rgba(250, 246, 235, 0.92);
+    color: #b8860b;
+    pointer-events: none;
+  }
+
+  .zp-album-action {
+    position: absolute;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.7rem;
+    height: 1.7rem;
+    border: none;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+  }
+
+  .zp-album-action-star {
+    top: 0.35rem;
+    left: 0.35rem;
+    background: rgba(250, 246, 235, 0.95);
+    color: #5a3d22;
+  }
+
+  .zp-album-action-star.is-primary,
+  .zp-album-action-star:hover {
+    color: #b8860b;
+  }
+
+  .zp-album-action-delete {
+    top: 0.35rem;
+    right: 0.35rem;
+    background: rgba(178, 58, 45, 0.92);
+    color: #fff7f0;
+  }
+
+  .zp-album-action-delete:hover {
+    background: rgba(140, 40, 30, 0.95);
+  }
+
+  /* 文件列表（与相簿同一套工具栏） */
+  .zp-files-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+
+  .zp-files-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    padding: 0.45rem 0.35rem;
+    border-radius: var(--zp-radius);
+    background: rgba(138, 107, 42, 0.06);
+  }
+
+  .zp-files-main {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-width: 0;
+    flex: 1 1 auto;
+  }
+
+  .zp-files-meta {
+    font-size: 0.75rem;
+    color: #6b542e !important;
+  }
+
+  .zp-files-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    flex: 0 0 auto;
+  }
+
+  .zp-files-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    border: 1px solid rgba(138, 107, 42, 0.28);
+    border-radius: var(--zp-radius);
+    background: rgba(250, 246, 235, 0.95);
+    color: #5a3d22;
+    cursor: pointer;
+  }
+
+  .zp-files-action:hover {
+    border-color: rgba(178, 58, 45, 0.45);
+    color: var(--zp-seal);
+  }
+
+  .zp-files-action-delete {
+    background: rgba(178, 58, 45, 0.9);
+    border-color: transparent;
+    color: #fff7f0;
+  }
+
+  .zp-files-action-delete:hover {
+    background: rgba(140, 40, 30, 0.95);
+    color: #fff7f0;
+  }
+
+  @media (min-width: 1100px) {
+    .zp-album-masonry {
+      column-count: 3;
+    }
+  }
+
+  /* 右侧宣纸卡内：强制茶墨字，避免木面浅金墨把历史等文字洗淡 */
+  .zp-shell main .zp-side-panel,
+  .zp-shell main .zp-side-panel :where(p, span, td, th, div, label, li, a, h1, h2, h3, h4, h5, h6) {
+    color: #2a2118 !important;
+  }
+
+  .zp-shell main .zp-side-panel .text-neutral-800,
+  .zp-shell main .zp-side-panel .text-neutral-700,
+  .zp-shell main .zp-side-panel .text-neutral-600,
+  .zp-shell main .zp-side-panel .text-neutral-500,
+  .zp-shell main .zp-side-panel .text-neutral-50,
+  .zp-shell main .zp-side-panel .text-gray-900,
+  .zp-shell main .zp-side-panel .text-gray-800,
+  .zp-shell main .zp-side-panel .text-gray-700,
+  .zp-shell main .zp-side-panel .text-gray-600,
+  .zp-shell main .zp-side-panel .dark\:text-neutral-50,
+  .zp-shell main .zp-side-panel .dark\:text-neutral-200 {
+    color: #2a2118 !important;
+  }
+
+  .zp-shell main .zp-side-panel a:hover {
+    color: var(--zp-seal) !important;
+  }
+
+  /* 信息表 / 家族结构：保留原有表格线条 */
+  .zp-side-panel-body .zp-embed-table {
+    min-width: 0;
+  }
+
+  .zp-family-chart-compact {
+    font-size: 0.8125rem;
+    line-height: 1.35;
+  }
+
+  .zp-family-chart-compact .p-2 {
+    padding: 0.4rem !important;
+  }
+
+  .zp-family-chart-compact .basis-1\/5 {
+    flex-basis: 22%;
+  }
+
+  .zp-side-panel-body .zp-embed-table .zp-family-chart-compact .border {
+    border-width: 1px !important;
+    border-style: solid !important;
+    border-color: rgba(138, 107, 42, 0.35) !important;
+  }
+
+  .zp-side-panel-body .zp-embed-table table .border-b-2,
+  .zp-side-panel-body .zp-embed-table table .border-y-2,
+  .zp-side-panel-body .zp-embed-table table [class*='border-gray'],
+  .zp-side-panel-body .zp-embed-table table .border-solid {
+    border-color: rgba(74, 52, 32, 0.55) !important;
+    border-style: solid !important;
+  }
+
+  .zp-side-panel-body .zp-embed-table table .border-b-2 {
+    border-bottom-width: 2px !important;
+  }
+
+  .zp-side-panel-body .zp-embed-table table .border-y-2 {
+    border-top-width: 2px !important;
+    border-bottom-width: 2px !important;
+  }
+
+  @media (max-width: 1023px) {
+    .zp-side-panel {
+      width: 100%;
+      height: auto !important;
+    }
+
+    .zp-side-panel-shell {
+      height: min(70dvh, 36rem);
+      max-height: min(70dvh, 36rem);
+    }
+  }
+
+  /* 业务页常见深色字类：在告示牌木面上改为浅金墨 */
+  main .text-black,
+  main .text-gray-900,
+  main .text-gray-800,
+  main .text-neutral-900,
+  main .text-neutral-800,
+  main .text-slate-900,
+  main .text-slate-800 {
+    color: var(--zp-ink) !important;
+  }
+
+  main .text-gray-700,
+  main .text-gray-600,
+  main .text-neutral-700,
+  main .text-neutral-600,
+  main .text-slate-700,
+  main .text-slate-600 {
+    color: var(--zp-ink-soft) !important;
+  }
+
+  main .text-gray-500,
+  main .text-gray-400,
+  main .text-neutral-500,
+  main .text-neutral-400 {
+    color: var(--zp-muted) !important;
+  }
+
+  main .bg-gray-50,
+  main .bg-gray-100,
+  main .bg-neutral-50,
+  main .bg-neutral-100,
+  main .bg-slate-50 {
+    background-color: transparent !important;
+    background-image: none !important;
+    border: 1px solid var(--zp-line);
+  }
+
+  /*
+   * 编辑弹窗：宣纸底 + 茶墨字 + 清晰描边
+   * 压过木面浅金墨 / 透明底输入框规则
+   */
+  .zp-edit-modal-panel {
+    color: #2a2118;
+  }
+
+  .zp-shell main .zp-edit-modal-panel,
+  .zp-shell main .zp-edit-modal-panel :where(
+    p, span, div, label, li, a, td, th, h1, h2, h3, h4, h5, h6, small, strong
+  ) {
+    color: #2a2118 !important;
+  }
+
+  .zp-shell main .zp-edit-modal-panel .text-black,
+  .zp-shell main .zp-edit-modal-panel .text-gray-900,
+  .zp-shell main .zp-edit-modal-panel .text-gray-800,
+  .zp-shell main .zp-edit-modal-panel .text-gray-700,
+  .zp-shell main .zp-edit-modal-panel .text-gray-600,
+  .zp-shell main .zp-edit-modal-panel .text-gray-500,
+  .zp-shell main .zp-edit-modal-panel .text-neutral-900,
+  .zp-shell main .zp-edit-modal-panel .text-neutral-800,
+  .zp-shell main .zp-edit-modal-panel .text-neutral-700,
+  .zp-shell main .zp-edit-modal-panel .text-neutral-600,
+  .zp-shell main .zp-edit-modal-panel .text-neutral-500,
+  .zp-shell main .zp-edit-modal-panel .text-neutral-50,
+  .zp-shell main .zp-edit-modal-panel .dark\:text-white,
+  .zp-shell main .zp-edit-modal-panel .dark\:text-neutral-50 {
+    color: #2a2118 !important;
+  }
+
+  .zp-shell main .zp-edit-modal-panel input,
+  .zp-shell main .zp-edit-modal-panel select,
+  .zp-shell main .zp-edit-modal-panel textarea,
+  .zp-shell main .zp-edit-modal-panel .bg-gray-50,
+  .zp-shell main .zp-edit-modal-panel .bg-gray-100,
+  .zp-shell main .zp-edit-modal-panel .bg-neutral-50,
+  .zp-shell main .zp-edit-modal-panel .bg-neutral-100,
+  .zp-shell main .zp-edit-modal-panel .bg-white,
+  .zp-shell main .zp-edit-modal-panel .dark\:bg-gray-700,
+  .zp-shell main .zp-edit-modal-panel .dark\:bg-neutral-700 {
+    color: #2a2118 !important;
+    background-color: #faf6eb !important;
+    background-image: none !important;
+    border: 1px solid rgba(138, 107, 42, 0.42) !important;
+    box-shadow: none !important;
+  }
+
+  .zp-shell main .zp-edit-modal-panel input::placeholder,
+  .zp-shell main .zp-edit-modal-panel textarea::placeholder {
+    color: #7a6548 !important;
+    opacity: 1;
+  }
+
+  .zp-shell main .zp-edit-modal-panel input:focus,
+  .zp-shell main .zp-edit-modal-panel select:focus,
+  .zp-shell main .zp-edit-modal-panel textarea:focus {
+    border-color: rgba(178, 58, 45, 0.65) !important;
+    outline: none !important;
+    box-shadow: 0 0 0 2px rgba(178, 58, 45, 0.18) !important;
+  }
+
+  .zp-shell main .zp-edit-modal-panel hr,
+  .zp-shell main .zp-edit-modal-panel .border,
+  .zp-shell main .zp-edit-modal-panel .border-b,
+  .zp-shell main .zp-edit-modal-panel .border-t,
+  .zp-shell main .zp-edit-modal-panel .border-gray-300,
+  .zp-shell main .zp-edit-modal-panel .border-neutral-100,
+  .zp-shell main .zp-edit-modal-panel .border-neutral-600 {
+    border-color: rgba(138, 107, 42, 0.35) !important;
+  }
+
+  .zp-shell main .zp-edit-modal-panel .bg-yellow-200 {
+    background-color: rgba(250, 220, 140, 0.55) !important;
+    color: #2a2118 !important;
+  }
+
+  /* 性别选择：清晰选中态（避免 form-radio 实心点被主题盖掉） */
+  .zp-sex-picker {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .zp-sex-option {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-width: 6.5rem;
+    padding: 0.45rem 0.85rem;
+    border: 1px solid rgba(90, 61, 34, 0.4);
+    border-radius: var(--zp-radius);
+    background: #fffef9;
+    color: #1a140e !important;
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+
+  .zp-sex-option span,
+  .zp-sex-option svg {
+    color: inherit !important;
+  }
+
+  .zp-sex-option:hover {
+    border-color: rgba(178, 58, 45, 0.55);
+  }
+
+  .zp-sex-option.is-on,
+  .zp-sex-option:has(input:checked) {
+    background: rgba(178, 58, 45, 0.14);
+    border-color: #b23a2d;
+    color: #8f2d23 !important;
+    box-shadow: inset 0 0 0 1px rgba(178, 58, 45, 0.25);
+  }
 }
 
 /* -------------------------------------------- */
 [x-cloak] { display: none !important; }
+/* -------------------------------------------- */
+/*
+  编辑弹窗输入文字：放在 @layer 外，压过木面浅金墨输入规则
+  （浅字 + 浅宣纸底会融在一起）
+*/
+.zp-edit-modal-panel input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='file']):not([type='hidden']):not([type='submit']):not([type='button']):not([type='image']),
+.zp-edit-modal-panel textarea,
+.zp-edit-modal-panel select,
+.zp-edit-modal-panel .ts-input,
+.zp-edit-modal-panel [data-slot='control'],
+.zp-shell .zp-edit-modal-panel input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='file']):not([type='hidden']):not([type='submit']):not([type='button']):not([type='image']),
+.zp-shell .zp-edit-modal-panel textarea,
+.zp-shell .zp-edit-modal-panel select,
+.zp-shell .zp-edit-modal-panel .ts-input,
+.zp-shell .zp-edit-modal-panel [data-slot='control'],
+.zp-shell main .zp-edit-modal-panel input:not([type='checkbox']):not([type='radio']):not([type='range']):not([type='file']):not([type='hidden']):not([type='submit']):not([type='button']):not([type='image']),
+.zp-shell main .zp-edit-modal-panel textarea,
+.zp-shell main .zp-edit-modal-panel select,
+.zp-shell main .zp-edit-modal-panel .ts-input,
+.zp-shell main .zp-edit-modal-panel [data-slot='control'] {
+  color: #1a140e !important;
+  -webkit-text-fill-color: #1a140e !important;
+  caret-color: #b23a2d !important;
+  background-color: #fffef9 !important;
+  background-image: none !important;
+  border-color: rgba(90, 61, 34, 0.5) !important;
+}
+
+.zp-edit-modal-panel input::placeholder,
+.zp-edit-modal-panel textarea::placeholder,
+.zp-shell .zp-edit-modal-panel input::placeholder,
+.zp-shell .zp-edit-modal-panel textarea::placeholder,
+.zp-shell main .zp-edit-modal-panel input::placeholder,
+.zp-shell main .zp-edit-modal-panel textarea::placeholder {
+  color: #8a7355 !important;
+  -webkit-text-fill-color: #8a7355 !important;
+  opacity: 1 !important;
+}
+
+.zp-edit-modal-panel input:focus,
+.zp-edit-modal-panel textarea:focus,
+.zp-edit-modal-panel select:focus,
+.zp-shell .zp-edit-modal-panel input:focus,
+.zp-shell .zp-edit-modal-panel textarea:focus,
+.zp-shell .zp-edit-modal-panel select:focus {
+  color: #1a140e !important;
+  -webkit-text-fill-color: #1a140e !important;
+  background-color: #ffffff !important;
+  border-color: rgba(178, 58, 45, 0.7) !important;
+  box-shadow: 0 0 0 2px rgba(178, 58, 45, 0.2) !important;
+}
+
+/* 性别选择器（layer 外再保一层，避免主题冲掉选中态） */
+.zp-sex-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.zp-sex-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-width: 6.5rem;
+  padding: 0.45rem 0.85rem;
+  border: 1px solid rgba(90, 61, 34, 0.4);
+  border-radius: 0.25rem;
+  background: #fffef9 !important;
+  color: #1a140e !important;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.zp-sex-option.is-on,
+.zp-sex-option:has(input:checked) {
+  background: rgba(178, 58, 45, 0.16) !important;
+  border-color: #b23a2d !important;
+  color: #8f2d23 !important;
+  box-shadow: inset 0 0 0 1px rgba(178, 58, 45, 0.28);
+}
+
+/* -------------------------------------------- */
+/* Modal above sticky header stacking context   */
+/* -------------------------------------------- */
+#search-help[role='dialog'] {
+  position: fixed !important;
+  inset: 0;
+  z-index: 100 !important;
+}
+#search-help [class*='z-50'],
+#search-help .fixed {
+  z-index: 100 !important;
+}
 /* -------------------------------------------- */
 /* User image + ribbon overlay                  */
 /* -------------------------------------------- */
@@ -96,7 +1483,7 @@
     polygon(0 0,100% 0,100% calc(100% - var(--f)),calc(100% - var(--f)) 100%,
     calc(100% - var(--f)) calc(100% - var(--f)),0 calc(100% - var(--f)),
     var(--r) calc(50% - var(--f)/2));
-  background: #BD1550;
+  background: var(--zp-seal, #b23a2d);
   color: #FFFFFF;
   box-shadow: 0 calc(-1*var(--f)) 0 inset #0005;
 }

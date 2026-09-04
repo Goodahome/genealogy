@@ -37,7 +37,7 @@ final class Child extends Component
     {
         $this->childForm->firstname = null;
         $this->childForm->surname   = null;
-        $this->childForm->birthname = null;
+        $this->childForm->occupation = null;
         $this->childForm->nickname  = null;
 
         $this->childForm->sex       = null;
@@ -51,8 +51,7 @@ final class Child extends Component
 
         $this->childForm->person_id = null;
 
-        // 初始化农历出生日期
-        $this->childForm->dob_year = null;
+        // 初始化农历出生日�?        $this->childForm->dob_year = null;
         $this->childForm->dob_month = null;
         $this->childForm->dob_day = null;
         $this->childForm->dob_leap = false;
@@ -148,7 +147,7 @@ final class Child extends Component
                     $new_person = Person::create([
                         'firstname' => $validated['firstname'],
                         'surname'   => $validated['surname'],
-                        'birthname' => $validated['birthname'],
+                        'occupation' => $validated['occupation'],
                         'nickname'  => $validated['nickname'],
                         'sex'       => $validated['sex'],
                         'gender_id' => $validated['gender_id'] ?? null,
@@ -169,7 +168,7 @@ final class Child extends Component
                     $new_person = Person::create([
                         'firstname' => $validated['firstname'],
                         'surname'   => $validated['surname'],
-                        'birthname' => $validated['birthname'],
+                        'occupation' => $validated['occupation'],
                         'nickname'  => $validated['nickname'],
                         'sex'       => $validated['sex'],
                         'gender_id' => $validated['gender_id'] ?? null,
@@ -210,7 +209,7 @@ final class Child extends Component
         return
         $this->childForm->firstname !== null or
         $this->childForm->surname !== null or
-        $this->childForm->birthname !== null or
+        $this->childForm->occupation !== null or
         $this->childForm->nickname !== null or
 
         $this->childForm->sex !== null or

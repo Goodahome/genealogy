@@ -37,7 +37,7 @@ final class Father extends Component
     {
         $this->fatherForm->firstname = null;
         $this->fatherForm->surname   = null;
-        $this->fatherForm->birthname = null;
+        $this->fatherForm->occupation = null;
         $this->fatherForm->nickname  = null;
 
         $this->fatherForm->gender_id = null;
@@ -50,8 +50,7 @@ final class Father extends Component
 
         $this->fatherForm->person_id = null;
 
-        // 初始化农历出生日期
-        $this->fatherForm->dob_year = null;
+        // 初始化农历出生日�?        $this->fatherForm->dob_year = null;
         $this->fatherForm->dob_month = null;
         $this->fatherForm->dob_day = null;
         $this->fatherForm->dob_leap = false;
@@ -126,7 +125,7 @@ final class Father extends Component
                 $new_person = Person::create([
                     'firstname' => $validated['firstname'],
                     'surname'   => $validated['surname'],
-                    'birthname' => $validated['birthname'],
+                    'occupation' => $validated['occupation'],
                     'nickname'  => $validated['nickname'],
                     'sex'       => 'm',
                     'gender_id' => $validated['gender_id'] ?? null,
@@ -167,7 +166,7 @@ final class Father extends Component
         return
         $this->fatherForm->firstname !== null or
         $this->fatherForm->surname !== null or
-        $this->fatherForm->birthname !== null or
+        $this->fatherForm->occupation !== null or
         $this->fatherForm->nickname !== null or
 
         $this->fatherForm->gender_id !== null or

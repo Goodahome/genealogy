@@ -1,4 +1,4 @@
-<div class="flex justify-between p-2 text-xs bg-neutral-200 dark:bg-neutral-700">
+<div class="zp-wood zp-wood-text flex justify-between p-2 text-xs">
     <!-- Left Section: Copyright and Licensing -->
     <div class="text-left">
         <p>

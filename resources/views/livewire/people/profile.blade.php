@@ -1,5 +1,5 @@
-<div class="mx-auto flex w-full min-w-0 max-w-sm flex-col rounded-sm bg-white text-neutral-800 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 dark:text-neutral-50 sm:max-w-md md:mx-0 md:min-w-100 md:max-w-192">
-    <div class="flex flex-col p-2 text-lg font-medium border-b-2 rounded-t h-14 min-h-min border-neutral-100 dark:border-neutral-600 dark:text-neutral-50">
+<div class="mx-auto flex w-full min-w-0 max-w-sm flex-col rounded-sm zp-paper-card text-[#2a2118] sm:max-w-md md:mx-0 md:max-w-md lg:max-w-lg">
+    <div class="flex flex-col p-2 text-lg font-medium border-b-2 rounded-t h-14 min-h-min border-[rgba(138,107,42,0.22)] text-[#2a2118]">
         <div class="flex flex-wrap items-start justify-center gap-2">
             <div class="items-center justify-center flex-1 grow max-w-full align-middle min-w-max">
                 {{ __('person.profile') }}
@@ -9,34 +9,26 @@
                 <div class="flex-1 grow min-w-max max-w-min text-end">
                     <x-ts-dropdown icon="tabler.menu-2" position="bottom-end">
                         @if (auth()->user()->hasPermission('person:update'))
-                            <a href="/people/{{ $person->id }}/edit-profile">
+                            <button type="button" class="w-full text-left" x-on:click="$modalOpen('edit-person-profile')">
                                 <x-ts-dropdown.items>
                                     <x-ts-icon icon="tabler.id" class="mr-2" />
                                     {{ __('person.edit_profile') }}
                                 </x-ts-dropdown.items>
-                            </a>
+                            </button>
 
-                            <a href="/people/{{ $person->id }}/edit-contact">
+                            <button type="button" class="w-full text-left" x-on:click="$modalOpen('edit-person-contact')">
                                 <x-ts-dropdown.items>
                                     <x-ts-icon icon="tabler.address-book" class="mr-2" />
                                     {{ __('person.edit_contact') }}
                                 </x-ts-dropdown.items>
-                            </a>
+                            </button>
 
-                            <a href="/people/{{ $person->id }}/edit-death">
+                            <button type="button" class="w-full text-left" x-on:click="$modalOpen('edit-person-death')">
                                 <x-ts-dropdown.items>
                                     <x-ts-icon icon="tabler.grave-2" class="mr-2" />
                                     {{ __('person.edit_death') }}
                                 </x-ts-dropdown.items>
-                            </a>
-
-                            <hr />
-                            <a href="/people/{{ $person->id }}/edit-photos">
-                                <x-ts-dropdown.items>
-                                    <x-ts-icon icon="tabler.photo" class="mr-2" />
-                                    {{ __('person.edit_photos') }}
-                                </x-ts-dropdown.items>
-                            </a>
+                            </button>
                         @endif
 
                         @if (auth()->user()->hasPermission('person:delete') and $person->isDeletable())
@@ -53,9 +45,17 @@
         </div>
     </div>
 
-    {{-- image --}}
+    {{-- 主图；完整相簿在右侧「相簿」面板 --}}
     <div class="grid justify-center px-2 pt-2">
-        <livewire:people.gallery :person="$person" class="max-w-96" />
+        @if ($person->photo && Storage::exists('public/photos/' . $person->team_id . '/' . $person->photo))
+            <img class="max-h-96 max-w-96 rounded-sm object-cover shadow-lg"
+                 src="{{ asset('storage/photos-384/' . $person->team_id . '/' . $person->photo) }}"
+                 alt="{{ $person->name }}"
+                 loading="lazy"
+                 decoding="async" />
+        @else
+            <x-svg.person-placeholder :sex="$person->sex ?? 'm'" class="max-h-96 max-w-96 rounded-sm fill-neutral-400 shadow-lg" />
+        @endif
     </div>
 
     {{-- lifetime & age --}}
@@ -84,6 +84,10 @@
                 <tr class="align-top border-b-2 h-8">
                     <td class="w-[5.5rem] pr-2 border-r-2 align-top">{{ __('person.nickname') }}</td>
                     <td class="pl-2 break-words">{{ $person->nickname }}</td>
+                </tr>
+                <tr class="align-top border-b-2 h-8">
+                    <td class="w-[5.5rem] pr-2 border-r-2 align-top">{{ __('person.occupation') }}</td>
+                    <td class="pl-2 break-words">{{ $person->occupation }}</td>
                 </tr>
 
                 <tr class="align-top border-b-2 h-8">

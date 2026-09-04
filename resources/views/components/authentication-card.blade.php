@@ -1,17 +1,24 @@
-@props(['logo' => '', 'header' => ''])
+@props(['logo' => null, 'header' => null])
 
-<div class="w-full min-h-192 flex flex-col sm:justify-center items-center pt-6 sm:pt-0 mb-5">
-    <div>
-        {{ $logo }}
-    </div>
+<div class="zp-auth-wrap">
+    @if ($logo)
+        <div class="mb-3 shrink-0">
+            {{ $logo }}
+        </div>
+    @endif
 
-    <div class="flex w-full sm:max-w-4xl shadow-md overflow-hidden rounded-sm">
-        <div class="w-full md:w-1/3 hidden md:block">
-            <img src="img/genealogy-research.webp" alt="Genealogy Research" class="object-cover w-full h-full rounded-l">
+    {{-- 高度随表单内容，不被拉长；侧图绝对定位跟随表单高度 --}}
+    <div class="zp-auth-frame">
+        <div class="zp-auth-media" aria-hidden="true">
+            <img src="{{ asset('img/genealogy-research.webp') }}"
+                 alt=""
+                 class="h-full w-full object-cover object-center">
         </div>
 
-        <div class="w-full md:w-2/3 p-8 mx-auto bg-white rounded-r">
-            <h1 class="text-4xl font-bold mb-8">{{ $header }}</h1>
+        <div class="zp-auth-panel">
+            @if ($header)
+                <h1 class="zp-display mb-6 text-4xl font-bold text-[var(--zp-ink)]">{{ $header }}</h1>
+            @endif
 
             {{ $slot }}
         </div>

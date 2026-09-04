@@ -74,7 +74,7 @@ final class DemoSeeder extends Seeder
                 'id'        => $person['id'],
                 'firstname' => ! empty($person['firstname']) ? $person['firstname'] : null,
                 'surname'   => ! empty($person['surname']) ? $person['surname'] : null,
-                'birthname' => ! empty($person['birthname']) ? $person['birthname'] : null,
+                'occupation' => ! empty($person['birthname']) ? $person['birthname'] : (! empty($person['occupation']) ? $person['occupation'] : null),
                 'nickname'  => ! empty($person['nickname']) ? $person['nickname'] : null,
 
                 'sex' => mb_strtolower((string) $person['sex']),
@@ -372,7 +372,7 @@ final class DemoSeeder extends Seeder
                 'id'        => $person['id'],
                 'firstname' => ! empty($person['firstname']) ? $person['firstname'] : null,
                 'surname'   => ! empty($person['surname']) ? $person['surname'] : null,
-                'birthname' => ! empty($person['birthname']) ? $person['birthname'] : null,
+                'occupation' => ! empty($person['birthname']) ? $person['birthname'] : (! empty($person['occupation']) ? $person['occupation'] : null),
                 'nickname'  => ! empty($person['nickname']) ? $person['nickname'] : null,
 
                 'sex' => mb_strtolower((string) $person['sex']),

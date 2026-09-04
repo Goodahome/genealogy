@@ -37,6 +37,11 @@
                     <div class="col-span-6 md:col-span-3">
                         <x-ts-input wire:model="childForm.nickname" id="nickname" label="{{ __('person.nickname') }}" wire:dirty.class="bg-yellow-200 dark:text-black" autocomplete="nickname" />
                     </div>
+
+                    {{-- occupation --}}
+                    <div class="col-span-6 md:col-span-3">
+                        <x-ts-input wire:model="childForm.occupation" id="occupation" label="{{ __('person.occupation') }}" wire:dirty.class="bg-yellow-200 dark:text-black" autocomplete="organization-title" />
+                    </div>
                     <x-hr.narrow class="col-span-6 my-0!" />
 
                     {{-- sex --}}

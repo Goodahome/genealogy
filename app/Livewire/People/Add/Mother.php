@@ -37,7 +37,7 @@ final class Mother extends Component
     {
         $this->motherForm->firstname = null;
         $this->motherForm->surname   = null;
-        $this->motherForm->birthname = null;
+        $this->motherForm->occupation = null;
         $this->motherForm->nickname  = null;
 
         $this->motherForm->gender_id = null;
@@ -50,8 +50,7 @@ final class Mother extends Component
 
         $this->motherForm->person_id = null;
 
-        // 初始化农历出生日期
-        $this->motherForm->dob_year = null;
+        // 初始化农历出生日�?        $this->motherForm->dob_year = null;
         $this->motherForm->dob_month = null;
         $this->motherForm->dob_day = null;
         $this->motherForm->dob_leap = false;
@@ -126,7 +125,7 @@ final class Mother extends Component
                 $new_person = Person::create([
                     'firstname' => $validated['firstname'],
                     'surname'   => $validated['surname'],
-                    'birthname' => $validated['birthname'],
+                    'occupation' => $validated['occupation'],
                     'nickname'  => $validated['nickname'],
                     'sex'       => 'f',
                     'gender_id' => $validated['gender_id'] ?? null,
@@ -167,7 +166,7 @@ final class Mother extends Component
         return
         $this->motherForm->firstname !== null or
         $this->motherForm->surname !== null or
-        $this->motherForm->birthname !== null or
+        $this->motherForm->occupation !== null or
         $this->motherForm->nickname !== null or
 
         $this->motherForm->gender_id !== null or

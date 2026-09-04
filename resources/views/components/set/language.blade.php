@@ -1,7 +1,13 @@
 <x-dropdown align="right" width="48">
     <x-slot name="trigger">
-        <button type="button" title="{{ __('app.language_select') }}">
-            {{ strtoupper(app()->getLocale()) }}
+        @php
+            $currentLocaleLabel = array_search(app()->getLocale(), config('app.available_locales'), true);
+            if ($currentLocaleLabel === false) {
+                $currentLocaleLabel = strtoupper(app()->getLocale());
+            }
+        @endphp
+        <button type="button" title="{{ __('app.language_select') }}" class="whitespace-nowrap">
+            {{ $currentLocaleLabel }}
         </button>
     </x-slot>
 

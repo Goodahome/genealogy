@@ -1,49 +1,87 @@
-<div class="min-w-80 flex flex-col rounded-sm bg-white shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 text-neutral-800 dark:text-neutral-50">
-    <div class="flex flex-col p-2 text-lg font-medium border-b-2 rounded-t h-14 min-h-min border-neutral-100 dark:border-neutral-600 dark:text-neutral-50">
-        <div class="flex flex-wrap items-start justify-center gap-2">
-            <div class="flex-1 grow max-w-full min-w-max">
-                {{ __('person.files') }}
-                @if ($person->countFiles() > 0)
-                    <x-ts-badge color="emerald" text="{{ $person->countFiles() }}" />
-                @endif
-            </div>
+<div class="zp-files">
+    @if ($canManage)
+        <div class="zp-album-toolbar" x-data>
+            <button type="button"
+                    class="zp-album-tool"
+                    x-on:click="$refs.filesPicker.click()"
+                    title="{{ __('person.upload_files') }}">
+                <x-ts-icon icon="tabler.plus" class="size-4" />
+            </button>
 
-            @if (auth()->user()->hasPermission('person:update') or auth()->user()->hasPermission('person:delete'))
-                <div class="flex-1 grow min-w-max max-w-min text-end">
-                    <x-ts-dropdown icon="tabler.menu-2" position="bottom-end">
-                        @if (auth()->user()->hasPermission('person:update'))
-                            <a href="/people/{{ $person->id }}/edit-files">
-                                <x-ts-dropdown.items>
-                                    <x-ts-icon icon="tabler.files" class="mr-2" />
-                                    {{ __('person.edit_files') }}
-                                </x-ts-dropdown.items>
-                            </a>
-                        @endif
-                    </x-ts-dropdown>
-                </div>
-            @endif
+            <button type="button"
+                    class="zp-album-tool {{ $editing ? 'is-on' : '' }}"
+                    wire:click="toggleEditing"
+                    title="{{ __('app.edit') }}"
+                    aria-pressed="{{ $editing ? 'true' : 'false' }}">
+                <x-ts-icon icon="tabler.pencil" class="size-4" />
+            </button>
+
+            <input type="file"
+                   class="hidden"
+                   x-ref="filesPicker"
+                   wire:model="uploads"
+                   accept=".pdf,.txt,.doc,.docx,.xls,.xlsx"
+                   multiple />
         </div>
-    </div>
+    @endif
 
-    @if (count($files) > 0)
-        <div class="flex flex-col w-full">
+    @if ($files->isEmpty())
+        <div class="px-1 py-6 text-center text-sm text-[#5a3d22]">
+            {{ __('app.nothing_recorded') }}
+        </div>
+    @else
+        <div class="zp-files-list">
             @foreach ($files as $file)
                 @php
                     $file_type = substr($file['file_name'], strpos($file['file_name'], '.') + 1);
                 @endphp
 
-                <div class="flex-1 grow p-2">
-                    <img class="inline" src="{{ url('img/icons/' . $file_type . '.svg') }}" width="20px" alt="{{ $file['name'] }}" class="rounded-sm" />
+                <div class="zp-files-item" wire:key="file-{{ $file->id }}">
+                    <div class="zp-files-main">
+                        <img src="{{ url('img/icons/' . $file_type . '.svg') }}"
+                             width="20"
+                             height="20"
+                             alt="{{ $file['name'] }}"
+                             class="shrink-0 rounded-sm" />
 
-                    <x-link href="{{ $file->getUrl() }}" target="_blank" title="{{ __('app.show') }}">
-                        {{ $file->name }}
-                    </x-link>
+                        <x-link href="{{ $file->getUrl() }}" target="_blank" title="{{ __('app.show') }}" class="min-w-0 truncate">
+                            {{ $file->name }}
+                        </x-link>
 
-                    {{ $file->human_readable_size }}
+                        <span class="zp-files-meta shrink-0">{{ $file->human_readable_size }}</span>
+                    </div>
+
+                    @if ($canManage && $editing)
+                        <div class="zp-files-actions">
+                            @if ($file->order_column > 1)
+                                <button type="button"
+                                        class="zp-files-action"
+                                        wire:click="moveFile({{ $file->order_column }}, 'up')"
+                                        title="{{ __('app.move_up') }}">
+                                    <x-ts-icon icon="tabler.arrow-up" class="size-4" />
+                                </button>
+                            @endif
+
+                            @if ($file->order_column < $files->count())
+                                <button type="button"
+                                        class="zp-files-action"
+                                        wire:click="moveFile({{ $file->order_column }}, 'down')"
+                                        title="{{ __('app.move_down') }}">
+                                    <x-ts-icon icon="tabler.arrow-down" class="size-4" />
+                                </button>
+                            @endif
+
+                            <button type="button"
+                                    class="zp-files-action zp-files-action-delete"
+                                    wire:click="deleteFile({{ $file->id }})"
+                                    wire:confirm="{{ __('app.are_you_sure') }}"
+                                    title="{{ __('app.delete') }}">
+                                <x-ts-icon icon="tabler.trash" class="size-4" />
+                            </button>
+                        </div>
+                    @endif
                 </div>
             @endforeach
         </div>
-    @else
-        <p class="p-2">{{ __('app.nothing_recorded') }}</p>
     @endif
 </div>

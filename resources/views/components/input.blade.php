@@ -2,6 +2,6 @@
 
 <input {{ $disabled ? 'disabled' : '' }} {!! $attributes->merge([
     'class' => $disabled
-        ? 'block w-full rounded-sm border-gray-300 bg-gray-100 text-gray-500 shadow-xs cursor-not-allowed'
-        : 'block w-full rounded-sm border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 shadow-xs',
+        ? 'block w-full rounded-sm border-[var(--zp-line)] bg-transparent text-[var(--zp-muted)] shadow-none cursor-not-allowed'
+        : 'block w-full rounded-sm border-[var(--zp-line)] bg-transparent text-[var(--zp-ink)] focus:border-[var(--zp-gold)] focus:ring-[rgba(196,163,90,0.45)] shadow-none',
 ]) !!}>

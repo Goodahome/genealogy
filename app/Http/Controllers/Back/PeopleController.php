@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Back;
 use App\Http\Controllers\Controller;
 use App\Models\Couple;
 use App\Models\Person;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
 final class PeopleController extends Controller
@@ -109,18 +110,18 @@ final class PeopleController extends Controller
         return view('back.people.add.partner', ['person' => $person]);
     }
 
-    public function editContact(Person $person): View
+    public function editContact(Person $person): RedirectResponse
     {
         abort_unless(auth()->user()->hasPermission('person:update'), 403, __('app.unauthorized_access'));
 
-        return view('back.people.edit.contact', ['person' => $person]);
+        return redirect()->to(route('people.show', $person) . '?edit=contact');
     }
 
-    public function editDeath(Person $person): View
+    public function editDeath(Person $person): RedirectResponse
     {
         abort_unless(auth()->user()->hasPermission('person:update'), 403, __('app.unauthorized_access'));
 
-        return view('back.people.edit.death', ['person' => $person]);
+        return redirect()->to(route('people.show', $person) . '?edit=death');
     }
 
     public function editFamily(Person $person): View
@@ -130,25 +131,25 @@ final class PeopleController extends Controller
         return view('back.people.edit.family', ['person' => $person]);
     }
 
-    public function editFiles(Person $person): View
+    public function editFiles(Person $person): RedirectResponse
     {
         abort_unless(auth()->user()->hasPermission('person:update'), 403, __('app.unauthorized_access'));
 
-        return view('back.people.edit.files', ['person' => $person]);
+        return redirect()->to(route('people.show', $person) . '?panel=files');
     }
 
-    public function editPhotos(Person $person): View
+    public function editPhotos(Person $person): RedirectResponse
     {
         abort_unless(auth()->user()->hasPermission('person:update'), 403, __('app.unauthorized_access'));
 
-        return view('back.people.edit.photos', ['person' => $person]);
+        return redirect()->to(route('people.show', $person) . '?panel=photos');
     }
 
-    public function editProfile(Person $person): View
+    public function editProfile(Person $person): RedirectResponse
     {
         abort_unless(auth()->user()->hasPermission('person:update'), 403, __('app.unauthorized_access'));
 
-        return view('back.people.edit.profile', ['person' => $person]);
+        return redirect()->to(route('people.show', $person) . '?edit=profile');
     }
 
     public function editPartner(Person $person, Couple $couple): View

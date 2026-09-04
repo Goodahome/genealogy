@@ -31,7 +31,7 @@ final class Person extends Component
     {
         $this->personForm->firstname = null;
         $this->personForm->surname   = null;
-        $this->personForm->birthname = null;
+        $this->personForm->occupation = null;
         $this->personForm->nickname  = null;
 
         $this->personForm->sex       = null;
@@ -43,8 +43,7 @@ final class Person extends Component
 
         $this->personForm->photo = null;
 
-        // 初始化农历出生日期
-        $this->personForm->dob_year = null;
+        // 初始化农历出生日�?        $this->personForm->dob_year = null;
         $this->personForm->dob_month = null;
         $this->personForm->dob_day = null;
         $this->personForm->dob_leap = false;
@@ -103,7 +102,7 @@ final class Person extends Component
             $new_person = \App\Models\Person::create([
                 'firstname' => $validated['firstname'],
                 'surname'   => $validated['surname'],
-                'birthname' => $validated['birthname'],
+                'occupation' => $validated['occupation'],
                 'nickname'  => $validated['nickname'],
                 'sex'       => $validated['sex'],
                 'gender_id' => $validated['gender_id'] ?? null,
@@ -142,7 +141,7 @@ final class Person extends Component
         return
         $this->personForm->firstname !== null or
         $this->personForm->surname !== null or
-        $this->personForm->birthname !== null or
+        $this->personForm->occupation !== null or
         $this->personForm->nickname !== null or
 
         $this->personForm->sex !== null or

@@ -1,22 +1,11 @@
 .birthday-calendar {
-    --bc-border: #e5e7eb;
-    --bc-today: #3370ff;
-    --bc-holiday: #f54a45;
-    --bc-muted: #8f959e;
-    --bc-chip: #eef3ff;
-    --bc-chip-text: #3370ff;
-    --bc-chip-dead: #fde8e8;
-    --bc-chip-dead-text: #c23631;
-}
-
-.dark .birthday-calendar {
-    --bc-border: #525252;
-    --bc-today: #4c82ff;
+    --bc-border: var(--zp-line, rgba(196, 163, 90, 0.38));
+    --bc-today: #e4c878;
     --bc-holiday: #ff7b76;
-    --bc-muted: #a3a3a3;
-    --bc-chip: #1e3a5f;
-    --bc-chip-text: #93c5fd;
-    --bc-chip-dead: #4a1d1d;
+    --bc-muted: var(--zp-muted, rgba(247, 240, 221, 0.62));
+    --bc-chip: rgba(196, 163, 90, 0.18);
+    --bc-chip-text: #f7f0dd;
+    --bc-chip-dead: rgba(178, 58, 45, 0.28);
     --bc-chip-dead-text: #fca5a5;
 }
 

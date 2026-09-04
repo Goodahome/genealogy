@@ -1,5 +1,5 @@
 <nav x-data="{ open: false }" 
-     class="border-b border-gray-100 bg-neutral-200 dark:bg-neutral-700 text-neutral-600 dark:text-neutral-200"
+     class="zp-nav zp-wood text-[var(--zp-wood-text-paint)]"
      x-bind:class="{'fixed inset-0 z-50 overflow-y-auto': open, 'relative': !open}"
      x-on:scroll.window="if(open) $event.preventDefault()">
     {{-- primary navigation menu --}}
@@ -7,66 +7,52 @@
         <div class="flex grow items-center gap-3 md:gap-5">
             {{-- logo --}}
             <div class="flex items-center shrink-0">
-                <a href="{{ route('home') }}" title="{{ __('app.home') }}">
-                    <x-svg.genealogy class="size-12 fill-dark dark:fill-neutral-400 hover:fill-primary-300 dark:hover:fill-primary-300" alt="genealogy" />
+                <a href="{{ route('home') }}" title="{{ __('app.home') }}" class="zp-display">
+                    <x-svg.genealogy class="size-12 fill-[var(--zp-wood-text-paint)] hover:fill-[var(--zp-wood-text-active)]" alt="genealogy" />
                 </a>
             </div>
 
             {{-- navigation links (desktop) --}}
-            <div class="hidden flex-wrap items-center gap-5 py-2 md:flex">
-                <div class="flex items-center gap-5">
-                    <x-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
-                        <x-ts-icon icon="tabler.home" class="mr-1 size-5" />
-                        {{ __('app.home') }}
-                    </x-nav-link>
+            <div class="hidden flex-wrap items-center gap-2 py-2 md:flex">
+                <x-nav-link href="{{ route('home') }}" :active="request()->routeIs('home')">
+                    <x-ts-icon icon="tabler.home" class="mr-1 size-5" />
+                    {{ __('app.home') }}
+                </x-nav-link>
 
-                    <x-nav-link href="{{ route('people.search') }}" :active="request()->routeIs('people.search')">
-                        <x-ts-icon icon="tabler.search" class="mr-1 size-5" />
-                        {{ __('app.search') }}
-                    </x-nav-link>
-                </div>
+                <x-nav-link href="{{ route('people.search') }}" :active="request()->routeIs('people.search')">
+                    <x-ts-icon icon="tabler.search" class="mr-1 size-5" />
+                    {{ __('app.search') }}
+                </x-nav-link>
 
-                <div class="flex items-center gap-5">
-                    <x-nav-link href="{{ route('people.birthdays') }}" :active="request()->routeIs('people.birthdays')">
-                        <x-ts-icon icon="tabler.cake" class="mr-1 size-5" />
-                        {{ __('birthday.birthdays') }}
-                    </x-nav-link>
-                </div>
+                <x-nav-link href="{{ route('people.birthdays') }}" :active="request()->routeIs('people.birthdays')">
+                    <x-ts-icon icon="tabler.cake" class="mr-1 size-5" />
+                    {{ __('birthday.birthdays') }}
+                </x-nav-link>
 
-                <div class="flex items-center gap-5">
-                    <x-nav-link href="{{ route('events.index') }}" :active="request()->routeIs('events.index')">
-                        <x-ts-icon icon="tabler.calendar-event" class="mr-1 size-5" />
-                        {{ __('app.events') }}
-                    </x-nav-link>
-                </div>
+                <x-nav-link href="{{ route('events.index') }}" :active="request()->routeIs('events.index')">
+                    <x-ts-icon icon="tabler.calendar-event" class="mr-1 size-5" />
+                    {{ __('app.events') }}
+                </x-nav-link>
 
-                <div class="flex items-center gap-5">
-                    <x-nav-link href="{{ route('ancient-text.index') }}" :active="request()->routeIs('ancient-text.index')">
-                        <x-ts-icon icon="tabler.book" class="mr-1 size-5" />
-                        {{ __('app.ancient_texts') }}
-                    </x-nav-link>
-                </div>
+                <x-nav-link href="{{ route('ancient-text.index') }}" :active="request()->routeIs('ancient-text.index')">
+                    <x-ts-icon icon="tabler.book" class="mr-1 size-5" />
+                    {{ __('app.ancient_texts') }}
+                </x-nav-link>
 
-                <div class="flex items-center gap-5">
-                    <x-nav-link href="{{ route('people.clan-lineage') }}" :active="request()->routeIs('people.clan-lineage')">
-                        <x-ts-icon icon="tabler.binary-tree" class="mr-1 size-5" />
-                        {{ __('app.clan_lineage') }}
-                    </x-nav-link>
-                </div>
+                <x-nav-link href="{{ route('people.clan-lineage') }}" :active="request()->routeIs('people.clan-lineage')">
+                    <x-ts-icon icon="tabler.binary-tree" class="mr-1 size-5" />
+                    {{ __('app.clan_lineage') }}
+                </x-nav-link>
 
-                <div class="flex items-center gap-5">
-                    <x-nav-link href="{{ route('family-fund.index') }}" :active="request()->routeIs('family-fund.*')">
-                        <x-ts-icon icon="tabler.coin" class="mr-1 size-5" />
-                        {{ __('fund.family_fund') }}
-                    </x-nav-link>
-                </div>
+                <x-nav-link href="{{ route('family-fund.index') }}" :active="request()->routeIs('family-fund.*')">
+                    <x-ts-icon icon="tabler.coin" class="mr-1 size-5" />
+                    {{ __('fund.family_fund') }}
+                </x-nav-link>
 
-                <div class="flex items-center gap-5">
-                    <x-nav-link href="{{ route('help') }}" :active="request()->routeIs('help')">
-                        <x-ts-icon icon="tabler.help" class="mr-1 size-5" />
-                        {{ __('app.help') }}
-                    </x-nav-link>
-                </div>
+                <x-nav-link href="{{ route('help') }}" :active="request()->routeIs('help')">
+                    <x-ts-icon icon="tabler.help" class="mr-1 size-5" />
+                    {{ __('app.help') }}
+                </x-nav-link>
             </div>
         </div>
 
@@ -83,7 +69,7 @@
                             @else
                                 <span class="inline-flex rounded-sm">
                                     <button type="button" title="{{ auth()->user()->name }}"
-                                        class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-white border border-transparent rounded-sm hover:text-gray-700 focus:outline-hidden focus:bg-gray-50 active:bg-gray-50">
+                                        class="zp-wood zp-wood-text inline-flex items-center rounded-sm px-3 py-2 text-sm font-medium leading-4 transition duration-150 ease-in-out">
                                         {{ auth()->user()->name }}
 
                                         <svg class="ml-2 -mr-0.5 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -112,7 +98,7 @@
                                 </x-dropdown-link>
                             @endif
 
-                            <div class="border-t border-gray-200"></div>
+                            <div class="border-t border-[rgba(160,120,55,0.35)]"></div>
 
                             {{-- authentication --}}
                             <form method="POST" action="{{ route('logout') }}" x-data>
@@ -134,7 +120,7 @@
                             <x-slot name="trigger">
                                 <span class="inline-flex rounded-sm">
                                     <button type="button"
-                                        class="inline-flex items-center px-3 py-2 text-sm font-medium leading-4 text-gray-500 transition duration-150 ease-in-out bg-white border border-transparent rounded-sm hover:text-gray-700 focus:outline-hidden focus:bg-gray-50 active:bg-gray-50">
+                                        class="zp-wood zp-wood-text inline-flex items-center rounded-sm px-3 py-2 text-sm font-medium leading-4 transition duration-150 ease-in-out">
                                         {{ auth()->user()->currentTeam->name }}
 
                                         <svg class="ml-2 -mr-0.5 size-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
@@ -196,12 +182,12 @@
                     </div>
                 @endif
             @else
-                <x-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
+                <x-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')" class="whitespace-nowrap">
                     <x-ts-icon icon="tabler.login-2" class="inline-block mr-1 size-5" />
                     {{ __('auth.login') }}
                 </x-nav-link>
 
-                <x-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')">
+                <x-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')" class="whitespace-nowrap">
                     <x-ts-icon icon="tabler.user-plus" class="inline-block mr-1 size-5" />
                     {{ __('auth.register') }}
                 </x-nav-link>
@@ -223,7 +209,7 @@
         {{-- hamburger (mobile) --}}
         <div class="ml-auto flex items-center md:hidden">
             <button @click="open = ! open"
-                class="inline-flex items-center justify-center p-2 text-gray-400 transition duration-150 ease-in-out rounded-sm hover:text-gray-500 hover:bg-gray-300 focus:outline-hidden focus:bg-gray-300 focus:text-gray-500">
+                class="zp-wood zp-wood-text inline-flex items-center justify-center rounded-sm p-2 transition duration-150 ease-in-out">
                 <svg class="size-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
                     <path :class="{ 'hidden': open, 'inline-flex': !open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                     <path :class="{ 'hidden': !open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
@@ -233,9 +219,9 @@
     </div>
 
     {{-- responsive navigation menu --}}
-    <div :class="{ 'block': open, 'hidden': !open }" class="hidden md:hidden">
+    <div :class="{ 'block': open, 'hidden': !open }" class="hidden border-t border-[rgba(160,120,55,0.35)] md:hidden">
         {{-- primary navigation links (mobile) --}}
-        <div class="space-y-1 border-b border-gray-200 pb-2">
+        <div class="space-y-1 pb-2">
             <x-nav-link-responsive href="{{ route('home') }}" :active="request()->routeIs('home')">
                 <x-ts-icon icon="tabler.home" class="inline-block mr-1 size-5" />
                 {{ __('app.home') }}
@@ -278,7 +264,7 @@
         </div>
 
         @guest
-            <div class="space-y-1 border-t border-gray-200 pt-2">
+            <div class="space-y-1 border-t border-[rgba(160,120,55,0.35)] pt-2">
                 <x-nav-link-responsive href="{{ route('login') }}" :active="request()->routeIs('login')">
                     <x-ts-icon icon="tabler.login-2" class="inline-block mr-1 size-5" />
                     {{ __('auth.login') }}
@@ -291,19 +277,19 @@
             </div>
 
             {{-- responsive settings options --}}
-            <div class="pt-2 pb-2 pl-4 border-t border-gray-200">
+            <div class="border-t border-[rgba(160,120,55,0.35)] pb-2 pl-4 pt-2">
                 <x-set.language />
             </div>
-            <div class="pt-2 pb-2 pl-4 border-t border-gray-200">
+            <div class="border-t border-[rgba(160,120,55,0.35)] pb-2 pl-4 pt-2">
                 <x-ts-theme-switch only-icons />
             </div>
-            <div class="pt-2 pb-2 pl-4 border-t border-gray-200">
+            <div class="border-t border-[rgba(160,120,55,0.35)] pb-2 pl-4 pt-2">
                 <x-set.offcanvas />
             </div>
         @endguest
 
         @auth
-            <div class="pt-2 pb-2 border-t border-gray-200">
+            <div class="border-t border-[rgba(160,120,55,0.35)] pb-2 pt-2">
                 <div class="flex items-center px-4">
                     @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
                         <div class="mr-3 shrink-0">
@@ -312,8 +298,8 @@
                     @endif
 
                     <div>
-                        <div class="text-base font-medium text-gray-800 dark:text-gray-400">{{ auth()->user()->name }}</div>
-                        <div class="text-sm font-medium text-gray-500 dark:text-gray-400">{{ auth()->user()->email }}</div>
+                        <div class="zp-display text-base font-medium text-[var(--zp-wood-text-paint)]">{{ auth()->user()->name }}</div>
+                        <div class="text-sm font-medium text-[var(--zp-wood-text-paint-deep)]">{{ auth()->user()->email }}</div>
                     </div>
                 </div>
 
@@ -343,7 +329,7 @@
 
                     {{-- team switcher --}}
                     @if (auth()->user()->allTeams()->count() > 1)
-                        <div class="border-t border-gray-200"></div>
+                        <div class="border-t border-[rgba(160,120,55,0.35)]"></div>
 
                         <div class="block px-4 py-2 text-xs text-gray-400">
                             {{ __('team.switch') }}
@@ -356,7 +342,7 @@
 
                     {{-- team management --}}
                     @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
-                        <div class="border-t border-gray-200"></div>
+                        <div class="border-t border-[rgba(160,120,55,0.35)]"></div>
 
                         <div class="block px-4 py-2 text-xs text-gray-400">
                             {{ __('team.manage') }}
@@ -390,10 +376,10 @@
             </div>
 
             {{-- responsive settings options --}}
-            <div class="py-2 pl-4 border-t border-gray-200">
+            <div class="py-2 pl-4 border-t border-[rgba(160,120,55,0.35)]">
                 <x-ts-theme-switch only-icons />
             </div>
-            <div class="py-1 pl-4 border-t border-gray-200">
+            <div class="py-1 pl-4 border-t border-[rgba(160,120,55,0.35)]">
                 <x-set.offcanvas />
             </div>
         @endauth

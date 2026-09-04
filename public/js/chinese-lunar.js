@@ -179,6 +179,61 @@ window.ChineseLunar = (function () {
         };
     }
 
+    /**
+     * 农历 → 阳历（1900–2100）。
+     * @returns {{year:number,month:number,day:number}|null}
+     */
+    function lunarToSolar(year, month, day, isLeap) {
+        year = Number(year);
+        month = Number(month);
+        day = Number(day);
+        isLeap = Boolean(isLeap);
+
+        if (year < 1900 || year > 2100 || month < 1 || month > 12 || day < 1 || day > 30) {
+            return null;
+        }
+
+        const leap = leapMonth(year);
+        if (isLeap && leap !== month) {
+            return null;
+        }
+
+        const maxDay = isLeap ? leapDays(year) : monthDays(year, month);
+        if (day > maxDay) {
+            return null;
+        }
+
+        let offset = 0;
+        for (let y = 1900; y < year; y++) {
+            offset += yearDays(y);
+        }
+
+        for (let m = 1; m <= 12; m++) {
+            if (month === m && !isLeap) {
+                offset += day - 1;
+                break;
+            }
+
+            offset += monthDays(year, m);
+
+            if (leap === m) {
+                if (month === m && isLeap) {
+                    offset += day - 1;
+                    break;
+                }
+                offset += leapDays(year);
+            }
+        }
+
+        const date = new Date(Date.UTC(1900, 0, 31) + offset * 86400000);
+
+        return {
+            year: date.getUTCFullYear(),
+            month: date.getUTCMonth() + 1,
+            day: date.getUTCDate(),
+        };
+    }
+
     function getTermDate(year, termIndex) {
         const ms = 31556925974.7 * (year - 1900) + TERM_INFO[termIndex] * 60000;
         return new Date(ms + Date.UTC(1900, 0, 6, 2, 5));
@@ -263,6 +318,8 @@ window.ChineseLunar = (function () {
 
     return {
         solarToLunar: solarToLunar,
+        lunarToSolar: lunarToSolar,
+        leapMonth: leapMonth,
         format: format,
         dayInfo: dayInfo,
         months: MONTHS,

@@ -22,7 +22,7 @@ final class MotherForm extends Form
 
     public $surname;
 
-    public $birthname;
+    public $occupation;
 
     public $nickname;
 
@@ -60,7 +60,7 @@ final class MotherForm extends Form
         return $rules = [
             'firstname' => ['nullable', 'string', 'max:255'],
             'surname'   => ['nullable', 'string', 'max:255', 'required_without:person_id'],
-            'birthname' => ['nullable', 'string', 'max:255'],
+            'occupation' => ['nullable', 'string', 'max:255'],
             'nickname'  => ['nullable', 'string', 'max:255'],
 
             'gender_id' => ['nullable', 'integer'],
@@ -108,7 +108,7 @@ final class MotherForm extends Form
         return [
             'firstname' => __('person.firstname'),
             'surname'   => __('person.surname'),
-            'birthname' => __('person.birthname'),
+            'occupation' => __('person.occupation'),
             'nickname'  => __('person.nickname'),
 
             'gender_id' => __('person.gender'),
