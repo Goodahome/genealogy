@@ -6,6 +6,7 @@ return [
     'age'                   => 'Leeftijd',
     'birthday'              => 'Verjaardag',
     'birthdays'             => 'Verjaardagen',
+    'family_calendar'       => 'Familiekalender',
     'upcoming_birthdays'    => 'Aankomende verjaardagen',
     'upcoming_months'       => 'Aankomende verjaardagen in de volgende :months maanden.',
     'no_upcoming_birthdays' => 'Geen aankomende verjaardagen in de volgende :months maanden.',

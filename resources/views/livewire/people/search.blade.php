@@ -83,12 +83,13 @@
                     @endif
 
                     @if (auth()->user()->hasPermission('person:create'))
-                        <a href="/people/add"
-                           title="{{ __('person.add_person') }}"
-                           aria-label="{{ __('person.add_person') }}"
-                           class="zp-search-action shrink-0 self-start">
+                        <button type="button"
+                                x-on:click="$modalOpen('add-person')"
+                                title="{{ __('person.add_person') }}"
+                                aria-label="{{ __('person.add_person') }}"
+                                class="zp-search-action shrink-0 self-start">
                             <x-ts-icon icon="tabler.user-plus" class="size-5" />
-                        </a>
+                        </button>
                     @endif
 
                     <button type="button"
@@ -145,4 +146,15 @@
         <p>{!! __('app.people_search_help_2') !!}</p><br />
         <p>{!! __('app.people_search_help_3') !!}</p>
     </x-ts-modal>
+
+    @if (auth()->user()->hasPermission('person:create'))
+        <x-ts-modal id="add-person" size="4xl" blur center persistent z-index="z-[100]">
+            <x-slot:title>
+                <x-ts-icon icon="tabler.user-plus" class="inline-block mr-1" />{{ __('person.add_person') }}
+            </x-slot:title>
+            <div class="zp-edit-modal-panel zp-edit-dialog-content">
+                <livewire:people.add.person :as-modal="true" />
+            </div>
+        </x-ts-modal>
+    @endif
 </div>

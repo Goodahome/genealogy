@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Back;
 
 use App\Http\Controllers\Controller;
-use App\Models\Couple;
 use App\Models\Person;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -38,13 +37,6 @@ final class PeopleController extends Controller
         return view('back.people.birthdays', [
             'birthdays' => $birthdays,
         ]);
-    }
-
-    public function add(): View
-    {
-        abort_unless(auth()->user()->hasPermission('person:create'), 403, __('app.unauthorized_access'));
-
-        return view('back.people.add.person');
     }
 
     public function show(Person $person): View
@@ -82,55 +74,6 @@ final class PeopleController extends Controller
         return view('back.people.datasheet', ['person' => $person]);
     }
 
-    public function addFather(Person $person): View
-    {
-        abort_unless(auth()->user()->hasPermission('person:create'), 403, __('app.unauthorized_access'));
-
-        return view('back.people.add.father', ['person' => $person]);
-    }
-
-    public function addMother(Person $person): View
-    {
-        abort_unless(auth()->user()->hasPermission('person:create'), 403, __('app.unauthorized_access'));
-
-        return view('back.people.add.mother', ['person' => $person]);
-    }
-
-    public function addChild(Person $person): View
-    {
-        abort_unless(auth()->user()->hasPermission('person:create'), 403, __('app.unauthorized_access'));
-
-        return view('back.people.add.child', ['person' => $person]);
-    }
-
-    public function addPartner(Person $person): View
-    {
-        abort_unless(auth()->user()->hasPermission('couple:create'), 403, __('app.unauthorized_access'));
-
-        return view('back.people.add.partner', ['person' => $person]);
-    }
-
-    public function editContact(Person $person): RedirectResponse
-    {
-        abort_unless(auth()->user()->hasPermission('person:update'), 403, __('app.unauthorized_access'));
-
-        return redirect()->to(route('people.show', $person) . '?edit=contact');
-    }
-
-    public function editDeath(Person $person): RedirectResponse
-    {
-        abort_unless(auth()->user()->hasPermission('person:update'), 403, __('app.unauthorized_access'));
-
-        return redirect()->to(route('people.show', $person) . '?edit=death');
-    }
-
-    public function editFamily(Person $person): View
-    {
-        abort_unless(auth()->user()->hasPermission('person:update'), 403, __('app.unauthorized_access'));
-
-        return view('back.people.edit.family', ['person' => $person]);
-    }
-
     public function editFiles(Person $person): RedirectResponse
     {
         abort_unless(auth()->user()->hasPermission('person:update'), 403, __('app.unauthorized_access'));
@@ -145,17 +88,4 @@ final class PeopleController extends Controller
         return redirect()->to(route('people.show', $person) . '?panel=photos');
     }
 
-    public function editProfile(Person $person): RedirectResponse
-    {
-        abort_unless(auth()->user()->hasPermission('person:update'), 403, __('app.unauthorized_access'));
-
-        return redirect()->to(route('people.show', $person) . '?edit=profile');
-    }
-
-    public function editPartner(Person $person, Couple $couple): View
-    {
-        abort_unless(auth()->user()->hasPermission('couple:update'), 403, __('app.unauthorized_access'));
-
-        return view('back.people.edit.partner', ['person' => $person, 'couple' => $couple]);
-    }
 }

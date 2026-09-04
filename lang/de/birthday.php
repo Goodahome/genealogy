@@ -6,6 +6,7 @@ return [
     'age'                   => 'Alter',
     'birthday'              => 'Geburtstag',
     'birthdays'             => 'Geburtstage',
+    'family_calendar'       => 'Familienkalender',
     'upcoming_birthdays'    => 'Anstehende Geburtstage',
     'upcoming_months'       => 'Anstehende Geburtstage in den nächsten :months Monaten.',
     'no_upcoming_birthdays' => 'Keine anstehenden Geburtstage in den nächsten :months Monaten.',

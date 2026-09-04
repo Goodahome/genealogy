@@ -1,5 +1,5 @@
 @section('title')
-    &vert; {{ __('birthday.birthdays') }}
+    &vert; {{ __('birthday.family_calendar') }}
 @endsection
 
 @push('styles')
@@ -8,13 +8,13 @@
 
 <x-app-layout>
     <x-slot name="heading">
-        {{ __('birthday.birthdays') }}
+        {{ __('birthday.family_calendar') }}
     </x-slot>
 
     <script src="{{ asset('js/lunar.js') }}"></script>
     <script src="{{ asset('js/chinese-lunar.js') }}"></script>
     <script>
-        window.birthdayCalendar = function (people) {
+        window.familyCalendar = function (people) {
             const turnsTemplate = @js(__('birthday.turns'));
             const deceasedLabel = @js(__('person.deceased'));
             const moreLabel = @js(__('birthday.more'));
@@ -123,7 +123,7 @@
 
     <div
         class="birthday-calendar flex min-h-[calc(100dvh-6.5rem)] w-full flex-col p-2 sm:p-4"
-        x-data="birthdayCalendar(@js($birthdays))"
+        x-data="familyCalendar(@js($birthdays))"
         x-cloak
     >
         <div class="flex min-h-0 flex-1 w-full flex-col overflow-hidden rounded-sm bg-white text-neutral-800 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700 dark:text-neutral-50">

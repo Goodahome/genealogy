@@ -57,27 +57,17 @@ Route::middleware([
     // -----------------------------------------------------------------------------------
     Route::controller(App\Http\Controllers\Back\PeopleController::class)->group(function (): void {
         Route::get('search', 'search')->name('people.search');
-        Route::get('birthdays', 'birthdays')->name('people.birthdays');
+        Route::get('family-calendar', 'birthdays')->name('people.family-calendar');
         Route::get('clan-lineage', 'clanLineage')->name('people.clan-lineage');
 
-        Route::get('people/add', 'add')->name('people.add');
         Route::get('people/{person}', 'show')->name('people.show');
         Route::get('people/{person}/ancestors', 'ancestors')->name('people.ancestors');
         Route::get('people/{person}/descendants', 'descendants')->name('people.descendants');
         Route::get('people/{person}/chart', 'chart')->name('people.chart');
         Route::get('people/{person}/history', 'history')->name('people.history');
         Route::get('people/{person}/datasheet', 'datasheet')->name('people.datasheet');
-        Route::get('people/{person}/add-father', 'addFather')->name('people.add-father');
-        Route::get('people/{person}/add-mother', 'addMother')->name('people.add-mother');
-        Route::get('people/{person}/add-child', 'addChild')->name('people.add-child');
-        Route::get('people/{person}/add-partner', 'addPartner')->name('people.add-partner');
-        Route::get('people/{person}/edit-contact', 'editContact')->name('people.edit-contact');
-        Route::get('people/{person}/edit-death', 'editDeath')->name('people.edit-death');
-        Route::get('people/{person}/edit-family', 'editFamily')->name('people.edit-family');
         Route::get('people/{person}/edit-files', 'editFiles')->name('people.edit-files');
         Route::get('people/{person}/edit-photos', 'editPhotos')->name('people.edit-photos');
-        Route::get('people/{person}/edit-profile', 'editProfile')->name('people.edit-profile');
-        Route::get('people/{person}/{couple}/edit-partner', 'editPartner')->name('people.edit-partner');
     });
 
     // -----------------------------------------------------------------------------------

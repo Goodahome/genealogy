@@ -22,6 +22,8 @@ final class Person extends Component
     // -----------------------------------------------------------------------
     public PersonForm $personForm;
 
+    public bool $asModal = false;
+
     public array $photos = [];
 
     public array $backup = [];

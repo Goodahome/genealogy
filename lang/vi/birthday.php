@@ -6,6 +6,7 @@ return [
     'age'                   => 'Tuổi',
     'birthday'              => 'Ngày sinh',
     'birthdays'             => 'Ngày sinh',
+    'family_calendar'       => 'Lịch gia đình',
     'upcoming_birthdays'    => 'Ngày sinh sắp tới',
     'upcoming_months'       => 'Ngày sinh sắp tới trong :months tháng tới.',
     'no_upcoming_birthdays' => 'Không có ngày sinh sắp tới trong :months tháng tới.',

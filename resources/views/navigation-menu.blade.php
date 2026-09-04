@@ -24,9 +24,9 @@
                     {{ __('app.search') }}
                 </x-nav-link>
 
-                <x-nav-link href="{{ route('people.birthdays') }}" :active="request()->routeIs('people.birthdays')">
-                    <x-ts-icon icon="tabler.cake" class="mr-1 size-5" />
-                    {{ __('birthday.birthdays') }}
+                <x-nav-link href="{{ route('people.family-calendar') }}" :active="request()->routeIs('people.family-calendar')">
+                    <x-ts-icon icon="tabler.calendar" class="mr-1 size-5" />
+                    {{ __('birthday.family_calendar') }}
                 </x-nav-link>
 
                 <x-nav-link href="{{ route('events.index') }}" :active="request()->routeIs('events.index')">
@@ -232,9 +232,9 @@
                 {{ __('app.search') }}
             </x-nav-link-responsive>
 
-            <x-nav-link-responsive href="{{ route('people.birthdays') }}" :active="request()->routeIs('people.birthdays')">
-                <x-ts-icon icon="tabler.cake" class="inline-block mr-1 size-5" />
-                {{ __('birthday.birthdays') }}
+            <x-nav-link-responsive href="{{ route('people.family-calendar') }}" :active="request()->routeIs('people.family-calendar')">
+                <x-ts-icon icon="tabler.calendar" class="inline-block mr-1 size-5" />
+                {{ __('birthday.family_calendar') }}
             </x-nav-link-responsive>
 
             <x-nav-link-responsive href="{{ route('events.index') }}" :active="request()->routeIs('events.index')">
