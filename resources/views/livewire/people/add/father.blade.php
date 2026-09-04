@@ -1,9 +1,11 @@
+<div class="zp-edit-modal-panel">
 <form wire:submit="saveFather">
     @csrf
 
-    <x-ts-tab selected="{{ __('person.add_new_person_as_father') }}" class="dark:bg-red-100">
+    <div class="zp-edit-tabs">
+    <x-ts-tab selected="{{ __('person.add_new_person_as_father') }}">
         <x-ts-tab.items tab="{{ __('person.add_new_person_as_father') }}">
-            <div class="p-4 rounded-sm md:w-192 bg-neutral-200">
+            <div @class(['p-4 rounded-sm', 'md:w-192 bg-neutral-200' => ! $asModal, 'pt-1' => $asModal])>
                 @if (auth()->user()->currentTeam->personal_team)
                     <div class="mb-4">
                         <x-ts-alert color="cyan" icon="tabler.exclamation-circle" close>
@@ -48,9 +50,10 @@
                     {{-- sex --}}
                     <div class="col-span-6 md:col-span-3">
                         <x-label for="sex" class="mr-5" value="{{ __('person.sex') }}:" />
-                        <div class="flex">
-                            <div class="mt-3 mb-[0.125rem] mr-4 inline-block min-h-[1.5rem] pl-[1.5rem] text-gray-700">
-                                {{ __('app.male') }}
+                        <div class="zp-sex-picker mt-2" role="radiogroup" aria-label="{{ __('person.sex') }}">
+                            <div class="zp-sex-option is-on" aria-label="{{ __('app.male') }}">
+                                <x-ts-icon icon="tabler.gender-male" class="size-4 shrink-0" />
+                                <span>{{ __('app.male') }}</span>
                             </div>
                         </div>
                     </div>
@@ -58,11 +61,8 @@
                     
                     <x-hr.narrow class="col-span-6 my-0!" />
 
-                    {{-- yob --}}
-                    <div class="col-span-6 md:col-span-3">
-                        <x-ts-input wire:model="fatherForm.yob" id="yob" label="{{ __('person.yob') }} :" wire:dirty.class="bg-yellow-200 dark:text-black" autocomplete="yob" />
-                    </div>
-
+                    @include('livewire.people.partials.birth-date-fields', ['formPrefix' => 'fatherForm', 'idPrefix' => 'father'])
+                    @if (false)
                     {{-- 替换原来的日期选择部分 --}}
                     
                     {{-- 原来的 dob 字段 --}}
@@ -105,6 +105,7 @@
                         </div>
                     </div>
 
+                    @endif
                     {{-- pob --}}
                     <div class="col-span-6">
                         <x-ts-input wire:model="fatherForm.pob" id="pob" label="{{ __('person.pob') }} :" wire:dirty.class="bg-yellow-200 dark:text-black" autocomplete="pod" />
@@ -144,7 +145,7 @@
         </x-ts-tab.items>
 
         <x-ts-tab.items tab="{{ __('person.add_existing_person_as_father') }}">
-            <div class="p-4 rounded-sm md:w-192 bg-neutral-200">
+            <div @class(['p-4 rounded-sm', 'md:w-192 bg-neutral-200' => ! $asModal, 'pt-1' => $asModal])>
                 <x-ts-errors class="mb-2" close />
 
                 {{-- person_id --}}
@@ -183,4 +184,6 @@
             </div>
         </x-ts-tab.items>
     </x-ts-tab>
+    </div>
 </form>
+</div>

@@ -7,7 +7,7 @@
         {{ __('person.profile') }}
     </x-slot>
 
-    <div class="w-full space-y-5 overflow-x-auto p-2"
+    <div class="w-full space-y-5 overflow-visible p-2"
          x-data="{
             panelHeight: null,
             syncPanelHeight() {
@@ -179,7 +179,7 @@
             <x-slot:title>
                 <x-ts-icon icon="tabler.id" class="inline-block mr-1" />{{ __('person.edit_profile') }}
             </x-slot:title>
-            <div class="zp-edit-modal-panel">
+            <div class="zp-edit-modal-panel zp-edit-dialog-content">
                 <livewire:people.edit.profile :person="$person" :as-modal="true" />
             </div>
         </x-ts-modal>
@@ -188,7 +188,7 @@
             <x-slot:title>
                 <x-ts-icon icon="tabler.address-book" class="inline-block mr-1" />{{ __('person.edit_contact') }}
             </x-slot:title>
-            <div class="zp-edit-modal-panel">
+            <div class="zp-edit-modal-panel zp-edit-dialog-content">
                 <livewire:people.edit.contact :person="$person" :as-modal="true" />
             </div>
         </x-ts-modal>
@@ -197,9 +197,71 @@
             <x-slot:title>
                 <x-ts-icon icon="tabler.grave-2" class="inline-block mr-1" />{{ __('person.edit_death') }}
             </x-slot:title>
-            <div class="zp-edit-modal-panel">
+            <div class="zp-edit-modal-panel zp-edit-dialog-content">
                 <livewire:people.edit.death :person="$person" :as-modal="true" />
             </div>
         </x-ts-modal>
+
+        <x-ts-modal id="add-person-father" size="4xl" blur center persistent z-index="z-[100]">
+            <x-slot:title>
+                <x-ts-icon icon="tabler.user-plus" class="inline-block mr-1" />{{ __('person.add_father') }}
+            </x-slot:title>
+            <div class="zp-edit-modal-panel zp-edit-dialog-content">
+                <livewire:people.add.father :person="$person" :as-modal="true" />
+            </div>
+        </x-ts-modal>
+
+        <x-ts-modal id="add-person-mother" size="4xl" blur center persistent z-index="z-[100]">
+            <x-slot:title>
+                <x-ts-icon icon="tabler.user-plus" class="inline-block mr-1" />{{ __('person.add_mother') }}
+            </x-slot:title>
+            <div class="zp-edit-modal-panel zp-edit-dialog-content">
+                <livewire:people.add.mother :person="$person" :as-modal="true" />
+            </div>
+        </x-ts-modal>
+
+        <x-ts-modal id="edit-person-family" size="4xl" blur center persistent z-index="z-[100]">
+            <x-slot:title>
+                <x-ts-icon icon="tabler.edit" class="inline-block mr-1" />{{ __('person.edit_family') }}
+            </x-slot:title>
+            <div class="zp-edit-modal-panel zp-edit-dialog-content">
+                <livewire:people.edit.family :person="$person" :as-modal="true" />
+            </div>
+        </x-ts-modal>
+    @endif
+
+    @if (auth()->user()->hasPermission('person:create'))
+        <x-ts-modal id="add-person-child" size="4xl" blur center persistent z-index="z-[100]">
+            <x-slot:title>
+                <x-ts-icon icon="tabler.user-plus" class="inline-block mr-1" />{{ __('person.add_child') }}
+            </x-slot:title>
+            <div class="zp-edit-modal-panel zp-edit-dialog-content">
+                <livewire:people.add.child :person="$person" :as-modal="true" />
+            </div>
+        </x-ts-modal>
+    @endif
+
+    @if (auth()->user()->hasPermission('couple:create'))
+        <x-ts-modal id="add-person-partner" size="4xl" blur center persistent z-index="z-[100]">
+            <x-slot:title>
+                <x-ts-icon icon="tabler.user-plus" class="inline-block mr-1" />{{ __('person.add_relationship') }}
+            </x-slot:title>
+            <div class="zp-edit-modal-panel zp-edit-dialog-content">
+                <livewire:people.add.partner :person="$person" :as-modal="true" />
+            </div>
+        </x-ts-modal>
+    @endif
+
+    @if (auth()->user()->hasPermission('couple:update'))
+        @foreach ($person->couples as $couple)
+            <x-ts-modal id="edit-person-partner-{{ $couple->id }}" size="4xl" blur center persistent z-index="z-[100]">
+                <x-slot:title>
+                    <x-ts-icon icon="tabler.user-edit" class="inline-block mr-1" />{{ __('person.edit_relationship') }}
+                </x-slot:title>
+                <div class="zp-edit-modal-panel zp-edit-dialog-content">
+                    <livewire:people.edit.partner :person="$person" :couple="$couple" :as-modal="true" :key="'edit-person-partner-' . $couple->id" />
+                </div>
+            </x-ts-modal>
+        @endforeach
     @endif
 </x-app-layout>

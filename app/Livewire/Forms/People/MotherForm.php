@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire\Forms\People;
 
+use App\Livewire\Forms\People\Traits\HasSolarBirthDate;
 use App\Models\Gender;
 use App\Rules\DobValid;
 use App\Rules\YobValid;
@@ -14,6 +15,8 @@ use Livewire\Form;
 
 final class MotherForm extends Form
 {
+    use HasSolarBirthDate;
+
     // -----------------------------------------------------------------------
     public $person;
 
@@ -43,6 +46,10 @@ final class MotherForm extends Form
     public $dob_month;
     public $dob_day;
     public $dob_leap = false;
+
+    public $solar_year;
+    public $solar_month;
+    public $solar_day;
     
     // -----------------------------------------------------------------------
     public $person_id;
@@ -57,7 +64,7 @@ final class MotherForm extends Form
     // -----------------------------------------------------------------------
     public function rules(): array
     {
-        return $rules = [
+        return array_merge([
             'firstname' => ['nullable', 'string', 'max:255'],
             'surname'   => ['nullable', 'string', 'max:255', 'required_without:person_id'],
             'occupation' => ['nullable', 'string', 'max:255'],
@@ -65,19 +72,6 @@ final class MotherForm extends Form
 
             'gender_id' => ['nullable', 'integer'],
 
-            'yob' => [
-                'nullable',
-                'integer',
-                'min:1',
-                'max:' . date('Y'),
-                new YobValid,
-            ],
-            'dob' => [
-                'nullable',
-                'date_format:Y-m-d',
-                'before_or_equal:today',
-                new DobValid,
-            ],
             'pob' => ['nullable', 'string', 'max:255'],
 
             'photo' => ['nullable', 'string', 'max:255'],
@@ -85,11 +79,7 @@ final class MotherForm extends Form
             // -----------------------------------------------------------------------
             'person_id' => ['nullable', 'integer', 'required_without:surname'],
 
-            'dob_year' => ['nullable', 'integer', 'min:1900', 'max:2100'],
-            'dob_month' => ['nullable', 'integer', 'min:1', 'max:12'],
-            'dob_day' => ['nullable', 'integer', 'min:1', 'max:30'],
-            'dob_leap' => ['boolean'],
-        ];
+        ], $this->birthDateRules());
     }
 
     public function messages(): array
@@ -105,7 +95,7 @@ final class MotherForm extends Form
 
     public function validationAttributes(): array
     {
-        return [
+        return array_merge([
             'firstname' => __('person.firstname'),
             'surname'   => __('person.surname'),
             'occupation' => __('person.occupation'),
@@ -121,10 +111,6 @@ final class MotherForm extends Form
 
             'person_id' => __('person.person'),
 
-            'dob_year' => '农历出生年',
-            'dob_month' => '农历出生月',
-            'dob_day' => '农历出生日',
-            'dob_leap' => '闰月',
-        ];
+        ], $this->birthDateValidationAttributes());
     }
 }

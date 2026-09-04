@@ -1248,6 +1248,47 @@
     border: 1px solid var(--zp-line);
   }
 
+  /* 所有下拉菜单使用人物简介卡片同款不透明宣纸底，避免木面透出导致文字难以阅读 */
+  .zp-shell main [role='menu'].bg-white,
+  .zp-shell main [role='submenu'].bg-white,
+  .zp-shell main [role='menu'].dark\:bg-dark-700,
+  .zp-shell main [role='submenu'].dark\:bg-dark-700,
+  .zp-shell [role='menu'],
+  .zp-shell [role='submenu'],
+  .zp-shell .zp-dropdown-panel,
+  .zp-shell .zp-dropdown-panel__content {
+    background-color: #faf6eb !important;
+    background-image:
+      linear-gradient(180deg, rgba(255, 252, 245, 0.72) 0%, rgba(245, 236, 214, 0.45) 100%),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 11px,
+        rgba(138, 107, 42, 0.028) 11px,
+        rgba(138, 107, 42, 0.028) 12px
+      ) !important;
+    background-size: auto, auto !important;
+    background-repeat: no-repeat, repeat !important;
+    border-color: rgba(138, 107, 42, 0.32) !important;
+    color: #2a2118 !important;
+  }
+
+  .zp-shell [role='menu'] [role='menuitem'],
+  .zp-shell [role='submenu'] [role='menuitem'],
+  .zp-shell .zp-dropdown-panel a {
+    color: #2a2118 !important;
+  }
+
+  .zp-shell [role='menu'] [role='menuitem']:hover,
+  .zp-shell [role='menu'] [role='menuitem']:focus,
+  .zp-shell [role='submenu'] [role='menuitem']:hover,
+  .zp-shell [role='submenu'] [role='menuitem']:focus,
+  .zp-shell .zp-dropdown-panel a:hover,
+  .zp-shell .zp-dropdown-panel a:focus {
+    background-color: rgba(178, 58, 45, 0.12) !important;
+    color: #8f2d23 !important;
+  }
+
   /*
    * 编辑弹窗：宣纸底 + 茶墨字 + 清晰描边
    * 压过木面浅金墨 / 透明底输入框规则
@@ -1256,19 +1297,77 @@
     color: #2a2118;
   }
 
-  /* 编辑人物弹窗外壳：与简介 zp-paper-card 同款不透明宣纸底 */
-  .zp-shell #edit-person-profile .bg-white,
-  .zp-shell #edit-person-contact .bg-white,
-  .zp-shell #edit-person-death .bg-white,
-  .zp-shell #edit-person-profile .dark\:bg-dark-700,
-  .zp-shell #edit-person-contact .dark\:bg-dark-700,
-  .zp-shell #edit-person-death .dark\:bg-dark-700,
-  html.dark .zp-shell #edit-person-profile .bg-white,
-  html.dark .zp-shell #edit-person-contact .bg-white,
-  html.dark .zp-shell #edit-person-death .bg-white,
-  html.dark .zp-shell #edit-person-profile .dark\:bg-dark-700,
-  html.dark .zp-shell #edit-person-contact .dark\:bg-dark-700,
-  html.dark .zp-shell #edit-person-death .dark\:bg-dark-700 {
+  /* 所有人物编辑弹窗共用简介编辑信息弹窗的宣纸内容区 */
+  .zp-shell main .zp-edit-dialog-content,
+  .zp-shell main .zp-edit-dialog-content .bg-white,
+  .zp-shell main .zp-edit-dialog-content .bg-neutral-200,
+  .zp-shell main .zp-edit-dialog-content .dark\:bg-neutral-700,
+  .zp-shell main .zp-edit-dialog-content .dark\:bg-neutral-600 {
+    background-color: #faf6eb !important;
+    background-image:
+      linear-gradient(180deg, rgba(255, 252, 245, 0.72) 0%, rgba(245, 236, 214, 0.45) 100%),
+      repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 11px,
+        rgba(138, 107, 42, 0.028) 11px,
+        rgba(138, 107, 42, 0.028) 12px
+      ) !important;
+    background-size: auto, auto !important;
+    background-repeat: no-repeat, repeat !important;
+    color: #2a2118 !important;
+  }
+
+  .zp-shell main .zp-edit-dialog-content form > div,
+  .zp-shell main .zp-edit-dialog-content form > [data-slot] {
+    border: 0 !important;
+    border-radius: 0 !important;
+    border-color: rgba(138, 107, 42, 0.32) !important;
+    box-shadow: none !important;
+    color: #2a2118 !important;
+  }
+
+  /* 内容区与编辑信息弹窗一致：不再叠加独立页面卡片边框 */
+  .zp-shell main .zp-edit-dialog-content > .zp-edit-modal-panel,
+  .zp-shell main .zp-edit-dialog-content > .zp-edit-modal-panel > form > div,
+  .zp-shell main .zp-edit-dialog-content .zp-edit-tabs,
+  .zp-shell main .zp-edit-dialog-content .zp-edit-tabs > div,
+  .zp-shell main .zp-edit-dialog-content .zp-edit-tabs > div > div {
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  /* 新增人物页面保留业务标签页，但去掉独立页面的卡片外观 */
+  .zp-shell main .zp-edit-dialog-content .zp-edit-tabs,
+  .zp-shell main .zp-edit-dialog-content .zp-edit-tabs > div {
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  .zp-shell main .zp-edit-dialog-content .zp-edit-tabs > div > hr {
+    background-color: rgba(138, 107, 42, 0.22) !important;
+  }
+
+  /* 标签页自身的 content 默认带 p-4；表单面板已有同款内边距，弹窗模式只保留一层 */
+  .zp-shell main .zp-edit-dialog-content .zp-edit-tabs > div > div:last-child {
+    padding: 0 !important;
+  }
+
+  /* 只给 TallStackUI 弹窗第四层容器加外框，避免污染内容区内部的 bg-white */
+  .zp-shell :is(
+    #edit-person-profile,
+    #edit-person-contact,
+    #edit-person-death,
+    #add-person-father,
+    #add-person-mother,
+    #edit-person-family,
+    #add-person-child,
+    #add-person-partner,
+    [id^='edit-person-partner-']
+  ) > div:nth-child(2) > div > div {
     background-color: #faf6eb !important;
     background-image:
       linear-gradient(180deg, rgba(255, 252, 245, 0.72) 0%, rgba(245, 236, 214, 0.45) 100%),
@@ -1282,11 +1381,29 @@
     background-size: auto, auto !important;
     background-repeat: no-repeat, repeat !important;
     border: 1px solid rgba(138, 107, 42, 0.32) !important;
+    border-color: rgba(138, 107, 42, 0.32) !important;
     border-radius: var(--zp-radius) !important;
     box-shadow:
       0 1px 0 rgba(255, 248, 230, 0.55),
       0 8px 18px -12px rgba(74, 52, 32, 0.35) !important;
     color: #2a2118 !important;
+  }
+
+  /* 新增人物弹窗：缩短标题与“新增 / 选择现有”标签页之间的距离 */
+  .zp-shell :is(
+    #add-person-father,
+    #add-person-mother,
+    #add-person-child,
+    #add-person-partner
+  ) > div:nth-child(2) > div > div > div:last-child {
+    padding-top: 0.25rem !important;
+  }
+
+  .zp-shell main .zp-edit-dialog-content .border-b,
+  .zp-shell main .zp-edit-dialog-content .border-b-2,
+  .zp-shell main .zp-edit-dialog-content .border,
+  .zp-shell main .zp-edit-dialog-content hr {
+    border-color: rgba(138, 107, 42, 0.22) !important;
   }
 
   .zp-shell #edit-person-profile .border-b-gray-100,

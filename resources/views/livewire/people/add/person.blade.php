@@ -1,3 +1,4 @@
+<div class="zp-edit-modal-panel">
 <form wire:submit="savePerson">
     @csrf
 
@@ -60,24 +61,25 @@
                 {{-- sex --}}
                 <div class="col-span-6 md:col-span-3">
                     <x-label for="sex" class="mr-5" value="{{ __('person.sex') }}: *" />
-                    <div class="flex">
-                        <div class="mt-3 mb-[0.125rem] mr-4 inline-block min-h-[1.5rem] pl-[1.5rem]">
-                            <x-ts-radio color="primary" wire:model="personForm.sex" name="sex" id="sexM" value="m" label="{{ __('app.male') }}" />
-                        </div>
-                        <div class="mt-3 mb-[0.125rem] mr-4 inline-block min-h-[1.5rem] pl-[1.5rem]">
-                            <x-ts-radio color="primary" wire:model="personForm.sex" name="sex" id="sexF" value="f" label="{{ __('app.female') }}" />
-                        </div>
+                    <div class="zp-sex-picker mt-2" role="radiogroup" aria-label="{{ __('person.sex') }}">
+                        <label class="zp-sex-option">
+                            <input type="radio" class="sr-only" wire:model="personForm.sex" name="personForm_sex" id="person_sex_m" value="m" />
+                            <x-ts-icon icon="tabler.gender-male" class="size-4 shrink-0" />
+                            <span>{{ __('app.male') }}</span>
+                        </label>
+                        <label class="zp-sex-option">
+                            <input type="radio" class="sr-only" wire:model="personForm.sex" name="personForm_sex" id="person_sex_f" value="f" />
+                            <x-ts-icon icon="tabler.gender-female" class="size-4 shrink-0" />
+                            <span>{{ __('app.female') }}</span>
+                        </label>
                     </div>
                 </div>
 
                 
                 <x-hr.narrow class="col-span-6 my-0!" />
 
-                {{-- yob --}}
-                <div class="col-span-6 md:col-span-3">
-                    <x-ts-input wire:model="personForm.yob" id="yob" label="{{ __('person.yob') }} :" wire:dirty.class="bg-yellow-200 dark:text-black" autocomplete="yob" />
-                </div>
-
+                @include('livewire.people.partials.birth-date-fields', ['formPrefix' => 'personForm', 'idPrefix' => 'person'])
+                @if (false)
                 {{-- dob --}}
                 <div class="col-span-6 md:col-span-3">
                     {{-- 阳历日期选择器 --}}
@@ -122,6 +124,7 @@
                     {{-- 同样修改 dod 部分 --}}
                 </div>
 
+                @endif
                 {{-- pob --}}
                 <div class="col-span-6">
                     <x-ts-input wire:model="personForm.pob" id="pob" label="{{ __('person.pob') }} :" wire:dirty.class="bg-yellow-200 dark:text-black" autocomplete="pod" />
@@ -160,3 +163,4 @@
         </div>
     </div>
 </form>
+</div>

@@ -21,6 +21,8 @@ final class Family extends Component
     // -----------------------------------------------------------------------
     public $person;
 
+    public bool $asModal = false;
+
     public FamilyForm $familyForm;
 
     public Collection $fathers;

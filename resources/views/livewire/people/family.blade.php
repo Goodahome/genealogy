@@ -10,32 +10,32 @@
                     <x-ts-dropdown icon="tabler.menu-2" position="bottom-end">
                         @if (!isset($person->father_id) or !isset($person->mother_id))
                             @if (!isset($person->father_id))
-                                <a href="/people/{{ $person->id }}/add-father">
+                                <button type="button" class="w-full text-left" x-on:click="$modalOpen('add-person-father')">
                                     <x-ts-dropdown.items>
                                         <x-ts-icon icon="tabler.user-plus" class="mr-2" />
                                         {{ __('person.add_father') }}
                                     </x-ts-dropdown.items>
-                                </a>
+                                </button>
                             @endif
 
                             @if (!isset($person->mother_id))
-                                <a href="/people/{{ $person->id }}/add-mother">
+                                <button type="button" class="w-full text-left" x-on:click="$modalOpen('add-person-mother')">
                                     <x-ts-dropdown.items>
                                         <x-ts-icon icon="tabler.user-plus" class="mr-2" />
                                         {{ __('person.add_mother') }}
                                     </x-ts-dropdown.items>
-                                </a>
+                                </button>
                             @endif
 
                             <hr />
                         @endif
 
-                        <a href="/people/{{ $person->id }}/edit-family">
+                        <button type="button" class="w-full text-left" x-on:click="$modalOpen('edit-person-family')">
                             <x-ts-dropdown.items>
                                 <x-ts-icon icon="tabler.edit" class="mr-2" />
                                 {{ __('person.edit_family') }}
                             </x-ts-dropdown.items>
-                        </a>
+                        </button>
                     </x-ts-dropdown>
                 </div>
             @endif

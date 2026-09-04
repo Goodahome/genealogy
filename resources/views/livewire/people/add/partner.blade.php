@@ -1,9 +1,11 @@
+<div class="zp-edit-modal-panel">
 <form wire:submit="savePartner">
     @csrf
 
-    <x-ts-tab selected="{{ __('person.add_new_person_as_partner') }}" class="dark:bg-red-100">
+    <div class="zp-edit-tabs">
+    <x-ts-tab selected="{{ __('person.add_new_person_as_partner') }}">
         <x-ts-tab.items tab="{{ __('person.add_new_person_as_partner') }}">
-            <div class="p-4 rounded-sm md:w-192 bg-neutral-200">
+            <div @class(['p-4 rounded-sm', 'md:w-192 bg-neutral-200' => ! $asModal, 'pt-1' => $asModal])>
                 @if (auth()->user()->currentTeam->personal_team)
                     <div class="mb-4">
                         <x-ts-alert color="cyan" icon="tabler.exclamation-circle" close>
@@ -48,24 +50,25 @@
                     {{-- sex --}}
                     <div class="col-span-6 md:col-span-3">
                         <x-label for="sex" class="mr-5" value="{{ __('person.sex') }}: *" />
-                        <div class="flex">
-                            <div class="mt-3 mb-[0.125rem] mr-4 inline-block min-h-[1.5rem] pl-[1.5rem]">
-                                <x-ts-radio color="primary" wire:model="partnerForm.sex" name="sex" id="sexM" value="m" label="{{ __('app.male') }}" />
-                            </div>
-                            <div class="mt-3 mb-[0.125rem] mr-4 inline-block min-h-[1.5rem] pl-[1.5rem]">
-                                <x-ts-radio color="primary" wire:model="partnerForm.sex" name="sex" id="sexF" value="f" label="{{ __('app.female') }}" />
-                            </div>
+                        <div class="zp-sex-picker mt-2" role="radiogroup" aria-label="{{ __('person.sex') }}">
+                            <label class="zp-sex-option">
+                                <input type="radio" class="sr-only" wire:model="partnerForm.sex" name="partnerForm_sex" id="partner_sex_m" value="m" />
+                                <x-ts-icon icon="tabler.gender-male" class="size-4 shrink-0" />
+                                <span>{{ __('app.male') }}</span>
+                            </label>
+                            <label class="zp-sex-option">
+                                <input type="radio" class="sr-only" wire:model="partnerForm.sex" name="partnerForm_sex" id="partner_sex_f" value="f" />
+                                <x-ts-icon icon="tabler.gender-female" class="size-4 shrink-0" />
+                                <span>{{ __('app.female') }}</span>
+                            </label>
                         </div>
                     </div>
 
                     
                     <x-hr.narrow class="col-span-6 my-0!" />
 
-                    {{-- yob --}}
-                    <div class="col-span-6 md:col-span-3">
-                        <x-ts-input wire:model="partnerForm.yob" id="yob" label="{{ __('person.yob') }} :" wire:dirty.class="bg-yellow-200 dark:text-black" autocomplete="yob" />
-                    </div>
-
+                    @include('livewire.people.partials.birth-date-fields', ['formPrefix' => 'partnerForm', 'idPrefix' => 'partner'])
+                    @if (false)
                     {{-- 替换原来的日期选择部分 --}}
                     
                     {{-- 阳历日期选择器 --}}
@@ -106,6 +109,7 @@
                         </div>
                     </div>
 
+                    @endif
                     {{-- pob --}}
                     <div class="col-span-6">
                         <x-ts-input wire:model="partnerForm.pob" id="pob" label="{{ __('person.pob') }} :" wire:dirty.class="bg-yellow-200 dark:text-black" autocomplete="pod" />
@@ -171,7 +175,7 @@
         </x-ts-tab.items>
 
         <x-ts-tab.items tab="{{ __('person.add_existing_person_as_partner') }}">
-            <div class="p-4 rounded-sm md:w-192 bg-neutral-200">
+            <div @class(['p-4 rounded-sm', 'md:w-192 bg-neutral-200' => ! $asModal, 'pt-1' => $asModal])>
                 <x-ts-errors class="mb-2" close />
 
                 <div class="grid grid-cols-6 gap-5">
@@ -234,4 +238,6 @@
             </div>
         </x-ts-tab.items>
     </x-ts-tab>
+    </div>
 </form>
+</div>

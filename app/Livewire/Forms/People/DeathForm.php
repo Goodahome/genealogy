@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire\Forms\People;
 
+use App\Livewire\Forms\People\Traits\HasSolarDeathDate;
 use App\Rules\DodValid;
 use App\Rules\YodValid;
 use Livewire\Attributes\Validate;
@@ -11,12 +12,21 @@ use Livewire\Form;
 
 final class DeathForm extends Form
 {
+    use HasSolarDeathDate;
+
     // -----------------------------------------------------------------------
     #[Validate]
     public $yod;
 
     #[Validate]
     public $dod;
+
+    // 阳历死亡日期（界面用年月日；保存时映射为 dod / yod）
+    public $solar_year;
+
+    public $solar_month;
+
+    public $solar_day;
 
     public $pod;
 
@@ -37,7 +47,7 @@ final class DeathForm extends Form
     // -----------------------------------------------------------------------
     public function rules(): array
     {
-        return [
+        return array_merge([
             'yod' => [
                 'nullable',
                 'integer',
@@ -56,12 +66,7 @@ final class DeathForm extends Form
             'cemetery_location_address'   => ['nullable', 'string', 'max:255'],
             'cemetery_location_latitude'  => ['nullable', 'numeric', 'decimal:0,13', 'min:-90', 'max:90', 'required_with:cemetery_location_longitude'],
             'cemetery_location_longitude' => ['nullable', 'numeric', 'decimal:0,13', 'min:-180', 'max:180', 'required_with:cemetery_location_latitude'],
-            // 添加农历死亡日期验证规则
-            'dod_year' => ['nullable', 'integer', 'min:1900', 'max:2100'],
-            'dod_month' => ['nullable', 'integer', 'min:1', 'max:12'],
-            'dod_day' => ['nullable', 'integer', 'min:1', 'max:30'],
-            'dod_leap' => ['boolean'],
-        ];
+        ], $this->deathDateRules());
     }
 
     public function messages(): array
@@ -71,7 +76,7 @@ final class DeathForm extends Form
 
     public function validationAttributes(): array
     {
-        return [
+        return array_merge([
             'yod'                         => __('person.yod'),
             'dod'                         => __('person.dod'),
             'pod'                         => __('person.pod'),
@@ -79,11 +84,6 @@ final class DeathForm extends Form
             'cemetery_location_address'   => __('metadata.address'),
             'cemetery_location_latitude'  => __('metadata.latitude'),
             'cemetery_location_longitude' => __('metadata.longitude'),
-            // 添加农历日期字段的验证属性
-            'dod_year'                    => __('person.dod_year'),
-            'dod_month'                   => __('person.dod_month'),
-            'dod_day'                     => __('person.dod_day'),
-            'dod_leap'                    => __('person.dod_leap'),
-        ];
+        ], $this->deathDateValidationAttributes());
     }
 }

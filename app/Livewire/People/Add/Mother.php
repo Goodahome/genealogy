@@ -24,6 +24,8 @@ final class Mother extends Component
     // -----------------------------------------------------------------------
     public $person;
 
+    public bool $asModal = false;
+
     public MotherForm $motherForm;
 
     public array $photos = [];
@@ -44,13 +46,16 @@ final class Mother extends Component
 
         $this->motherForm->yob = null;
         $this->motherForm->dob = null;
+        $this->motherForm->solar_year = null;
+        $this->motherForm->solar_month = null;
+        $this->motherForm->solar_day = null;
         $this->motherForm->pob = null;
 
         $this->motherForm->photo = null;
 
         $this->motherForm->person_id = null;
 
-        // 初始化农历出生日�?        $this->motherForm->dob_year = null;
+        // 初始化农历出生日�?        $this->motherForm->dob_year = null;
         $this->motherForm->dob_month = null;
         $this->motherForm->dob_day = null;
         $this->motherForm->dob_leap = false;
@@ -114,6 +119,13 @@ final class Mother extends Component
     {
         if ($this->isDirty()) {
             $validated = $this->motherForm->validate();
+            $this->motherForm->assertSolarBirthValid();
+
+            if ($this->getErrorBag()->isNotEmpty()) {
+                return;
+            }
+
+            $birth = $this->motherForm->resolveSolarBirth();
 
             if (isset($validated['person_id'])) {
                 $this->person->update([
@@ -129,8 +141,8 @@ final class Mother extends Component
                     'nickname'  => $validated['nickname'],
                     'sex'       => 'f',
                     'gender_id' => $validated['gender_id'] ?? null,
-                    'yob'       => $validated['yob'],
-                    'dob'       => $validated['dob'],
+                    'yob'       => $birth['yob'],
+                    'dob'       => $birth['dob'],
                     'pob'       => $validated['pob'],
                     'team_id'   => $this->person->team_id,
                     // 保存农历日期字段
@@ -171,14 +183,8 @@ final class Mother extends Component
 
         $this->motherForm->gender_id !== null or
 
-        $this->motherForm->yob !== null or
-        $this->motherForm->dob !== null or
+        $this->motherForm->hasBirthDateInput() or
         $this->motherForm->pob !== null or
-
-        $this->motherForm->dob_year !== $this->person->dob_lunar_year or
-        $this->motherForm->dob_month !== $this->person->dob_lunar_month or
-        $this->motherForm->dob_day !== $this->person->dob_lunar_day or
-        $this->motherForm->dob_leap !== $this->person->dob_lunar_leap or
 
         $this->motherForm->person_id;
     }

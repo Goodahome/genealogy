@@ -29,6 +29,18 @@ final class Death extends Component
     {
         $this->deathForm->yod = $this->person->yod;
         $this->deathForm->dod = $this->person->dod ? Carbon::parse($this->person->dod)->format('Y-m-d') : null;
+
+        if ($this->person->dod) {
+            $dod = Carbon::parse($this->person->dod);
+            $this->deathForm->solar_year = (int) $dod->format('Y');
+            $this->deathForm->solar_month = (int) $dod->format('n');
+            $this->deathForm->solar_day = (int) $dod->format('j');
+        } else {
+            $this->deathForm->solar_year = $this->person->yod !== null ? (int) $this->person->yod : null;
+            $this->deathForm->solar_month = null;
+            $this->deathForm->solar_day = null;
+        }
+
         $this->deathForm->pod = $this->person->pod;
 
         $this->deathForm->dod_year = $this->person->dod_lunar_year;
@@ -45,11 +57,20 @@ final class Death extends Component
     public function saveDeath(): void
     {
         if ($this->isDirty()) {
+            $death = $this->deathForm->resolveSolarDeath();
+            $this->deathForm->yod = $death['yod'];
+            $this->deathForm->dod = $death['dod'];
+            $this->deathForm->assertSolarDeathValid();
+
+            if ($this->getErrorBag()->isNotEmpty()) {
+                return;
+            }
+
             $validated = $this->deathForm->validate();
 
             $this->person->update([
-                'yod' => $this->deathForm->yod ?? null,
-                'dod' => $this->deathForm->dod ?? null,
+                'yod' => $death['yod'],
+                'dod' => $death['dod'],
                 'pod' => $this->deathForm->pod ?? null,
                 'dod_lunar_year' => $this->deathForm->dod_year,
                 'dod_lunar_month' => $this->deathForm->dod_month,
@@ -59,7 +80,11 @@ final class Death extends Component
 
             $this->person->updateMetadata(
                 collect($validated)
-                    ->forget(['yod', 'dod', 'pod'])
+                    ->forget([
+                        'yod', 'dod', 'pod',
+                        'solar_year', 'solar_month', 'solar_day',
+                        'dod_year', 'dod_month', 'dod_day', 'dod_leap',
+                    ])
                     ->filter(fn ($value, $key): bool => $value !== $this->person->getMetadataValue($key))
             );
 
@@ -86,26 +111,57 @@ final class Death extends Component
 
     public function isDirty(): bool
     {
-        return
-        $this->deathForm->yod !== $this->person->yod or
-        $this->deathForm->dod !== ($this->person->dod ? Carbon::parse($this->person->dod)->format('Y-m-d') : null) or
-        $this->deathForm->pod !== $this->person->pod or
-        
-        // 检查农历死亡日期是否有变化
-        $this->deathForm->dod_year !== $this->person->dod_lunar_year or
-        $this->deathForm->dod_month !== $this->person->dod_lunar_month or
-        $this->deathForm->dod_day !== $this->person->dod_lunar_day or
-        $this->deathForm->dod_leap !== $this->person->dod_lunar_leap or
+        [$solarYear, $solarMonth, $solarDay] = $this->currentSolarParts();
 
-        $this->deathForm->cemetery_location_name !== $this->person->getMetadataValue('cemetery_location_name') or
-        $this->deathForm->cemetery_location_address !== $this->person->getMetadataValue('cemetery_location_address') or
-        $this->deathForm->cemetery_location_latitude !== $this->person->getMetadataValue('cemetery_location_latitude') or
-        $this->deathForm->cemetery_location_longitude !== $this->person->getMetadataValue('cemetery_location_longitude');
+        return
+            $this->normalizeInt($this->deathForm->solar_year) !== $solarYear or
+            $this->normalizeInt($this->deathForm->solar_month) !== $solarMonth or
+            $this->normalizeInt($this->deathForm->solar_day) !== $solarDay or
+            $this->deathForm->pod !== $this->person->pod or
+            $this->normalizeInt($this->deathForm->dod_year) !== $this->normalizeInt($this->person->dod_lunar_year) or
+            $this->normalizeInt($this->deathForm->dod_month) !== $this->normalizeInt($this->person->dod_lunar_month) or
+            $this->normalizeInt($this->deathForm->dod_day) !== $this->normalizeInt($this->person->dod_lunar_day) or
+            (bool) $this->deathForm->dod_leap !== (bool) $this->person->dod_lunar_leap or
+            $this->deathForm->cemetery_location_name !== $this->person->getMetadataValue('cemetery_location_name') or
+            $this->deathForm->cemetery_location_address !== $this->person->getMetadataValue('cemetery_location_address') or
+            $this->deathForm->cemetery_location_latitude !== $this->person->getMetadataValue('cemetery_location_latitude') or
+            $this->deathForm->cemetery_location_longitude !== $this->person->getMetadataValue('cemetery_location_longitude');
     }
 
     // ------------------------------------------------------------------------------
     public function render(): View
     {
         return view('livewire.people.edit.death');
+    }
+
+    /**
+     * @return array{0: ?int, 1: ?int, 2: ?int}
+     */
+    private function currentSolarParts(): array
+    {
+        if ($this->person->dod) {
+            $dod = Carbon::parse($this->person->dod);
+
+            return [
+                (int) $dod->format('Y'),
+                (int) $dod->format('n'),
+                (int) $dod->format('j'),
+            ];
+        }
+
+        return [
+            $this->person->yod !== null ? (int) $this->person->yod : null,
+            null,
+            null,
+        ];
+    }
+
+    private function normalizeInt(mixed $value): ?int
+    {
+        if ($value === null || $value === '') {
+            return null;
+        }
+
+        return (int) $value;
     }
 }

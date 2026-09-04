@@ -11,12 +11,12 @@
             @if (auth()->user()->hasPermission('person:create'))
                 <div class="flex-1 grow min-w-max max-w-min text-end">
                     <x-ts-dropdown icon="tabler.menu-2" position="bottom-end">
-                        <a href="/people/{{ $person->id }}/add-child">
+                        <button type="button" class="w-full text-left" x-on:click="$modalOpen('add-person-child')">
                             <x-ts-dropdown.items>
                                 <x-ts-icon icon="tabler.user-plus" class="mr-2" />
                                 {{ __('person.add_child') }}
                             </x-ts-dropdown.items>
-                        </a>
+                        </button>
 
                         @if (auth()->user()->hasPermission('person:update') and $person->children->count() > 0)
                             <hr />

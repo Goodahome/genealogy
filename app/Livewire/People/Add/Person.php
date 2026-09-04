@@ -39,11 +39,14 @@ final class Person extends Component
 
         $this->personForm->yob = null;
         $this->personForm->dob = null;
+        $this->personForm->solar_year = null;
+        $this->personForm->solar_month = null;
+        $this->personForm->solar_day = null;
         $this->personForm->pob = null;
 
         $this->personForm->photo = null;
 
-        // 初始化农历出生日�?        $this->personForm->dob_year = null;
+        // 初始化农历出生日�?        $this->personForm->dob_year = null;
         $this->personForm->dob_month = null;
         $this->personForm->dob_day = null;
         $this->personForm->dob_leap = false;
@@ -97,6 +100,13 @@ final class Person extends Component
     {
         if ($this->isDirty()) {
             $validated = $this->personForm->validate();
+            $this->personForm->assertSolarBirthValid();
+
+            if ($this->getErrorBag()->isNotEmpty()) {
+                return;
+            }
+
+            $birth = $this->personForm->resolveSolarBirth();
             
             // 创建新的人物记录
             $new_person = \App\Models\Person::create([
@@ -106,7 +116,8 @@ final class Person extends Component
                 'nickname'  => $validated['nickname'],
                 'sex'       => $validated['sex'],
                 'gender_id' => $validated['gender_id'] ?? null,
-                'yob'       => $validated['yob'],
+                'yob'       => $birth['yob'],
+                'dob'       => $birth['dob'],
                 
                 // 保存农历日期字段
                 'dob_lunar_year' => $validated['dob_year'] ?? null,
@@ -147,13 +158,7 @@ final class Person extends Component
         $this->personForm->sex !== null or
         $this->personForm->gender_id !== null or
 
-        $this->personForm->yob !== null or
-        $this->personForm->dob !== null or
-
-        $this->personForm->dob_year !== $this->person->dob_lunar_year or
-        $this->personForm->dob_month !== $this->person->dob_lunar_month or
-        $this->personForm->dob_day !== $this->person->dob_lunar_day or
-        $this->personForm->dob_leap !== $this->person->dob_lunar_leap or
+        $this->personForm->hasBirthDateInput() or
 
         $this->personForm->pob !== null;
     }

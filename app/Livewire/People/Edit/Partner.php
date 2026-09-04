@@ -20,6 +20,8 @@ final class Partner extends Component
     // -----------------------------------------------------------------------
     public $person;
 
+    public bool $asModal = false;
+
     public $couple;
 
     public PartnerForm $partnerForm;

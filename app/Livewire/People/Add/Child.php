@@ -24,6 +24,8 @@ final class Child extends Component
     // -----------------------------------------------------------------------
     public $person;
 
+    public bool $asModal = false;
+
     public ChildForm $childForm;
 
     public array $photos = [];
@@ -45,13 +47,16 @@ final class Child extends Component
 
         $this->childForm->yob = null;
         $this->childForm->dob = null;
+        $this->childForm->solar_year = null;
+        $this->childForm->solar_month = null;
+        $this->childForm->solar_day = null;
         $this->childForm->pob = null;
 
         $this->childForm->photo = null;
 
         $this->childForm->person_id = null;
 
-        // 初始化农历出生日�?        $this->childForm->dob_year = null;
+        // 初始化农历出生日�?        $this->childForm->dob_year = null;
         $this->childForm->dob_month = null;
         $this->childForm->dob_day = null;
         $this->childForm->dob_leap = false;
@@ -127,6 +132,13 @@ final class Child extends Component
     {
         if ($this->isDirty()) {
             $validated = $this->childForm->validate();
+            $this->childForm->assertSolarBirthValid();
+
+            if ($this->getErrorBag()->isNotEmpty()) {
+                return;
+            }
+
+            $birth = $this->childForm->resolveSolarBirth();
 
             if (isset($validated['person_id'])) {
                 if ($this->person->sex === 'm') {
@@ -151,8 +163,8 @@ final class Child extends Component
                         'nickname'  => $validated['nickname'],
                         'sex'       => $validated['sex'],
                         'gender_id' => $validated['gender_id'] ?? null,
-                        'yob'       => $validated['yob'],
-                        'dob'       => $validated['dob'],
+                        'yob'       => $birth['yob'],
+                        'dob'       => $birth['dob'],
                         'pob'       => $validated['pob'],
                         // 保存农历日期字段
                         'dob_lunar_year' => $validated['dob_year'] ?? null,
@@ -172,8 +184,8 @@ final class Child extends Component
                         'nickname'  => $validated['nickname'],
                         'sex'       => $validated['sex'],
                         'gender_id' => $validated['gender_id'] ?? null,
-                        'yob'       => $validated['yob'],
-                        'dob'       => $validated['dob'],
+                        'yob'       => $birth['yob'],
+                        'dob'       => $birth['dob'],
                         'pob'       => $validated['pob'],
                         // 保存农历日期字段
                         'dob_lunar_year' => $validated['dob_year'] ?? null,
@@ -215,14 +227,8 @@ final class Child extends Component
         $this->childForm->sex !== null or
         $this->childForm->gender_id !== null or
 
-        $this->childForm->yob !== null or
-        $this->childForm->dob !== null or
+        $this->childForm->hasBirthDateInput() or
         $this->childForm->pob !== null or
-
-        $this->childForm->dob_year !== $this->person->dob_lunar_year or
-        $this->childForm->dob_month !== $this->person->dob_lunar_month or
-        $this->childForm->dob_day !== $this->person->dob_lunar_day or
-        $this->childForm->dob_leap !== $this->person->dob_lunar_leap or
 
         $this->childForm->person_id;
     }

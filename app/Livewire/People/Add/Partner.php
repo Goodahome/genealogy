@@ -25,6 +25,8 @@ final class Partner extends Component
     // -----------------------------------------------------------------------
     public $person;
 
+    public bool $asModal = false;
+
     public PartnerForm $partnerForm;
 
     public array $photos = [];
@@ -46,6 +48,9 @@ final class Partner extends Component
 
         $this->partnerForm->yob = null;
         $this->partnerForm->dob = null;
+        $this->partnerForm->solar_year = null;
+        $this->partnerForm->solar_month = null;
+        $this->partnerForm->solar_day = null;
         $this->partnerForm->pob = null;
 
         $this->partnerForm->photo = null;
@@ -58,7 +63,7 @@ final class Partner extends Component
         $this->partnerForm->is_married = false;
         $this->partnerForm->has_ended  = false;
 
-        // 初始化农历出生日�?        $this->partnerForm->dob_year = null;
+        // 初始化农历出生日�?        $this->partnerForm->dob_year = null;
         $this->partnerForm->dob_month = null;
         $this->partnerForm->dob_day = null;
         $this->partnerForm->dob_leap = false;
@@ -121,6 +126,13 @@ final class Partner extends Component
     {
         if ($this->isDirty()) {
             $validated = $this->partnerForm->validate();
+            $this->partnerForm->assertSolarBirthValid();
+
+            if ($this->getErrorBag()->isNotEmpty()) {
+                return;
+            }
+
+            $birth = $this->partnerForm->resolveSolarBirth();
 
             if (isset($validated['person2_id'])) {
                 if ($this->hasOverlap($validated['date_start'], $validated['date_end'])) {
@@ -149,8 +161,8 @@ final class Partner extends Component
                         'nickname'  => $validated['nickname'],
                         'sex'       => $validated['sex'],
                         'gender_id' => $validated['gender_id'] ?? null,
-                        'yob'       => $validated['yob'],
-                        'dob'       => $validated['dob'],
+                        'yob'       => $birth['yob'],
+                        'dob'       => $birth['dob'],
                         'pob'       => $validated['pob'],
                         'team_id'   => $this->person->team_id,
                         // 保存农历日期字段
@@ -202,19 +214,13 @@ final class Partner extends Component
         $this->partnerForm->sex !== null or
         $this->partnerForm->gender_id !== null or
 
-        $this->partnerForm->yob !== null or
-        $this->partnerForm->dob !== null or
+        $this->partnerForm->hasBirthDateInput() or
         $this->partnerForm->pob !== null or
 
         $this->partnerForm->person2_id !== null or
         $this->partnerForm->date_start !== null or
         $this->partnerForm->date_end !== null or
         $this->partnerForm->is_married !== false or
-
-        $this->partnerForm->dob_year !== $this->person->dob_lunar_year or
-        $this->partnerForm->dob_month !== $this->person->dob_lunar_month or
-        $this->partnerForm->dob_day !== $this->person->dob_lunar_day or
-        $this->partnerForm->dob_leap !== $this->person->dob_lunar_leap or
 
         $this->partnerForm->has_ended !== false;
     }

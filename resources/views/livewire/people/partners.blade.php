@@ -11,18 +11,18 @@
             @if (auth()->user()->hasPermission('couple:create'))
                 <div class="flex-1 grow min-w-max max-w-min text-end">
                     <x-ts-dropdown icon="tabler.menu-2" position="bottom-end">
-                        <a href="/people/{{ $person->id }}/add-partner">
+                        <button type="button" class="w-full text-left" x-on:click="$modalOpen('add-person-partner')">
                             <x-ts-dropdown.items>
                                 <x-ts-icon icon="tabler.user-plus" class="mr-2" />
                                 {{ __('person.add_relationship') }}
                             </x-ts-dropdown.items>
-                        </a>
+                        </button>
 
                         @if (auth()->user()->hasPermission('couple:update') and $person->couples->count() > 0)
                             <hr />
 
                             @foreach ($person->couples->sortBy('date_start') as $couple)
-                                <a href="/people/{{ $person->id }}/{{ $couple->id }}/edit-partner">
+                                <button type="button" class="w-full text-left" x-on:click="$modalOpen('edit-person-partner-{{ $couple->id }}')">
                                     <x-ts-dropdown.items title="{{ __('person.edit_relationship') }}">
                                         <x-ts-icon icon="tabler.user-edit" class="mr-2" />
                                         <div>
@@ -30,7 +30,7 @@
                                             {{ $couple->date_start ? $couple->date_start->timezone(session('timezone') ?? 'UTC')->isoFormat('LL') : '??' }}
                                         </div>
                                     </x-ts-dropdown.items>
-                                </a>
+                                </button>
                             @endforeach
                         @endif
 
